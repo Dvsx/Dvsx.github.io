@@ -332,9 +332,8 @@
       
         
           
-            <p>#php://filter的妙用#</p>
-<p>##1.解释<br><strong>什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。</strong></p>
-<p>##2.用法<br><strong>php://filter是PHP语言中特有的协议流，可以作为一个“中间流”来处理其他流。可以用如下一行代码将POST内容转换成base64编码并输出。</strong></p>
+            <h1 id="php-filter的妙用"><a href="#php-filter的妙用" class="headerlink" title="php://filter的妙用"></a>php://filter的妙用</h1><h2 id="1-解释"><a href="#1-解释" class="headerlink" title="1.解释"></a>1.解释</h2><p><strong>什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。</strong></p>
+<h2 id="2-用法"><a href="#2-用法" class="headerlink" title="2.用法"></a>2.用法</h2><p><strong>php://filter是PHP语言中特有的协议流，可以作为一个“中间流”来处理其他流。可以用如下一行代码将POST内容转换成base64编码并输出。</strong></p>
 <pre><code>readfile(&quot;php://filter/read=convert.base64-encode/resource=php://input&quot;);
 </code></pre><table>
 <thead>
@@ -358,7 +357,7 @@
 </tr>
 </tbody>
 </table>
-<p>##3.实例<br><strong>（1）bugku：flag在index里</strong></p>
+<h2 id="3-实例"><a href="#3-实例" class="headerlink" title="3.实例"></a>3.实例</h2><p><strong>（1）bugku：flag在index里</strong></p>
 <p><img src="https://i.imgur.com/B1QbUlq.png" alt=""><br><strong>（2）极客大挑战</strong><br><img src="https://i.imgur.com/8mux4zt.png" alt=""><br><strong>首先给参数id赋值</strong><br><img src="https://i.imgur.com/cUsSshs.png" alt=""><br><strong>结果为</strong><br><img src="https://i.imgur.com/LwT9eAr.png" alt=""><br><strong>post php://filter</strong><br><img src="https://i.imgur.com/vjCpXib.png" alt=""><br><strong>结果为</strong><br><img src="https://i.imgur.com/glnSuRg.png" alt=""><br><strong>再进行base64解密即可爆出flag</strong></p>
 
           
