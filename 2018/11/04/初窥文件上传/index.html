@@ -81,24 +81,30 @@
 
 
 
-<meta name="description" content="php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。">
+<meta name="description" content="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧1.基于DVWA的文件上传（1）LOW级别low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行php一句话木马如下所示&amp;lt;?php @eval($_POST[yjh]);?&amp;gt;上传结果如下所示这时候就可以上菜刀连了这就算是一次简单的上传了（2）Medium级别这个级别再上传php文件就不行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP伪协议">
-<meta property="og:url" content="http://yoursite.com/2018/10/27/PHP伪协议/index.html">
+<meta property="og:title" content="初窥文件上传">
+<meta property="og:url" content="http://yoursite.com/2018/11/04/初窥文件上传/index.html">
 <meta property="og:site_name" content="Dvsx&#39;blog">
-<meta property="og:description" content="php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。">
+<meta property="og:description" content="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧1.基于DVWA的文件上传（1）LOW级别low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行php一句话木马如下所示&amp;lt;?php @eval($_POST[yjh]);?&amp;gt;上传结果如下所示这时候就可以上菜刀连了这就算是一次简单的上传了（2）Medium级别这个级别再上传php文件就不行">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/B1QbUlq.png">
-<meta property="og:image" content="https://i.imgur.com/8mux4zt.png">
-<meta property="og:image" content="https://i.imgur.com/cUsSshs.png">
-<meta property="og:image" content="https://i.imgur.com/LwT9eAr.png">
-<meta property="og:image" content="https://i.imgur.com/vjCpXib.png">
-<meta property="og:image" content="https://i.imgur.com/glnSuRg.png">
-<meta property="og:updated_time" content="2018-10-27T09:50:12.414Z">
+<meta property="og:image" content="https://i.imgur.com/B8aOm31.png">
+<meta property="og:image" content="https://i.imgur.com/hk29VmV.png">
+<meta property="og:image" content="https://i.imgur.com/BGafxbx.png">
+<meta property="og:image" content="https://i.imgur.com/IgRtFN9.png">
+<meta property="og:image" content="https://i.imgur.com/sltFDav.png">
+<meta property="og:image" content="https://i.imgur.com/r5KiC7d.png">
+<meta property="og:image" content="https://i.imgur.com/9eNMGOj.png">
+<meta property="og:image" content="https://i.imgur.com/MMm4MnS.png">
+<meta property="og:image" content="https://i.imgur.com/fsyBb1V.png">
+<meta property="og:image" content="https://i.imgur.com/BllPY2U.png">
+<meta property="og:image" content="https://i.imgur.com/wyE4KRD.png">
+<meta property="og:image" content="https://i.imgur.com/5lSntcw.png">
+<meta property="og:updated_time" content="2018-11-04T08:26:25.250Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP伪协议">
-<meta name="twitter:description" content="php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。">
-<meta name="twitter:image" content="https://i.imgur.com/B1QbUlq.png">
+<meta name="twitter:title" content="初窥文件上传">
+<meta name="twitter:description" content="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧1.基于DVWA的文件上传（1）LOW级别low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行php一句话木马如下所示&amp;lt;?php @eval($_POST[yjh]);?&amp;gt;上传结果如下所示这时候就可以上菜刀连了这就算是一次简单的上传了（2）Medium级别这个级别再上传php文件就不行">
+<meta name="twitter:image" content="https://i.imgur.com/B8aOm31.png">
 
 
 
@@ -128,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/10/27/PHP伪协议/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/04/初窥文件上传/">
 
 
 
 
 
-  <title>PHP伪协议 | Dvsx'blog</title>
+  <title>初窥文件上传 | Dvsx'blog</title>
   
 
 
@@ -273,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/27/PHP伪协议/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/04/初窥文件上传/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dvsx">
@@ -290,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP伪协议</h1>
+          <h1 class="post-title" itemprop="name headline">初窥文件上传</h1>
         
 
         <div class="post-meta">
@@ -302,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-27T11:48:29+08:00">
-                2018-10-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-04T15:10:10+08:00">
+                2018-11-04
               </time>
             
 
@@ -340,33 +346,10 @@
       
 
       
-        <h1 id="php-filter的妙用"><a href="#php-filter的妙用" class="headerlink" title="php://filter的妙用"></a>php://filter的妙用</h1><h2 id="1-解释"><a href="#1-解释" class="headerlink" title="1.解释"></a>1.解释</h2><p><strong>什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。</strong><br><a id="more"></a></p>
-<h2 id="2-用法"><a href="#2-用法" class="headerlink" title="2.用法"></a>2.用法</h2><p><strong>php://filter是PHP语言中特有的协议流，可以作为一个“中间流”来处理其他流。可以用如下一行代码将POST内容转换成base64编码并输出。</strong></p>
-<pre><code>readfile(&quot;php://filter/read=convert.base64-encode/resource=php://input&quot;);
-</code></pre><table>
-<thead>
-<tr>
-<th style="text-align:center">名称</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">resource=&lt;要过滤的数据流&gt;</td>
-<td style="text-align:center">这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
-</tr>
-<tr>
-<td style="text-align:center">read=&lt;读链的筛选列表&gt;</td>
-<td style="text-align:center">该参数可选。可以设定一个或多个过滤器名称</td>
-</tr>
-<tr>
-<td style="text-align:center">write=&lt;写链的筛选列表&gt;</td>
-<td style="text-align:center">该参数可选。可以设定一个或多个过滤器名称</td>
-</tr>
-</tbody>
-</table>
-<h2 id="3-实例"><a href="#3-实例" class="headerlink" title="3.实例"></a>3.实例</h2><p><strong>（1）bugku：flag在index里</strong></p>
-<p><img src="https://i.imgur.com/B1QbUlq.png" alt=""><br><strong>（2）极客大挑战</strong><br><img src="https://i.imgur.com/8mux4zt.png" alt=""><br><strong>首先给参数id赋值</strong><br><img src="https://i.imgur.com/cUsSshs.png" alt=""><br><strong>结果为</strong><br><img src="https://i.imgur.com/LwT9eAr.png" alt=""><br><strong>post php://filter</strong><br><img src="https://i.imgur.com/vjCpXib.png" alt=""><br><strong>结果为</strong><br><img src="https://i.imgur.com/glnSuRg.png" alt=""><br><strong>再进行base64解密即可爆出flag</strong></p>
+        <h2 id="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"><a href="#头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧" class="headerlink" title="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"></a>头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧</h2><h2 id="1-基于DVWA的文件上传"><a href="#1-基于DVWA的文件上传" class="headerlink" title="1.基于DVWA的文件上传"></a>1.基于DVWA的文件上传</h2><p><strong>（1）LOW级别</strong><br><img src="https://i.imgur.com/B8aOm31.png" alt=""><br>low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行<br>php一句话木马如下所示<br><code>&lt;?php @eval($_POST[yjh]);?&gt;</code><br>上传结果如下所示<br><img src="https://i.imgur.com/hk29VmV.png" alt=""><br>这时候就可以上菜刀连了<br><img src="https://i.imgur.com/BGafxbx.png" alt=""><br>这就算是一次简单的上传了<br><strong>（2）Medium级别</strong><br>这个级别再上传php文件就不行了<br><img src="https://i.imgur.com/IgRtFN9.png" alt=""><br>这时候就要靠抓包了，上传png文件然后抓包，把feilname的后缀改为php，再把burp给off掉就能上传上去了，之后就能上菜刀连了<br><img src="https://i.imgur.com/sltFDav.png" alt=""><br><img src="https://i.imgur.com/r5KiC7d.png" alt=""></p>
+<h2 id="2-南邮题目上传绕过（00截断）"><a href="#2-南邮题目上传绕过（00截断）" class="headerlink" title="2.南邮题目上传绕过（00截断）"></a>2.南邮题目上传绕过（00截断）</h2><p><img src="https://i.imgur.com/9eNMGOj.png" alt=""></p>
+<p><strong>传.jpg类型的文件，结果爆出了一条路径/uploads/</strong><br><img src="https://i.imgur.com/MMm4MnS.png" alt=""><br><strong>那我传.php的文件</strong><br><img src="https://i.imgur.com/fsyBb1V.png" alt=""><br><strong>就没有爆出路径</strong><br><strong>所以就抓包，而且是抓上传.jpg文件的包</strong><br><strong>原包</strong><br><img src="https://i.imgur.com/BllPY2U.png" alt=""><br><strong>修改过后的包，就是在原来爆出的路径后面加上1.php，注意1.php后面有空格方便找出hex为20的值并改为00（00截断）</strong><br><img src="https://i.imgur.com/wyE4KRD.png" alt=""><br>爆出flag<br><img src="https://i.imgur.com/5lSntcw.png" alt=""></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p><strong>上传绕过的方法很多，还有很长的路要走啊！</strong></p>
 
       
     </div>
@@ -391,8 +374,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/23/my-first-blog/" rel="next" title="my-first-blog">
-                <i class="fa fa-chevron-left"></i> my-first-blog
+              <a href="/2018/10/27/PHP伪协议/" rel="next" title="PHP伪协议">
+                <i class="fa fa-chevron-left"></i> PHP伪协议
               </a>
             
           </div>
@@ -400,10 +383,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/04/初窥文件上传/" rel="prev" title="初窥文件上传">
-                初窥文件上传 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -548,7 +527,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#php-filter的妙用"><span class="nav-number">1.</span> <span class="nav-text">php://filter的妙用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-解释"><span class="nav-number">1.1.</span> <span class="nav-text">1.解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-用法"><span class="nav-number">1.2.</span> <span class="nav-text">2.用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实例"><span class="nav-number">1.3.</span> <span class="nav-text">3.实例</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"><span class="nav-number">1.</span> <span class="nav-text">头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基于DVWA的文件上传"><span class="nav-number">2.</span> <span class="nav-text">1.基于DVWA的文件上传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-南邮题目上传绕过（00截断）"><span class="nav-number">3.</span> <span class="nav-text">2.南邮题目上传绕过（00截断）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-总结"><span class="nav-number">4.</span> <span class="nav-text">3.总结</span></a></li></ol></div>
             
 
           </div>
