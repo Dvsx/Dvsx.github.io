@@ -333,13 +333,14 @@
 
       
         
-          
-            <h2 id="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"><a href="#头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧" class="headerlink" title="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"></a>头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧</h2><h2 id="1-基于DVWA的文件上传"><a href="#1-基于DVWA的文件上传" class="headerlink" title="1.基于DVWA的文件上传"></a>1.基于DVWA的文件上传</h2><p><strong>（1）LOW级别</strong><br><img src="https://i.imgur.com/B8aOm31.png" alt=""><br>low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行<br>php一句话木马如下所示<br><code>&lt;?php @eval($_POST[yjh]);?&gt;</code><br>上传结果如下所示<br><img src="https://i.imgur.com/hk29VmV.png" alt=""><br>这时候就可以上菜刀连了<br><img src="https://i.imgur.com/BGafxbx.png" alt=""><br>这就算是一次简单的上传了<br><strong>（2）Medium级别</strong><br>这个级别再上传php文件就不行了<br><img src="https://i.imgur.com/IgRtFN9.png" alt=""><br>这时候就要靠抓包了，上传png文件然后抓包，把feilname的后缀改为php，再把burp给off掉就能上传上去了，之后就能上菜刀连了<br><img src="https://i.imgur.com/sltFDav.png" alt=""><br><img src="https://i.imgur.com/r5KiC7d.png" alt=""></p>
-<h2 id="2-南邮题目上传绕过（00截断）"><a href="#2-南邮题目上传绕过（00截断）" class="headerlink" title="2.南邮题目上传绕过（00截断）"></a>2.南邮题目上传绕过（00截断）</h2><p><img src="https://i.imgur.com/9eNMGOj.png" alt=""></p>
-<p><strong>传.jpg类型的文件，结果爆出了一条路径/uploads/</strong><br><img src="https://i.imgur.com/MMm4MnS.png" alt=""><br><strong>那我传.php的文件</strong><br><img src="https://i.imgur.com/fsyBb1V.png" alt=""><br><strong>就没有爆出路径</strong><br><strong>所以就抓包，而且是抓上传.jpg文件的包</strong><br><strong>原包</strong><br><img src="https://i.imgur.com/BllPY2U.png" alt=""><br><strong>修改过后的包，就是在原来爆出的路径后面加上1.php，注意1.php后面有空格方便找出hex为20的值并改为00（00截断）</strong><br><img src="https://i.imgur.com/wyE4KRD.png" alt=""><br>爆出flag<br><img src="https://i.imgur.com/5lSntcw.png" alt=""></p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p><strong>上传绕过的方法很多，还有很长的路要走啊！</strong></p>
-
-          
+          <h2 id="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"><a href="#头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧" class="headerlink" title="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"></a>头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/04/初窥文件上传/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
