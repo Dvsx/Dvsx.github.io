@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="后台登陆进入链接查看页面源代码，发现如下所示下面这一行代码是执行上面的sql语句并将结果赋值给result$result=mysqli_query($link,$sql);如果result的结果大于0if(mysqli_num_rows($result)&amp;gt;0)这里用到了MD5的一个md5($string,true)的漏洞md5($string,raw) raw可选，默认为falsetrue">
+<meta name="description" content="后台登陆">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实验吧 writeup">
 <meta property="og:url" content="http://yoursite.com/2018/11/10/实验吧-writeup/index.html">
 <meta property="og:site_name" content="A piece of cake">
-<meta property="og:description" content="后台登陆进入链接查看页面源代码，发现如下所示下面这一行代码是执行上面的sql语句并将结果赋值给result$result=mysqli_query($link,$sql);如果result的结果大于0if(mysqli_num_rows($result)&amp;gt;0)这里用到了MD5的一个md5($string,true)的漏洞md5($string,raw) raw可选，默认为falsetrue">
+<meta property="og:description" content="后台登陆">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://i.imgur.com/2h1CBwA.png">
 <meta property="og:image" content="https://i.imgur.com/fgipwLg.png">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://i.imgur.com/4R6z3kh.png">
 <meta property="og:image" content="https://i.imgur.com/KwNfzaD.jpg">
 <meta property="og:image" content="https://i.imgur.com/amWNXX2.png">
-<meta property="og:updated_time" content="2018-11-10T02:03:37.747Z">
+<meta property="og:updated_time" content="2018-11-10T02:09:01.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实验吧 writeup">
-<meta name="twitter:description" content="后台登陆进入链接查看页面源代码，发现如下所示下面这一行代码是执行上面的sql语句并将结果赋值给result$result=mysqli_query($link,$sql);如果result的结果大于0if(mysqli_num_rows($result)&amp;gt;0)这里用到了MD5的一个md5($string,true)的漏洞md5($string,raw) raw可选，默认为falsetrue">
+<meta name="twitter:description" content="后台登陆">
 <meta name="twitter:image" content="https://i.imgur.com/2h1CBwA.png">
 
 
@@ -341,8 +341,8 @@
       
 
       
-        <a id="more"></a>
-<h1 id="后台登陆"><a href="#后台登陆" class="headerlink" title="后台登陆"></a>后台登陆</h1><p>进入链接<br><img src="https://i.imgur.com/2h1CBwA.png" alt=""><br>查看页面源代码，发现如下所示<br><img src="https://i.imgur.com/fgipwLg.png" alt=""><br>下面这一行代码是执行上面的sql语句并将结果赋值给result<br><code>$result=mysqli_query($link,$sql);</code><br>如果result的结果大于0<br><code>if(mysqli_num_rows($result)&gt;0)</code><br>这里用到了MD5的一个md5($string,true)的漏洞<br>md5($string,raw) raw可选，默认为false<br><strong>true</strong>：返回16字符2进制格式(并不是普通的二进制0和1，而是类似<strong>‘or’6\xc9]\x99\xe9!r,\xf9\xedb\x1c</strong>的形式)<br><strong>false</strong>：返回32字符16进制格式<br>所以说，现在要找到编码过后是’or’ 6这样的字符串<br>然鹅，重点来了，答案就在URL里面哦<br><img src="https://i.imgur.com/DNnpG96.png" alt=""><br>暗藏玄机，以后碰到这样的题目，要试试URL能不能行啊！</p>
+        <h1 id="后台登陆"><a href="#后台登陆" class="headerlink" title="后台登陆"></a>后台登陆</h1><a id="more"></a>
+<p>进入链接<br><img src="https://i.imgur.com/2h1CBwA.png" alt=""><br>查看页面源代码，发现如下所示<br><img src="https://i.imgur.com/fgipwLg.png" alt=""><br>下面这一行代码是执行上面的sql语句并将结果赋值给result<br><code>$result=mysqli_query($link,$sql);</code><br>如果result的结果大于0<br><code>if(mysqli_num_rows($result)&gt;0)</code><br>这里用到了MD5的一个md5($string,true)的漏洞<br>md5($string,raw) raw可选，默认为false<br><strong>true</strong>：返回16字符2进制格式(并不是普通的二进制0和1，而是类似<strong>‘or’6\xc9]\x99\xe9!r,\xf9\xedb\x1c</strong>的形式)<br><strong>false</strong>：返回32字符16进制格式<br>所以说，现在要找到编码过后是’or’ 6这样的字符串<br>然鹅，重点来了，答案就在URL里面哦<br><img src="https://i.imgur.com/DNnpG96.png" alt=""><br>暗藏玄机，以后碰到这样的题目，要试试URL能不能行啊！</p>
 <h1 id="因缺思汀的绕过"><a href="#因缺思汀的绕过" class="headerlink" title="因缺思汀的绕过"></a>因缺思汀的绕过</h1><p>又是让填账号和密码的题目<br><img src="https://i.imgur.com/suo5LXh.png" alt=""><br>查看源代码，发现端倪<br><img src="https://i.imgur.com/4R6z3kh.png" alt=""><br>进入提示的网页，主要代码如下<br><img src="https://i.imgur.com/KwNfzaD.jpg" alt=""><br>主要有这三部分需要注意的地方<br>（1）在第一层的filter里面就过滤了常用的SQL关键词，所以常规的SQL 注入就不行了。如果输入了filter里面的语句，网页返回“水可载舟，亦可赛艇！”<br>（2）第二点是那条查询语句，正是可以注入的地方，可用单引号闭合的方法来解题<br>（3）限制从数据库返回的数据必须是一行，在满足第一层条件的情况下可以使用 limit 的返回来确定数据库中总共有几行数据。 它的查询语句是 select * from interest where uname = ‘{$_POST[‘uname’]}’于是构造：<br><code>1&#39; or 1 limit 1 offset 0#</code><br><code>1&#39; or 1 limit 1 offset 1#</code><br><code>1&#39; or 1 limit 1 offset 2#</code><br>来判断数据库的行数<br>最重要的是if($key[‘pwd’] == $_POST[‘pwd’])这一行代码<br>这是一条if判断语句，只要返回结果为TRUE就可以接着运行下面的语句<br>这时候用到了group by with rollup来绕过，group by with rollup会在统计后的产生一条null信息，然后在pwd里不写值，if就为true了。<br>原理如下<br><img src="https://i.imgur.com/amWNXX2.png" alt=""><br>原先的表中并没有admin NULL这一行，但是使用了group by with rollup查询数据的时候就会多出NULL这一行，所以我们就可以构造语句找出值为NULL的那一行当作payload<br>payload如下<br><code>1&#39; or 1 group by with rollup limit 1 offset 2#</code><br>这里解释一下limit 1 offset 2的意思是从第二条数据开始取出一条数据。limit后面跟的是1条数据，offset后面跟的是从第二条开始读取。<br>而且，代码里的查询语句是根据uname来查找的，所以提交payload时只需要提交第一行的就可以了。</p>
 
       
