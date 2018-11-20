@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-17T12:40:05.549Z</updated>
+  <updated>2018-11-20T11:10:05.918Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DVWA指南</title>
+    <link href="http://yoursite.com/2018/11/20/DVWA%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2018/11/20/DVWA指南/</id>
+    <published>2018-11-20T11:10:05.000Z</published>
+    <updated>2018-11-20T11:10:05.918Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>实验吧 writeup</title>
