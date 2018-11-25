@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-20T11:10:05.918Z</updated>
+  <updated>2018-11-22T14:46:16.649Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,12 +21,22 @@
     <link href="http://yoursite.com/2018/11/20/DVWA%E6%8C%87%E5%8D%97/"/>
     <id>http://yoursite.com/2018/11/20/DVWA指南/</id>
     <published>2018-11-20T11:10:05.000Z</published>
-    <updated>2018-11-20T11:10:05.918Z</updated>
+    <updated>2018-11-22T14:46:16.649Z</updated>
     
     <summary type="html">
     
+      
+      
+        
+        
+          &lt;h1 id=&quot;Brute-Force&quot;&gt;&lt;a href=&quot;#Brute-Force&quot; class=&quot;headerlink&quot; title=&quot;Brute Force&quot;&gt;&lt;/a&gt;Brute Force&lt;/h1&gt;&lt;h2 id=&quot;1-LOW级别&quot;&gt;&lt;a href=&quot;#1-LOW级别&quot;
+        
+      
+    
     </summary>
     
+    
+      <category term="漏洞学习" scheme="http://yoursite.com/tags/%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
