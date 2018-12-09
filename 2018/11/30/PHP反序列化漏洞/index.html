@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="书山有路勤为径，学海无涯苦作舟">
+  <meta name="keywords" content="漏洞,">
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="just do it!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta name="description" content="漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。">
+<meta name="keywords" content="漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP反序列化漏洞">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/PHP反序列化漏洞/index.html">
 <meta property="og:site_name" content="A piece of cake">
-<meta property="og:description" content="just do it!">
+<meta property="og:description" content="漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-23T08:52:32.261Z">
+<meta property="og:updated_time" content="2018-11-30T12:47:51.079Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类">
-<meta name="twitter:description" content="just do it!">
+<meta name="twitter:title" content="PHP反序列化漏洞">
+<meta name="twitter:description" content="漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。">
 
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/30/PHP反序列化漏洞/">
 
 
 
 
 
-  <title>分类 | A piece of cake</title>
+  <title>PHP反序列化漏洞 | A piece of cake</title>
   
 
 
@@ -254,33 +255,194 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/30/PHP反序列化漏洞/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dvsx">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A piece of cake">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">分类</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">PHP反序列化漏洞</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-30T19:38:34+08:00">
+                2018-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/30/PHP反序列化漏洞/" class="leancloud_visitors" data-flag-title="PHP反序列化漏洞">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h1><p><strong>PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。</strong><br><a id="more"></a></p>
+<h1 id="深层理解"><a href="#深层理解" class="headerlink" title="深层理解"></a>深层理解</h1><p><strong>为什么要有序列化这种机制呢?因为在传递变量的过程中，有可能遇到变量值要跨脚本文件传递的过程。试想，如果在一个脚本中想要调用之前一个脚本的变量，但是前一个脚本已经执行完毕，所有的变量和内容释放掉了，我们要如何操作呢?难道要前一个脚本不断的循环，等待后面脚本调用?这肯定是不现实的。serialize和unserialize就是用来解决这一问题的。serialize可以将变量转换为字符串并且在转换中可以保存当前变量的值；unserialize则可以将serialize生成的字符串变换回变量。</strong></p>
+<h1 id="magic函数"><a href="#magic函数" class="headerlink" title="magic函数"></a>magic函数</h1><p>magic函数一般以_开头，通常会因为某些条件而触发不用我们手动调用<br>常见的magic函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__construct()当一个对象创建时被调用</span><br><span class="line">__destruct()当一个对象销毁时被调用</span><br><span class="line">__toString()当一个对象被当作一个字符串使用</span><br><span class="line">__sleep() 在对象在被序列化之前运行</span><br><span class="line">__wakeup将在序列化之后立即被调用</span><br></pre></td></tr></table></figure></p>
+<h1 id="反序列化漏洞需要满足两个条件"><a href="#反序列化漏洞需要满足两个条件" class="headerlink" title="反序列化漏洞需要满足两个条件"></a>反序列化漏洞需要满足两个条件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、程序中存在序列化字符串的输入点</span><br><span class="line">2、程序中存在可以利用的magic函数</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
     
     
+	<div>
+    
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>		
+    
+    </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Dvsx Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/漏洞/" rel="tag"># 漏洞</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/20/DVWA指南/" rel="next" title="DVWA指南">
+                <i class="fa fa-chevron-left"></i> DVWA指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/09/比赛心得/" rel="prev" title="比赛心得">
+                比赛心得 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -313,8 +475,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -396,6 +567,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#漏洞简介"><span class="nav-number">1.</span> <span class="nav-text">漏洞简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深层理解"><span class="nav-number">2.</span> <span class="nav-text">深层理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#magic函数"><span class="nav-number">3.</span> <span class="nav-text">magic函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反序列化漏洞需要满足两个条件"><span class="nav-number">4.</span> <span class="nav-text">反序列化漏洞需要满足两个条件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
