@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-11T12:50:31.623Z</updated>
+  <updated>2019-03-22T08:55:35.938Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>test</title>
-    <link href="http://yoursite.com/2019/03/11/test/"/>
-    <id>http://yoursite.com/2019/03/11/test/</id>
-    <published>2019-03-11T12:49:28.000Z</published>
-    <updated>2019-03-11T12:50:31.623Z</updated>
+    <title>信息收集</title>
+    <link href="http://yoursite.com/2019/03/22/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
+    <id>http://yoursite.com/2019/03/22/信息收集/</id>
+    <published>2019-03-22T08:16:21.000Z</published>
+    <updated>2019-03-22T08:55:35.938Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,7 @@
       
         
         
-          &lt;p&gt;This is a
+          &lt;p&gt;##信息收集&lt;br&gt;信息收集对于渗透测试前期来说是非常重要的，因为只有我们掌握了目标网站或目标主机足够多的信息之后，我们才能更好地对其进行漏洞检测。正所谓，知己知彼百战百胜！&lt;br&gt;信息收集的方式可以分为两种：&lt;font
         
       
     
@@ -145,7 +145,7 @@
     <link href="http://yoursite.com/2018/11/10/%E5%AE%9E%E9%AA%8C%E5%90%A7-writeup/"/>
     <id>http://yoursite.com/2018/11/10/实验吧-writeup/</id>
     <published>2018-11-10T02:01:37.000Z</published>
-    <updated>2018-11-17T12:40:05.549Z</updated>
+    <updated>2019-03-29T09:46:12.560Z</updated>
     
     <summary type="html">
     
