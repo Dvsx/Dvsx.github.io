@@ -80,8 +80,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="A piece of cake" type="application/atom+xml">
 
@@ -90,19 +88,23 @@
 
 
 
-<meta name="description" content="关于我？看我帅照就行了！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://dvsx.github.io/about/index.html">
+<meta name="description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSTI模板注入（攻防世界）">
+<meta property="og:url" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/index.html">
 <meta property="og:site_name" content="A piece of cake">
-<meta property="og:description" content="关于我？看我帅照就行了！">
+<meta property="og:description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/33KQESi.jpg">
-<meta property="og:updated_time" content="2018-11-04T08:49:40.199Z">
+<meta property="og:image" content="https://i.imgur.com/dXXJ6bz.png">
+<meta property="og:image" content="https://i.imgur.com/L9hCyTo.png">
+<meta property="og:image" content="https://i.imgur.com/qJ9wiVu.png">
+<meta property="og:image" content="https://i.imgur.com/ZV3pIJv.png">
+<meta property="og:image" content="https://i.imgur.com/S0ucANZ.png">
+<meta property="og:updated_time" content="2019-04-09T08:31:39.502Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="关于我？看我帅照就行了！">
-<meta name="twitter:image" content="https://i.imgur.com/33KQESi.jpg">
+<meta name="twitter:title" content="SSTI模板注入（攻防世界）">
+<meta name="twitter:description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
+<meta name="twitter:image" content="https://i.imgur.com/dXXJ6bz.png">
 
 
 
@@ -132,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://dvsx.github.io/about/">
+  <link rel="canonical" href="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/">
 
 
 
 
 
-  <title>about | A piece of cake</title>
+  <title>SSTI模板注入（攻防世界） | A piece of cake</title>
   
 
 
@@ -265,35 +267,216 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dvsx">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A piece of cake">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>关于我？<br>看我帅照就行了！</p>
-<p><img src="https://i.imgur.com/33KQESi.jpg" alt=""></p>
-
+          <h1 class="post-title" itemprop="name headline">SSTI模板注入（攻防世界）</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-09T15:57:30+08:00">
+                2019-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/09/SSTI模板注入（攻防世界）/" class="leancloud_visitors" data-flag-title="SSTI模板注入（攻防世界）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  404
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="攻防世界-confusion1"><a href="#攻防世界-confusion1" class="headerlink" title="攻防世界 confusion1"></a>攻防世界 confusion1</h1><p>第一次接触这样的漏洞，认真学习了一波<br><a id="more"></a></p>
+<h2 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h2><p>打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）<br><img src="https://i.imgur.com/dXXJ6bz.png" alt=""><br>但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没有发现什么有用的东西<br><img src="https://i.imgur.com/L9hCyTo.png" alt=""><br>偶然间查看页面源代码，发现了端倪<br><img src="https://i.imgur.com/qJ9wiVu.png" alt=""><br>这个404界面暗藏玄机啊！但还是不知道怎么做这道题</p>
+<h2 id="查阅资料"><a href="#查阅资料" class="headerlink" title="查阅资料"></a>查阅资料</h2><p>其实就是查看wp…发现这道题目考察的是SSTI，好像发现了新大陆诶，然后一脸懵逼地查资料。<br>首先知道了这种题型的漏洞表现在哪，就是把我们的输入当作代码执行。<br><img src="https://i.imgur.com/ZV3pIJv.png" alt=""><br>还可以导出所有的config变量，有些config变量可以暴露出重要的信息<br><img src="https://i.imgur.com/S0ucANZ.png" alt=""></p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>既然能够执行代码，就能够做很多事情，这里用到了沙箱逃逸（<a href="http://shaobaobaoer.cn/archives/656/python-sandbox-escape）" target="_blank" rel="noopener">http://shaobaobaoer.cn/archives/656/python-sandbox-escape）</a><br>沙箱逃逸,就是在给我们的一个代码执行环境下(Oj或使用socat生成的交互式终端),脱离种种过滤和限制,最终成功拿到shell权限的过程。其实就是闯过重重黑名单，最终拿到系统命令执行权限的过程。<br>这道题目过滤了一些关键字，用request.args绕过，所以构造payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&apos;&apos;[request.args.a][request.args.b][2][request.args.c]()[40](&apos;/opt/flag_1de36dff62a3a54ecfbc6e1fd2ef0ad1.txt&apos;)[request.args.d]()&#125;&#125;?a=__class__&amp;b=__mro__&amp;c=__subclasses__&amp;d=read</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
     
     
+	<div>
+    
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>		
+    
+    </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Dvsx Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/kali下钓鱼网站的制作/" rel="next" title="kali下钓鱼网站的制作">
+                <i class="fa fa-chevron-left"></i> kali下钓鱼网站的制作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -326,8 +509,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -409,6 +601,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#攻防世界-confusion1"><span class="nav-number">1.</span> <span class="nav-text">攻防世界 confusion1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目介绍"><span class="nav-number">1.1.</span> <span class="nav-text">题目介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查阅资料"><span class="nav-number">1.2.</span> <span class="nav-text">查阅资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">1.3.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
