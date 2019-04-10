@@ -113,7 +113,8 @@
 <meta property="og:image" content="https://i.imgur.com/dcdG5RD.png">
 <meta property="og:image" content="https://i.imgur.com/ecXoFyA.png">
 <meta property="og:image" content="https://i.imgur.com/OM1uLQC.png">
-<meta property="og:updated_time" content="2019-04-08T00:51:10.641Z">
+<meta property="og:image" content="https://i.imgur.com/LCPBwSD.png">
+<meta property="og:updated_time" content="2019-04-10T12:23:48.452Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实验吧 writeup">
 <meta name="twitter:description" content="后台登陆">
@@ -365,7 +366,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.5k
+                  1.8k
                 </span>
               
 
@@ -381,7 +382,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  5
+                  7
                 </span>
               
             </div>
@@ -409,6 +410,11 @@
 <p>结果如下<br><img src="https://i.imgur.com/wnKLoWr.png" alt=""><br>这道题主要考的是写代码的能力，还有你的思路够不够清晰，这道题没懂？不慌，还有下一题！</p>
 <h1 id="速度要快"><a href="#速度要快" class="headerlink" title="速度要快"></a>速度要快</h1><p>这道题目跟上一道题目有异曲同工之妙，主要思路是一样的，还是来看一下代码的处理(与上一题的解题方法有所不同，两种方法都可以解题)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import base64</span><br><span class="line">url = &quot;http://123.206.87.240:8002/web6/&quot;</span><br><span class="line">#r = requests.post(url)</span><br><span class="line">s = requests.Session()</span><br><span class="line">#flag = r.headers[&quot;FLAG&quot;]</span><br><span class="line">flag = s.get(url).headers[&apos;flag&apos;]</span><br><span class="line">flag = base64.b64decode(flag).decode().split()[1]#以空格为分界</span><br><span class="line">flag = base64.b64decode(flag)#再一次解码</span><br><span class="line">post = &#123;&apos;margin&apos;:flag&#125;</span><br><span class="line">#r = requests.post(url,data=post)</span><br><span class="line">r = s.post(url,data=post)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure></p>
 <h1 id="天网管理系统"><a href="#天网管理系统" class="headerlink" title="天网管理系统"></a>天网管理系统</h1><p>这是一道关于序列化与反序列化漏洞的题目。<br><img src="https://i.imgur.com/atharFb.png" alt=""><br>打开题目，点击登入系统发现页面没有发生变化，查看页面源代码，可以看到一段被注释掉的信息<br><img src="https://i.imgur.com/3UkqqDw.png" alt=""><br>大概意思是，传入的username经过MD5加密后的值为0，这就涉及到了PHP弱类型了，在某些情况下，PHP会把类数值数据（如含有数字的字符串等）转换成数值处理，== 运算符就是其中之一。在使用 == 运算符对两个字符串进行松散比较时，PHP会把类数值的字符串转换为数值进行比较，如果参数是字符串，则返回字符串中第一个不是数字的字符之前的数字串所代表的整数值。比如: ‘3’ == ‘3ascasd’结果为true。因此只要找到一个字串加密后第一个字符为0即可，这里提供几个：240610708，aabg7XSs，aabC9RqS<br><img src="https://i.imgur.com/dcdG5RD.png" alt=""><br>又给出了新的地址/user.php?fame=hjkleffifer<br>访问发现了一段代码<br><img src="https://i.imgur.com/ecXoFyA.png" alt=""><br>这次要修改的东西是password，代码的意思是把post提交的password值经过反序列化得到一个数组，要求数组里的user和pass都等于‘？？？’的时候打印出flag。但是怎么让这个条件符合呢？后面有一个提示：成也布尔，败也布尔，bool类型的true跟任意字符串可以弱类型相等，因此可以构造bool类型的序列化数据，无论比较的值是什么，结果都为true<br>因此，可以写一个简单的序列化的代码<br><img src="https://i.imgur.com/OM1uLQC.png" alt=""><br>运行输出结果就可以作为password上传了<br>这道题目考验了审计代码的能力，要先能够看得懂代码是什么意思，然后再找其中的漏洞</p>
+<h1 id="NSCTF-web200"><a href="#NSCTF-web200" class="headerlink" title="NSCTF web200"></a>NSCTF web200</h1><p>这道题纯考察了看代码的能力，里面有几个php的函数<br><img src="https://i.imgur.com/LCPBwSD.png" alt=""><br>通过tips可以看出来这道题需要写一个解密的代码，下面分析一下代码里的几个函数<br><strong>strrev():</strong>这是php的字符串逆置函数，把字符串逆序。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strrev(hello)==&gt;输出 olleh</span><br></pre></td></tr></table></figure></p>
+<p><strong>substr():</strong>这是php的截取字符串的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">substr(string,start,length) </span><br><span class="line">string和start是必须的参数，start表示从指定位数开始向后取</span><br><span class="line">substr(&quot;hello world&quot;,6)==&gt;输出 world</span><br><span class="line">substr(&quot;hello world&quot;,1,8)==&gt;输出 ello wor</span><br></pre></td></tr></table></figure></p>
+<p><strong>chr():</strong>返回字符的Acsii码<br><strong>ord():</strong>输入整型数，返回字符<br><strong>“.”</strong>在php中表示连接符，将两个字符串进行连接</p>
+<p>题目是让我们decode，那就把题目中的操作逆序操作一下就好了<br>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$code = &quot;a1zLbgQsCESEIqRLwuQAyMwLyq2L5VwBxqGA3RQAyumZ0tmMvSGM2ZwB4tws&quot;;</span><br><span class="line">$code = str_rot13($code);</span><br><span class="line">$code = strrev($code);</span><br><span class="line">$code = base64_decode($code);</span><br><span class="line">$flag = &quot;&quot;;</span><br><span class="line">for($x=0;$x&lt;strlen($code);$x++)</span><br><span class="line">&#123;</span><br><span class="line">	$t = substr($code, $x,1);</span><br><span class="line">	$t1 = ord($t) - 1;</span><br><span class="line">	$t = chr($t1);</span><br><span class="line">	$flag = $flag.$t;</span><br><span class="line">&#125;</span><br><span class="line">$flag = strrev($flag);</span><br><span class="line">echo $flag;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>运行即可以输出flag。</p>
 
       
     </div>
@@ -637,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后台登陆"><span class="nav-number">1.</span> <span class="nav-text">后台登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#因缺思汀的绕过"><span class="nav-number">2.</span> <span class="nav-text">因缺思汀的绕过</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#天下武功唯快不破"><span class="nav-number">3.</span> <span class="nav-text">天下武功唯快不破</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#速度要快"><span class="nav-number">4.</span> <span class="nav-text">速度要快</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#天网管理系统"><span class="nav-number">5.</span> <span class="nav-text">天网管理系统</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后台登陆"><span class="nav-number">1.</span> <span class="nav-text">后台登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#因缺思汀的绕过"><span class="nav-number">2.</span> <span class="nav-text">因缺思汀的绕过</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#天下武功唯快不破"><span class="nav-number">3.</span> <span class="nav-text">天下武功唯快不破</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#速度要快"><span class="nav-number">4.</span> <span class="nav-text">速度要快</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#天网管理系统"><span class="nav-number">5.</span> <span class="nav-text">天网管理系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NSCTF-web200"><span class="nav-number">6.</span> <span class="nav-text">NSCTF web200</span></a></li></ol></div>
             
 
           </div>
@@ -686,7 +692,7 @@
 
 <div class="theme-info">
     <div class="powered-by"></div>
-    <span class="post-count">博客全站共7.8k字</span>
+    <span class="post-count">博客全站共8.1k字</span>
 </div>
 
 
