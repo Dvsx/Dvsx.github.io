@@ -90,7 +90,7 @@
 
 <meta name="description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SSTI模板注入（攻防世界）">
+<meta property="og:title" content="攻防世界writeup">
 <meta property="og:url" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/index.html">
 <meta property="og:site_name" content="A piece of cake">
 <meta property="og:description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
@@ -100,9 +100,12 @@
 <meta property="og:image" content="https://i.imgur.com/qJ9wiVu.png">
 <meta property="og:image" content="https://i.imgur.com/ZV3pIJv.png">
 <meta property="og:image" content="https://i.imgur.com/S0ucANZ.png">
-<meta property="og:updated_time" content="2019-04-09T08:31:39.502Z">
+<meta property="og:image" content="https://i.imgur.com/cgLAz6d.png">
+<meta property="og:image" content="https://i.imgur.com/O9WwUd2.png">
+<meta property="og:image" content="https://i.imgur.com/wAmFQSX.png">
+<meta property="og:updated_time" content="2019-04-15T08:08:14.915Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SSTI模板注入（攻防世界）">
+<meta name="twitter:title" content="攻防世界writeup">
 <meta name="twitter:description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
 <meta name="twitter:image" content="https://i.imgur.com/dXXJ6bz.png">
 
@@ -140,7 +143,7 @@
 
 
 
-  <title>SSTI模板注入（攻防世界） | A piece of cake</title>
+  <title>攻防世界writeup | A piece of cake</title>
   
 
 
@@ -296,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SSTI模板注入（攻防世界）</h1>
+          <h1 class="post-title" itemprop="name headline">攻防世界writeup</h1>
         
 
         <div class="post-meta">
@@ -326,7 +329,7 @@
 
           
           
-             <span id="/2019/04/09/SSTI模板注入（攻防世界）/" class="leancloud_visitors" data-flag-title="SSTI模板注入（攻防世界）">
+             <span id="/2019/04/09/SSTI模板注入（攻防世界）/" class="leancloud_visitors" data-flag-title="攻防世界writeup">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -352,7 +355,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  404
+                  577
                 </span>
               
 
@@ -368,7 +371,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  2
                 </span>
               
             </div>
@@ -393,6 +396,7 @@
 <h2 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h2><p>打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）<br><img src="https://i.imgur.com/dXXJ6bz.png" alt=""><br>但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没有发现什么有用的东西<br><img src="https://i.imgur.com/L9hCyTo.png" alt=""><br>偶然间查看页面源代码，发现了端倪<br><img src="https://i.imgur.com/qJ9wiVu.png" alt=""><br>这个404界面暗藏玄机啊！但还是不知道怎么做这道题</p>
 <h2 id="查阅资料"><a href="#查阅资料" class="headerlink" title="查阅资料"></a>查阅资料</h2><p>其实就是查看wp…发现这道题目考察的是SSTI，好像发现了新大陆诶，然后一脸懵逼地查资料。<br>首先知道了这种题型的漏洞表现在哪，就是把我们的输入当作代码执行。<br><img src="https://i.imgur.com/ZV3pIJv.png" alt=""><br>还可以导出所有的config变量，有些config变量可以暴露出重要的信息<br><img src="https://i.imgur.com/S0ucANZ.png" alt=""></p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>既然能够执行代码，就能够做很多事情，这里用到了沙箱逃逸（<a href="http://shaobaobaoer.cn/archives/656/python-sandbox-escape）" target="_blank" rel="noopener">http://shaobaobaoer.cn/archives/656/python-sandbox-escape）</a><br>沙箱逃逸,就是在给我们的一个代码执行环境下(Oj或使用socat生成的交互式终端),脱离种种过滤和限制,最终成功拿到shell权限的过程。其实就是闯过重重黑名单，最终拿到系统命令执行权限的过程。<br>这道题目过滤了一些关键字，用request.args绕过，所以构造payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&apos;&apos;[request.args.a][request.args.b][2][request.args.c]()[40](&apos;/opt/flag_1de36dff62a3a54ecfbc6e1fd2ef0ad1.txt&apos;)[request.args.d]()&#125;&#125;?a=__class__&amp;b=__mro__&amp;c=__subclasses__&amp;d=read</span><br></pre></td></tr></table></figure></p>
+<h1 id="PHP2"><a href="#PHP2" class="headerlink" title="PHP2"></a>PHP2</h1><p>代码审计题目，题目刚进去是没有什么有用的信息，主要代码在/index.phps里面<br><img src="https://i.imgur.com/cgLAz6d.png" alt=""><br>第一个条件是传入的id不能是admin，两者之间是用“===”连接的，意思是不能利用php弱类型的方法传入admin，第二个条件是传入的id参数经url解码后的值不能为admin，那么解决方法就是将admin经过两次url加密，那用传入的参数经过浏览器的自动解码，结果是经过一次url加密的admin的值。<br>站长之家的不能编码，只能解码，所以用编码转换精灵来将admin编码两次然后传入就能得到flag了<br><img src="https://i.imgur.com/O9WwUd2.png" alt=""><br><img src="https://i.imgur.com/wAmFQSX.png" alt=""></p>
 
       
     </div>
@@ -611,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#攻防世界-confusion1"><span class="nav-number">1.</span> <span class="nav-text">攻防世界 confusion1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目介绍"><span class="nav-number">1.1.</span> <span class="nav-text">题目介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查阅资料"><span class="nav-number">1.2.</span> <span class="nav-text">查阅资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">1.3.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#攻防世界-confusion1"><span class="nav-number">1.</span> <span class="nav-text">攻防世界 confusion1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目介绍"><span class="nav-number">1.1.</span> <span class="nav-text">题目介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查阅资料"><span class="nav-number">1.2.</span> <span class="nav-text">查阅资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">1.3.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP2"><span class="nav-number">2.</span> <span class="nav-text">PHP2</span></a></li></ol></div>
             
 
           </div>
@@ -660,7 +664,7 @@
 
 <div class="theme-info">
     <div class="powered-by"></div>
-    <span class="post-count">博客全站共8.1k字</span>
+    <span class="post-count">博客全站共8.3k字</span>
 </div>
 
 
