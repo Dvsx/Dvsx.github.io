@@ -108,8 +108,11 @@
 <meta property="og:image" content="https://i.imgur.com/LfnMIz2.png">
 <meta property="og:image" content="https://i.imgur.com/XWFi88D.png">
 <meta property="og:image" content="https://i.imgur.com/oBCJriJ.png">
-<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/14.png">
-<meta property="og:updated_time" content="2019-04-19T01:52:17.191Z">
+<meta property="og:image" content="https://i.imgur.com/2eZPU1l.png">
+<meta property="og:image" content="https://i.imgur.com/dIHt7pu.png">
+<meta property="og:image" content="https://i.imgur.com/CcKxm7A.png">
+<meta property="og:image" content="https://i.imgur.com/aASMAYd.png">
+<meta property="og:updated_time" content="2019-04-19T02:28:52.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界writeup">
 <meta name="twitter:description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
@@ -361,7 +364,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1k
+                  1.3k
                 </span>
               
 
@@ -412,7 +415,8 @@
 <p>post类型的注入会有问题，默认y就可以<br><img src="https://i.imgur.com/XWFi88D.png" alt=""><br><strong>爆表名：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms -D news --tables</span><br></pre></td></tr></table></figure></p>
 <p><strong>爆字段：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms -D news -T secret_table --dump</span><br></pre></td></tr></table></figure></p>
 <p>最后得到flag<br><img src="https://i.imgur.com/oBCJriJ.png" alt=""></p>
-<h1 id="unserialize3"><a href="#unserialize3" class="headerlink" title="unserialize3"></a>unserialize3</h1><p>本题目考察的是php反序列化<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/14.png" alt=""></p>
+<h1 id="unserialize3"><a href="#unserialize3" class="headerlink" title="unserialize3"></a>unserialize3</h1><p>本题目考察的是php反序列化和<strong>__weakup()</strong>函数的绕过<br><img src="https://i.imgur.com/2eZPU1l.png" alt=""><br>和php序列化反序列化相联系的肯定就是魔术函数了，<strong>__weakup()</strong>函数是在反序列化的时候需要检查的函数，如果存在就跳过其他函数，直接执行<strong>__weakup()</strong>函数的内容。这道题目就是这样的，执行exit(‘bad requests’),而不执行echo flag.所以我们需要做的就是绕过<strong>__weakup()</strong>函数。<br><strong>绕过__weakup()函数的方法</strong><br>先来看一下字符串序列化后的结果<br><img src="https://i.imgur.com/dIHt7pu.png" alt=""><br><img src="https://i.imgur.com/CcKxm7A.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">O:代表object（类），还有一种是A，代表数组</span><br><span class="line">4:代表对象名字占4个字符</span><br><span class="line">xctf：对象名</span><br><span class="line">1:对象有一个变量</span><br><span class="line">s:数据类型，s代表string，i代表int</span><br></pre></td></tr></table></figure></p>
+<p>知道了这些，就可以绕过魔术函数了，方法就是让序列化的结果出错，就像例子中的，我们的类中本来就只有一个$flag变量，如果我们把变量名输入为2，就可以成功绕过了。<br>构造payload如下：<br><img src="https://i.imgur.com/aASMAYd.png" alt=""><br>就可以成功得到flag了</p>
 
       
     </div>
@@ -680,7 +684,7 @@
 
 <div class="theme-info">
     <div class="powered-by"></div>
-    <span class="post-count">博客全站共8.7k字</span>
+    <span class="post-count">博客全站共9k字</span>
 </div>
 
 
