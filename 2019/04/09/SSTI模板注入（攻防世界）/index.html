@@ -95,28 +95,28 @@
 <meta property="og:site_name" content="A piece of cake">
 <meta property="og:description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/dXXJ6bz.png">
-<meta property="og:image" content="https://i.imgur.com/L9hCyTo.png">
-<meta property="og:image" content="https://i.imgur.com/qJ9wiVu.png">
-<meta property="og:image" content="https://i.imgur.com/ZV3pIJv.png">
-<meta property="og:image" content="https://i.imgur.com/S0ucANZ.png">
-<meta property="og:image" content="https://i.imgur.com/cgLAz6d.png">
-<meta property="og:image" content="https://i.imgur.com/O9WwUd2.png">
-<meta property="og:image" content="https://i.imgur.com/wAmFQSX.png">
-<meta property="og:image" content="https://i.imgur.com/AeCW3Fz.png">
-<meta property="og:image" content="https://i.imgur.com/Daxi4pD.png">
-<meta property="og:image" content="https://i.imgur.com/LfnMIz2.png">
-<meta property="og:image" content="https://i.imgur.com/XWFi88D.png">
-<meta property="og:image" content="https://i.imgur.com/oBCJriJ.png">
-<meta property="og:image" content="https://i.imgur.com/2eZPU1l.png">
-<meta property="og:image" content="https://i.imgur.com/dIHt7pu.png">
-<meta property="og:image" content="https://i.imgur.com/CcKxm7A.png">
-<meta property="og:image" content="https://i.imgur.com/aASMAYd.png">
-<meta property="og:updated_time" content="2019-04-19T02:28:52.283Z">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/1.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/2.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/3.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/4.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/5.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/6.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/7.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/8.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/9.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/10.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/11.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/12.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/13.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/14.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/15.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/16.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/17.PNG">
+<meta property="og:updated_time" content="2019-04-23T00:45:19.062Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界writeup">
 <meta name="twitter:description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波">
-<meta name="twitter:image" content="https://i.imgur.com/dXXJ6bz.png">
+<meta name="twitter:image" content="http://dvsx.github.io/2019/04/09/SSTI模板注入（攻防世界）/1.PNG">
 
 
 
@@ -402,21 +402,21 @@
 
       
         <h1 id="攻防世界-confusion1"><a href="#攻防世界-confusion1" class="headerlink" title="攻防世界 confusion1"></a>攻防世界 confusion1</h1><p>第一次接触这样的漏洞，认真学习了一波<br><a id="more"></a></p>
-<h2 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h2><p>打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）<br><img src="https://i.imgur.com/dXXJ6bz.png" alt=""><br>但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没有发现什么有用的东西<br><img src="https://i.imgur.com/L9hCyTo.png" alt=""><br>偶然间查看页面源代码，发现了端倪<br><img src="https://i.imgur.com/qJ9wiVu.png" alt=""><br>这个404界面暗藏玄机啊！但还是不知道怎么做这道题</p>
-<h2 id="查阅资料"><a href="#查阅资料" class="headerlink" title="查阅资料"></a>查阅资料</h2><p>其实就是查看wp…发现这道题目考察的是SSTI，好像发现了新大陆诶，然后一脸懵逼地查资料。<br>首先知道了这种题型的漏洞表现在哪，就是把我们的输入当作代码执行。<br><img src="https://i.imgur.com/ZV3pIJv.png" alt=""><br>还可以导出所有的config变量，有些config变量可以暴露出重要的信息<br><img src="https://i.imgur.com/S0ucANZ.png" alt=""></p>
+<h2 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h2><p>打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/1.PNG" alt=""><br>但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没有发现什么有用的东西<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/2.PNG" alt=""><br>偶然间查看页面源代码，发现了端倪<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/3.PNG" alt=""><br>这个404界面暗藏玄机啊！但还是不知道怎么做这道题</p>
+<h2 id="查阅资料"><a href="#查阅资料" class="headerlink" title="查阅资料"></a>查阅资料</h2><p>其实就是查看wp…发现这道题目考察的是SSTI，好像发现了新大陆诶，然后一脸懵逼地查资料。<br>首先知道了这种题型的漏洞表现在哪，就是把我们的输入当作代码执行。<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/4.PNG" alt=""><br>还可以导出所有的config变量，有些config变量可以暴露出重要的信息<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/5.PNG" alt=""></p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>既然能够执行代码，就能够做很多事情，这里用到了沙箱逃逸（<a href="http://shaobaobaoer.cn/archives/656/python-sandbox-escape）" target="_blank" rel="noopener">http://shaobaobaoer.cn/archives/656/python-sandbox-escape）</a><br>沙箱逃逸,就是在给我们的一个代码执行环境下(Oj或使用socat生成的交互式终端),脱离种种过滤和限制,最终成功拿到shell权限的过程。其实就是闯过重重黑名单，最终拿到系统命令执行权限的过程。<br>这道题目过滤了一些关键字，用request.args绕过，所以构造payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&apos;&apos;[request.args.a][request.args.b][2][request.args.c]()[40](&apos;/opt/flag_1de36dff62a3a54ecfbc6e1fd2ef0ad1.txt&apos;)[request.args.d]()&#125;&#125;?a=__class__&amp;b=__mro__&amp;c=__subclasses__&amp;d=read</span><br></pre></td></tr></table></figure></p>
-<h1 id="PHP2"><a href="#PHP2" class="headerlink" title="PHP2"></a>PHP2</h1><p>代码审计题目，题目刚进去是没有什么有用的信息，主要代码在/index.phps里面<br><img src="https://i.imgur.com/cgLAz6d.png" alt=""><br>第一个条件是传入的id不能是admin，两者之间是用“===”连接的，意思是不能利用php弱类型的方法传入admin，第二个条件是传入的id参数经url解码后的值不能为admin，那么解决方法就是将admin经过两次url加密，那用传入的参数经过浏览器的自动解码，结果是经过一次url加密的admin的值。<br>站长之家的不能编码，只能解码，所以用编码转换精灵来将admin编码两次然后传入就能得到flag了<br><img src="https://i.imgur.com/O9WwUd2.png" alt=""><br><img src="https://i.imgur.com/wAmFQSX.png" alt=""></p>
-<h1 id="NewsCenter"><a href="#NewsCenter" class="headerlink" title="NewsCenter"></a>NewsCenter</h1><p>题目难度：一颗星<br>题目来源： XCTF 4th-QCTF-2018<br>考察内容：post类型注入<br>使用工具：sqlmap<br><img src="https://i.imgur.com/AeCW3Fz.png" alt=""><br>因为之前遇到过这种类型的题目，所以一进去就知道是sql注入<br><img src="https://i.imgur.com/Daxi4pD.png" alt=""><br>因为对手工注入不太熟悉，所以干脆放弃手工直接用sqlmap（这是硬伤，有好多注入的题型用sqlmap是扫不出来的），这用sqlmap也不是好用的，因为之前只知道get类型的注入语句，所以就用get的方法尝试注入，但是一直报错，一度让我怀疑这道题考的是不是注入。后来看了wp才知道，原来是TMD POST类型的注入<br><img src="https://i.imgur.com/LfnMIz2.png" alt="这是报错的情况"><br>POST类型的注入和GET类型的诸如类似，只是多了一个参数，下面先来复习一下GET类型的注入吧(以当前题目的url为例)<br><strong>查看能不能注入：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot;</span><br></pre></td></tr></table></figure></p>
+<h1 id="PHP2"><a href="#PHP2" class="headerlink" title="PHP2"></a>PHP2</h1><p>代码审计题目，题目刚进去是没有什么有用的信息，主要代码在/index.phps里面<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/6.PNG" alt=""><br>第一个条件是传入的id不能是admin，两者之间是用“===”连接的，意思是不能利用php弱类型的方法传入admin，第二个条件是传入的id参数经url解码后的值不能为admin，那么解决方法就是将admin经过两次url加密，那用传入的参数经过浏览器的自动解码，结果是经过一次url加密的admin的值。<br>站长之家的不能编码，只能解码，所以用编码转换精灵来将admin编码两次然后传入就能得到flag了<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/7.PNG" alt=""><br><img src="/2019/04/09/SSTI模板注入（攻防世界）/8.PNG" alt=""></p>
+<h1 id="NewsCenter"><a href="#NewsCenter" class="headerlink" title="NewsCenter"></a>NewsCenter</h1><p>题目难度：一颗星<br>题目来源： XCTF 4th-QCTF-2018<br>考察内容：post类型注入<br>使用工具：sqlmap<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/9.PNG" alt=""><br>因为之前遇到过这种类型的题目，所以一进去就知道是sql注入<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/10.PNG" alt=""><br>因为对手工注入不太熟悉，所以干脆放弃手工直接用sqlmap（这是硬伤，有好多注入的题型用sqlmap是扫不出来的），这用sqlmap也不是好用的，因为之前只知道get类型的注入语句，所以就用get的方法尝试注入，但是一直报错，一度让我怀疑这道题考的是不是注入。后来看了wp才知道，原来是TMD POST类型的注入<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/11.PNG" alt="这是报错的情况"><br>POST类型的注入和GET类型的诸如类似，只是多了一个参数，下面先来复习一下GET类型的注入吧(以当前题目的url为例)<br><strong>查看能不能注入：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot;</span><br></pre></td></tr></table></figure></p>
 <p><strong>爆数据库：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; --dbs</span><br></pre></td></tr></table></figure></p>
 <p><strong>爆表名：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; -D 数据库名 --tables</span><br></pre></td></tr></table></figure></p>
 <p><strong>爆列名：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; -D 数据库名 -T 表名 --cloumns</span><br></pre></td></tr></table></figure></p>
 <p><strong>爆字段：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; -D 数据库名 -T 表名 -C &quot;字段&quot; --dump</span><br></pre></td></tr></table></figure></p>
 <p>接下来看看post类型的注入<br><strong>爆数据库：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms --dbs</span><br></pre></td></tr></table></figure></p>
-<p>post类型的注入会有问题，默认y就可以<br><img src="https://i.imgur.com/XWFi88D.png" alt=""><br><strong>爆表名：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms -D news --tables</span><br></pre></td></tr></table></figure></p>
+<p>post类型的注入会有问题，默认y就可以<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/12.PNG" alt=""><br><strong>爆表名：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms -D news --tables</span><br></pre></td></tr></table></figure></p>
 <p><strong>爆字段：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms -D news -T secret_table --dump</span><br></pre></td></tr></table></figure></p>
-<p>最后得到flag<br><img src="https://i.imgur.com/oBCJriJ.png" alt=""></p>
-<h1 id="unserialize3"><a href="#unserialize3" class="headerlink" title="unserialize3"></a>unserialize3</h1><p>本题目考察的是php反序列化和<strong>__weakup()</strong>函数的绕过<br><img src="https://i.imgur.com/2eZPU1l.png" alt=""><br>和php序列化反序列化相联系的肯定就是魔术函数了，<strong>__weakup()</strong>函数是在反序列化的时候需要检查的函数，如果存在就跳过其他函数，直接执行<strong>__weakup()</strong>函数的内容。这道题目就是这样的，执行exit(‘bad requests’),而不执行echo flag.所以我们需要做的就是绕过<strong>__weakup()</strong>函数。<br><strong>绕过__weakup()函数的方法</strong><br>先来看一下字符串序列化后的结果<br><img src="https://i.imgur.com/dIHt7pu.png" alt=""><br><img src="https://i.imgur.com/CcKxm7A.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">O:代表object（类），还有一种是A，代表数组</span><br><span class="line">4:代表对象名字占4个字符</span><br><span class="line">xctf：对象名</span><br><span class="line">1:对象有一个变量</span><br><span class="line">s:数据类型，s代表string，i代表int</span><br></pre></td></tr></table></figure></p>
-<p>知道了这些，就可以绕过魔术函数了，方法就是让序列化的结果出错，就像例子中的，我们的类中本来就只有一个$flag变量，如果我们把变量名输入为2，就可以成功绕过了。<br>构造payload如下：<br><img src="https://i.imgur.com/aASMAYd.png" alt=""><br>就可以成功得到flag了</p>
+<p>最后得到flag<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/13.PNG" alt=""></p>
+<h1 id="unserialize3"><a href="#unserialize3" class="headerlink" title="unserialize3"></a>unserialize3</h1><p>本题目考察的是php反序列化和<strong>__weakup()</strong>函数的绕过<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/14.PNG" alt=""><br>和php序列化反序列化相联系的肯定就是魔术函数了，<strong>__weakup()</strong>函数是在反序列化的时候需要检查的函数，如果存在就跳过其他函数，直接执行<strong>__weakup()</strong>函数的内容。这道题目就是这样的，执行exit(‘bad requests’),而不执行echo flag.所以我们需要做的就是绕过<strong>__weakup()</strong>函数。<br><strong>绕过__weakup()函数的方法</strong><br>先来看一下字符串序列化后的结果<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/15.PNG" alt=""><br><img src="/2019/04/09/SSTI模板注入（攻防世界）/16.PNG" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">O:代表object（类），还有一种是A，代表数组</span><br><span class="line">4:代表对象名字占4个字符</span><br><span class="line">xctf：对象名</span><br><span class="line">1:对象有一个变量</span><br><span class="line">s:数据类型，s代表string，i代表int</span><br></pre></td></tr></table></figure></p>
+<p>知道了这些，就可以绕过魔术函数了，方法就是让序列化的结果出错，就像例子中的，我们的类中本来就只有一个$flag变量，如果我们把变量名输入为2，就可以成功绕过了。<br>构造payload如下：<br><img src="/2019/04/09/SSTI模板注入（攻防世界）/17.PNG" alt=""><br>就可以成功得到flag了</p>
 
       
     </div>

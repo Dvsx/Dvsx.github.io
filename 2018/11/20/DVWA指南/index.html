@@ -96,16 +96,16 @@
 <meta property="og:site_name" content="A piece of cake">
 <meta property="og:description" content="Brute Force1.LOW级别源代码">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/do8LglE.png">
-<meta property="og:image" content="https://i.imgur.com/LnVjCX0.png">
-<meta property="og:image" content="https://i.imgur.com/3EFVyRE.png">
-<meta property="og:image" content="https://i.imgur.com/yHrJWGr.png">
-<meta property="og:image" content="https://i.imgur.com/gGHLsIS.png">
-<meta property="og:updated_time" content="2018-12-09T05:34:30.719Z">
+<meta property="og:image" content="http://dvsx.github.io/2018/11/20/DVWA指南/1.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2018/11/20/DVWA指南/2.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2018/11/20/DVWA指南/3.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2018/11/20/DVWA指南/4.PNG">
+<meta property="og:image" content="http://dvsx.github.io/2018/11/20/DVWA指南/5.PNG">
+<meta property="og:updated_time" content="2019-04-23T00:31:13.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DVWA指南">
 <meta name="twitter:description" content="Brute Force1.LOW级别源代码">
-<meta name="twitter:image" content="https://i.imgur.com/do8LglE.png">
+<meta name="twitter:image" content="http://dvsx.github.io/2018/11/20/DVWA指南/1.PNG">
 
 
 
@@ -390,7 +390,7 @@
       
 
       
-        <h1 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h1><h2 id="1-LOW级别"><a href="#1-LOW级别" class="headerlink" title="1.LOW级别"></a>1.LOW级别</h2><p><img src="https://i.imgur.com/do8LglE.png" alt=""><br>源代码<br><a id="more"></a></p>
+        <h1 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h1><h2 id="1-LOW级别"><a href="#1-LOW级别" class="headerlink" title="1.LOW级别"></a>1.LOW级别</h2><p><img src="/2018/11/20/DVWA指南/1.PNG" alt=""><br>源代码<br><a id="more"></a></p>
 <pre><code>&lt;?php
 
 if( isset( $_GET[ &apos;Login&apos; ] ) ) {
@@ -447,9 +447,9 @@ else {
 <p>$GLOBALS[“_mysql_ston”]这是一个自定义的全局变量，可以不用在意。（ps：MysqlConverter假定此全局变量设置为数据库连接对象，如果转换器找到一个mysql——connect，它将代码转换成为包含$GLOBALS[“__mysqli_ston”]的赋值给mysql_connect函数的结果）</p>
 <p><strong>is_object()函数：</strong>用于检测变量是否是一个对象，是返回TRUE，否返回FALSE<br><strong>mysql_error()函数：</strong>返回最近调用函数的最后一个错误描述<br><strong>mysql_fetch_assoc()函数：</strong>从结果集中取得一行作为关联数组。返回根据根据从结果集中取得的行生成的关联数组，如果没有更多行，则返回false<br><strong>mysqli_num_rows() 函数</strong>返回结果集中行的数量。</p>
 <p>好了，源码分析完了，就很好理解了，对于没有做任何过滤的题目，我们可以通过如下的两种方法来解决。</p>
-<h3 id="（1）抓包爆破"><a href="#（1）抓包爆破" class="headerlink" title="（1）抓包爆破"></a>（1）抓包爆破</h3><p>说到爆破，就要先了解burp爆破的几个模块<br><img src="https://i.imgur.com/LnVjCX0.png" alt=""><br>Sniper：单参数爆破，当有多个参数时同一个字典按顺序替换各参数，总之初始值有一个不变<br>Battering ram：多参数同时爆破，但用的是同一个字典<br>Pichfork：多参数同时爆破，但用的是不同的字典<br>Cluster bamb：多参数做笛卡尔乘积模式爆破</p>
-<p>由于DVWA给的爆破太过于弱智，账号和密码就是admin和password，象征性的爆破一下<br><img src="https://i.imgur.com/3EFVyRE.png" alt=""><br>要注意箭头位置的参数是2，因为有两个payload需要爆破<br>结果如下<br><img src="https://i.imgur.com/yHrJWGr.png" alt=""></p>
-<h3 id="（2）sql注入"><a href="#（2）sql注入" class="headerlink" title="（2）sql注入"></a>（2）sql注入</h3><p>以前也做过这样的sql注入题，因为我们提交的数据需要后端执行sql语句来查询是否有这样的用户和密码是否正确，简单的是<br><code>select * from tablename where username=&#39;...&#39; and password=&#39;...&#39;</code><br>我们利用单引号闭合的方法去制造万能密码来绕过，如下所示<br><code>admin&#39; or &#39;1&#39;=&#39;1#</code><br><img src="https://i.imgur.com/gGHLsIS.png" alt=""></p>
+<h3 id="（1）抓包爆破"><a href="#（1）抓包爆破" class="headerlink" title="（1）抓包爆破"></a>（1）抓包爆破</h3><p>说到爆破，就要先了解burp爆破的几个模块<br><img src="/2018/11/20/DVWA指南/2.PNG" alt=""><br>Sniper：单参数爆破，当有多个参数时同一个字典按顺序替换各参数，总之初始值有一个不变<br>Battering ram：多参数同时爆破，但用的是同一个字典<br>Pichfork：多参数同时爆破，但用的是不同的字典<br>Cluster bamb：多参数做笛卡尔乘积模式爆破</p>
+<p>由于DVWA给的爆破太过于弱智，账号和密码就是admin和password，象征性的爆破一下<br><img src="/2018/11/20/DVWA指南/3.PNG" alt=""><br>要注意箭头位置的参数是2，因为有两个payload需要爆破<br>结果如下<br><img src="/2018/11/20/DVWA指南/4.PNG" alt=""></p>
+<h3 id="（2）sql注入"><a href="#（2）sql注入" class="headerlink" title="（2）sql注入"></a>（2）sql注入</h3><p>以前也做过这样的sql注入题，因为我们提交的数据需要后端执行sql语句来查询是否有这样的用户和密码是否正确，简单的是<br><code>select * from tablename where username=&#39;...&#39; and password=&#39;...&#39;</code><br>我们利用单引号闭合的方法去制造万能密码来绕过，如下所示<br><code>admin&#39; or &#39;1&#39;=&#39;1#</code><br><img src="/2018/11/20/DVWA指南/5.PNG" alt=""></p>
 
       
     </div>
