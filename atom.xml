@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>god_13</title>
   
-  
+  <subtitle>Harden</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
@@ -10,7 +10,7 @@
   <id>http://dvsx.github.io/</id>
   
   <author>
-    <name>dc</name>
+    <name>xiao</name>
     
   </author>
   
