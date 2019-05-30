@@ -8,9 +8,9 @@
     <meta name="description" content="Brute Force1.LOW级别源代码
 &amp;lt;?php
 
-if( isset( $_GET[ &amp;apos;Login&amp;apos; ] ) ) {
+if( isset( $_GET[ &amp;#39;Login&amp;#39; ] ) ) {
 // Get username
-$user = $_GET[ &amp;apos;usernam">
+$user = $_GET[ &amp;#39;username&amp;#">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -33,7 +33,7 @@ $user = $_GET[ &amp;apos;usernam">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -413,17 +413,17 @@ $user = $_GET[ &amp;apos;usernam">
                 <h1 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h1><h2 id="1-LOW级别"><a href="#1-LOW级别" class="headerlink" title="1.LOW级别"></a>1.LOW级别</h2><p><img src="/2018/11/20/DVWA指南/1.PNG" alt=""><br>源代码<br><a id="more"></a></p>
 <pre><code>&lt;?php
 
-if( isset( $_GET[ &apos;Login&apos; ] ) ) {
+if( isset( $_GET[ &#39;Login&#39; ] ) ) {
 // Get username
-$user = $_GET[ &apos;username&apos; ];
+$user = $_GET[ &#39;username&#39; ];
 
 // Get password
-$pass = $_GET[ &apos;password&apos; ];
+$pass = $_GET[ &#39;password&#39; ];
 $pass = md5( $pass );
 
 // Check the database
-$query  = &quot;SELECT * FROM `users` WHERE user = &apos;$user&apos; AND password = &apos;$pass&apos;;&quot;;//查询数据库
-$result = mysqli_query($GLOBALS[&quot;___mysqli_ston&quot;],  $query ) or die( &apos;&lt;pre&gt;&apos; . ((is_object($GLOBALS[&quot;___mysqli_ston&quot;])) ? mysqli_error($GLOBALS[&quot;___mysqli_ston&quot;]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . &apos;&lt;/pre&gt;&apos; );
+$query  = &quot;SELECT * FROM `users` WHERE user = &#39;$user&#39; AND password = &#39;$pass&#39;;&quot;;//查询数据库
+$result = mysqli_query($GLOBALS[&quot;___mysqli_ston&quot;],  $query ) or die( &#39;&lt;pre&gt;&#39; . ((is_object($GLOBALS[&quot;___mysqli_ston&quot;])) ? mysqli_error($GLOBALS[&quot;___mysqli_ston&quot;]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . &#39;&lt;/pre&gt;&#39; );
 
 if( $result &amp;&amp; mysqli_num_rows( $result ) == 1 ) {
     // Get users details

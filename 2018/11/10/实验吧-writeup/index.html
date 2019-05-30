@@ -29,7 +29,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -409,15 +409,58 @@
                 <h1 id="后台登陆"><a href="#后台登陆" class="headerlink" title="后台登陆"></a>后台登陆</h1><a id="more"></a>
 <p>进入链接<br><img src="/2018/11/10/实验吧-writeup/1.PNG" alt=""><br>查看页面源代码，发现如下所示<br><img src="/2018/11/10/实验吧-writeup/2.PNG" alt=""><br>下面这一行代码是执行上面的sql语句并将结果赋值给result<br><code>$result=mysqli_query($link,$sql);</code><br>如果result的结果大于0<br><code>if(mysqli_num_rows($result)&gt;0)</code><br>这里用到了MD5的一个md5($string,true)的漏洞<br>md5($string,raw) raw可选，默认为false<br><strong>true</strong>：返回16字符2进制格式(并不是普通的二进制0和1，而是类似<strong>‘or’6\xc9]\x99\xe9!r,\xf9\xedb\x1c</strong>的形式)<br><strong>false</strong>：返回32字符16进制格式<br>所以说，现在要找到编码过后是’or’ 6这样的字符串<br>然鹅，重点来了，答案就在URL里面哦<br><img src="/2018/11/10/实验吧-writeup/3.PNG" alt=""><br>暗藏玄机，以后碰到这样的题目，要试试URL能不能行啊！</p>
 <h1 id="因缺思汀的绕过"><a href="#因缺思汀的绕过" class="headerlink" title="因缺思汀的绕过"></a>因缺思汀的绕过</h1><p>又是让填账号和密码的题目<br><img src="/2018/11/10/实验吧-writeup/4.PNG" alt=""><br>查看源代码，发现端倪<br><img src="/2018/11/10/实验吧-writeup/5.PNG" alt=""><br>进入提示的网页，主要代码如下<br><img src="/2018/11/10/实验吧-writeup/6.jpg" alt=""><br>主要有这三部分需要注意的地方<br>（1）在第一层的filter里面就过滤了常用的SQL关键词，所以常规的SQL 注入就不行了。如果输入了filter里面的语句，网页返回“水可载舟，亦可赛艇！”<br>（2）第二点是那条查询语句，正是可以注入的地方，可用单引号闭合的方法来解题<br>（3）限制从数据库返回的数据必须是一行，在满足第一层条件的情况下可以使用 limit 的返回来确定数据库中总共有几行数据。 它的查询语句是 select * from interest where uname = ‘{$_POST[‘uname’]}’于是构造：<br><code>1&#39; or 1 limit 1 offset 0#</code><br><code>1&#39; or 1 limit 1 offset 1#</code><br><code>1&#39; or 1 limit 1 offset 2#</code><br>来判断数据库的行数<br>最重要的是if($key[‘pwd’] == $_POST[‘pwd’])这一行代码<br>这是一条if判断语句，只要返回结果为TRUE就可以接着运行下面的语句<br>这时候用到了group by with rollup来绕过，group by with rollup会在统计后的产生一条null信息，然后在pwd里不写值，if就为true了。<br>原理如下<br><img src="/2018/11/10/实验吧-writeup/7.PNG" alt=""><br>原先的表中并没有admin NULL这一行，但是使用了group by with rollup查询数据的时候就会多出NULL这一行，所以我们就可以构造语句找出值为NULL的那一行当作payload<br>payload如下<br><code>1&#39; or 1 group by with rollup limit 1 offset 2#</code><br>这里解释一下limit 1 offset 2的意思是从第二条数据开始取出一条数据。limit后面跟的是1条数据，offset后面跟的是从第二条开始读取。<br>而且，代码里的查询语句是根据uname来查找的，所以提交payload时只需要提交第一行的就可以了。</p>
-<h1 id="天下武功唯快不破"><a href="#天下武功唯快不破" class="headerlink" title="天下武功唯快不破"></a>天下武功唯快不破</h1><p>打开题目链接显示<br><img src="/2018/11/10/实验吧-writeup/8.PNG" alt=""><br>首先需要先查看网页上是否留下了什么线索，果然F12查看器找到了线索<br><img src="/2018/11/10/实验吧-writeup/9.PNG" alt="提示信息"><br>并且在“网络”（F12）里找到了FLAG<br><img src="/2018/11/10/实验吧-writeup/10.PNG" alt="GLAG"><br>很自然的就想到了base64解码，解码结果如下<br><img src="/2018/11/10/实验吧-writeup/11.PNG" alt="解码结果"><br>结合上面的提示信息，我们把解码结果post上去，发现没有任何反应<br>然后就想到了以前在bugku上面见过一道类似的题目，发现这道题需要写一个简单的脚本下面上脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import base64</span><br><span class="line">url = &quot;http://ctf5.shiyanbar.com/web/10/10.php&quot;</span><br><span class="line">r = requests.post(url)#用requests的post方法代替Session的连接</span><br><span class="line">flag = r.headers[&quot;FLAG&quot;]#获取响应头中的FLAG</span><br><span class="line">flag = base64.b64decode(flag).decode().split(&quot;:&quot;)[1]#分理出有效的信息</span><br><span class="line">post = &#123;&apos;key&apos;:flag&#125;#构造POST请求体</span><br><span class="line">r = requests.post(url,data=post)#POST方式发送数据</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure></p>
-<p>结果如下<br><img src="/2018/11/10/实验吧-writeup/12.PNG" alt=""><br>这道题主要考的是写代码的能力，还有你的思路够不够清晰，这道题没懂？不慌，还有下一题！</p>
-<h1 id="速度要快"><a href="#速度要快" class="headerlink" title="速度要快"></a>速度要快</h1><p>这道题目跟上一道题目有异曲同工之妙，主要思路是一样的，还是来看一下代码的处理(与上一题的解题方法有所不同，两种方法都可以解题)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import base64</span><br><span class="line">url = &quot;http://123.206.87.240:8002/web6/&quot;</span><br><span class="line">#r = requests.post(url)</span><br><span class="line">s = requests.Session()</span><br><span class="line">#flag = r.headers[&quot;FLAG&quot;]</span><br><span class="line">flag = s.get(url).headers[&apos;flag&apos;]</span><br><span class="line">flag = base64.b64decode(flag).decode().split()[1]#以空格为分界</span><br><span class="line">flag = base64.b64decode(flag)#再一次解码</span><br><span class="line">post = &#123;&apos;margin&apos;:flag&#125;</span><br><span class="line">#r = requests.post(url,data=post)</span><br><span class="line">r = s.post(url,data=post)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure></p>
-<h1 id="天网管理系统"><a href="#天网管理系统" class="headerlink" title="天网管理系统"></a>天网管理系统</h1><p>这是一道关于序列化与反序列化漏洞的题目。<br><img src="/2018/11/10/实验吧-writeup/13.PNG" alt=""><br>打开题目，点击登入系统发现页面没有发生变化，查看页面源代码，可以看到一段被注释掉的信息<br><img src="/2018/11/10/实验吧-writeup/14.PNG" alt=""><br>大概意思是，传入的username经过MD5加密后的值为0，这就涉及到了PHP弱类型了，在某些情况下，PHP会把类数值数据（如含有数字的字符串等）转换成数值处理，== 运算符就是其中之一。在使用 == 运算符对两个字符串进行松散比较时，PHP会把类数值的字符串转换为数值进行比较，如果参数是字符串，则返回字符串中第一个不是数字的字符之前的数字串所代表的整数值。比如: ‘3’ == ‘3ascasd’结果为true。因此只要找到一个字串加密后第一个字符为0即可，这里提供几个：240610708，aabg7XSs，aabC9RqS<br><img src="/2018/11/10/实验吧-writeup/15.PNG" alt=""><br>又给出了新的地址/user.php?fame=hjkleffifer<br>访问发现了一段代码<br><img src="/2018/11/10/实验吧-writeup/16.PNG" alt=""><br>这次要修改的东西是password，代码的意思是把post提交的password值经过反序列化得到一个数组，要求数组里的user和pass都等于‘？？？’的时候打印出flag。但是怎么让这个条件符合呢？后面有一个提示：成也布尔，败也布尔，bool类型的true跟任意字符串可以弱类型相等，因此可以构造bool类型的序列化数据，无论比较的值是什么，结果都为true<br>因此，可以写一个简单的序列化的代码<br><img src="/2018/11/10/实验吧-writeup/17.PNG" alt=""><br>运行输出结果就可以作为password上传了<br>这道题目考验了审计代码的能力，要先能够看得懂代码是什么意思，然后再找其中的漏洞</p>
-<h1 id="NSCTF-web200"><a href="#NSCTF-web200" class="headerlink" title="NSCTF web200"></a>NSCTF web200</h1><p>这道题纯考察了看代码的能力，里面有几个php的函数<br><img src="/2018/11/10/实验吧-writeup/18.PNG" alt=""><br>通过tips可以看出来这道题需要写一个解密的代码，下面分析一下代码里的几个函数<br><strong>strrev():</strong>这是php的字符串逆置函数，把字符串逆序。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strrev(hello)==&gt;输出 olleh</span><br></pre></td></tr></table></figure></p>
-<p><strong>substr():</strong>这是php的截取字符串的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">substr(string,start,length) </span><br><span class="line">string和start是必须的参数，start表示从指定位数开始向后取</span><br><span class="line">substr(&quot;hello world&quot;,6)==&gt;输出 world</span><br><span class="line">substr(&quot;hello world&quot;,1,8)==&gt;输出 ello wor</span><br></pre></td></tr></table></figure></p>
-<p><strong>chr():</strong>返回字符的Acsii码<br><strong>ord():</strong>输入整型数，返回字符<br><strong>“.”</strong>在php中表示连接符，将两个字符串进行连接</p>
-<p>题目是让我们decode，那就把题目中的操作逆序操作一下就好了<br>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$code = &quot;a1zLbgQsCESEIqRLwuQAyMwLyq2L5VwBxqGA3RQAyumZ0tmMvSGM2ZwB4tws&quot;;</span><br><span class="line">$code = str_rot13($code);</span><br><span class="line">$code = strrev($code);</span><br><span class="line">$code = base64_decode($code);</span><br><span class="line">$flag = &quot;&quot;;</span><br><span class="line">for($x=0;$x&lt;strlen($code);$x++)</span><br><span class="line">&#123;</span><br><span class="line">	$t = substr($code, $x,1);</span><br><span class="line">	$t1 = ord($t) - 1;</span><br><span class="line">	$t = chr($t1);</span><br><span class="line">	$flag = $flag.$t;</span><br><span class="line">&#125;</span><br><span class="line">$flag = strrev($flag);</span><br><span class="line">echo $flag;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
-<p>运行即可以输出flag。</p>
+<h1 id="天下武功唯快不破"><a href="#天下武功唯快不破" class="headerlink" title="天下武功唯快不破"></a>天下武功唯快不破</h1><p>打开题目链接显示<br><img src="/2018/11/10/实验吧-writeup/8.PNG" alt=""><br>首先需要先查看网页上是否留下了什么线索，果然F12查看器找到了线索<br><img src="/2018/11/10/实验吧-writeup/9.PNG" alt="提示信息"><br>并且在“网络”（F12）里找到了FLAG<br><img src="/2018/11/10/实验吧-writeup/10.PNG" alt="GLAG"><br>很自然的就想到了base64解码，解码结果如下<br><img src="/2018/11/10/实验吧-writeup/11.PNG" alt="解码结果"><br>结合上面的提示信息，我们把解码结果post上去，发现没有任何反应<br>然后就想到了以前在bugku上面见过一道类似的题目，发现这道题需要写一个简单的脚本下面上脚本</p>
+<pre><code>import requests
+import base64
+url = &quot;http://ctf5.shiyanbar.com/web/10/10.php&quot;
+r = requests.post(url)#用requests的post方法代替Session的连接
+flag = r.headers[&quot;FLAG&quot;]#获取响应头中的FLAG
+flag = base64.b64decode(flag).decode().split(&quot;:&quot;)[1]#分理出有效的信息
+post = {&#39;key&#39;:flag}#构造POST请求体
+r = requests.post(url,data=post)#POST方式发送数据
+print(r.text)
+</code></pre><p>结果如下<br><img src="/2018/11/10/实验吧-writeup/12.PNG" alt=""><br>这道题主要考的是写代码的能力，还有你的思路够不够清晰，这道题没懂？不慌，还有下一题！</p>
+<h1 id="速度要快"><a href="#速度要快" class="headerlink" title="速度要快"></a>速度要快</h1><p>这道题目跟上一道题目有异曲同工之妙，主要思路是一样的，还是来看一下代码的处理(与上一题的解题方法有所不同，两种方法都可以解题)</p>
+<pre><code>import requests
+import base64
+url = &quot;http://123.206.87.240:8002/web6/&quot;
+#r = requests.post(url)
+s = requests.Session()
+#flag = r.headers[&quot;FLAG&quot;]
+flag = s.get(url).headers[&#39;flag&#39;]
+flag = base64.b64decode(flag).decode().split()[1]#以空格为分界
+flag = base64.b64decode(flag)#再一次解码
+post = {&#39;margin&#39;:flag}
+#r = requests.post(url,data=post)
+r = s.post(url,data=post)
+print(r.text)
+</code></pre><h1 id="天网管理系统"><a href="#天网管理系统" class="headerlink" title="天网管理系统"></a>天网管理系统</h1><p>这是一道关于序列化与反序列化漏洞的题目。<br><img src="/2018/11/10/实验吧-writeup/13.PNG" alt=""><br>打开题目，点击登入系统发现页面没有发生变化，查看页面源代码，可以看到一段被注释掉的信息<br><img src="/2018/11/10/实验吧-writeup/14.PNG" alt=""><br>大概意思是，传入的username经过MD5加密后的值为0，这就涉及到了PHP弱类型了，在某些情况下，PHP会把类数值数据（如含有数字的字符串等）转换成数值处理，== 运算符就是其中之一。在使用 == 运算符对两个字符串进行松散比较时，PHP会把类数值的字符串转换为数值进行比较，如果参数是字符串，则返回字符串中第一个不是数字的字符之前的数字串所代表的整数值。比如: ‘3’ == ‘3ascasd’结果为true。因此只要找到一个字串加密后第一个字符为0即可，这里提供几个：240610708，aabg7XSs，aabC9RqS<br><img src="/2018/11/10/实验吧-writeup/15.PNG" alt=""><br>又给出了新的地址/user.php?fame=hjkleffifer<br>访问发现了一段代码<br><img src="/2018/11/10/实验吧-writeup/16.PNG" alt=""><br>这次要修改的东西是password，代码的意思是把post提交的password值经过反序列化得到一个数组，要求数组里的user和pass都等于‘？？？’的时候打印出flag。但是怎么让这个条件符合呢？后面有一个提示：成也布尔，败也布尔，bool类型的true跟任意字符串可以弱类型相等，因此可以构造bool类型的序列化数据，无论比较的值是什么，结果都为true<br>因此，可以写一个简单的序列化的代码<br><img src="/2018/11/10/实验吧-writeup/17.PNG" alt=""><br>运行输出结果就可以作为password上传了<br>这道题目考验了审计代码的能力，要先能够看得懂代码是什么意思，然后再找其中的漏洞</p>
+<h1 id="NSCTF-web200"><a href="#NSCTF-web200" class="headerlink" title="NSCTF web200"></a>NSCTF web200</h1><p>这道题纯考察了看代码的能力，里面有几个php的函数<br><img src="/2018/11/10/实验吧-writeup/18.PNG" alt=""><br>通过tips可以看出来这道题需要写一个解密的代码，下面分析一下代码里的几个函数<br><strong>strrev():</strong>这是php的字符串逆置函数，把字符串逆序。例：</p>
+<pre><code>strrev(hello)==&gt;输出 olleh
+</code></pre><p><strong>substr():</strong>这是php的截取字符串的函数</p>
+<pre><code>substr(string,start,length) 
+string和start是必须的参数，start表示从指定位数开始向后取
+substr(&quot;hello world&quot;,6)==&gt;输出 world
+substr(&quot;hello world&quot;,1,8)==&gt;输出 ello wor
+</code></pre><p><strong>chr():</strong>返回字符的Acsii码<br><strong>ord():</strong>输入整型数，返回字符<br><strong>“.”</strong>在php中表示连接符，将两个字符串进行连接</p>
+<p>题目是让我们decode，那就把题目中的操作逆序操作一下就好了<br>代码如下</p>
+<pre><code>&lt;?php
+$code = &quot;a1zLbgQsCESEIqRLwuQAyMwLyq2L5VwBxqGA3RQAyumZ0tmMvSGM2ZwB4tws&quot;;
+$code = str_rot13($code);
+$code = strrev($code);
+$code = base64_decode($code);
+$flag = &quot;&quot;;
+for($x=0;$x&lt;strlen($code);$x++)
+{
+    $t = substr($code, $x,1);
+    $t1 = ord($t) - 1;
+    $t = chr($t1);
+    $flag = $flag.$t;
+}
+$flag = strrev($flag);
+echo $flag;
+?&gt;
+</code></pre><p>运行即可以输出flag。</p>
 
             </div>
             <hr>
@@ -633,9 +676,9 @@
                             Brute Force1.LOW级别源代码
 &lt;?php
 
-if( isset( $_GET[ &apos;Login&apos; ] ) ) {
+if( isset( $_GET[ &#39;Login&#39; ] ) ) {
 // Get username
-$user = $_GET[ &apos;usernam
+$user = $_GET[ &#39;username&#
                         
                     </div>
                     <div class="publish-info">

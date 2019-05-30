@@ -10,7 +10,8 @@
 
 生成一个新结点p输入元素值赋给新结点p的数据域将新结点插入到头结点之后
 
-【算法描述】12345678910111213voi">
+【算法描述】
+void CreateList_H(L">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -33,7 +34,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -411,20 +412,91 @@
 <blockquote>
 <p>生成一个新结点p<br>输入元素值赋给新结点p的数据域<br>将新结点插入到头结点之后</p>
 </blockquote>
-<p>【算法描述】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void CreateList_H(LinkList &amp;L,int n)</span><br><span class="line">&#123;</span><br><span class="line">	L = new node;//头结点</span><br><span class="line">	L-&gt;next = NULL;//创建一个带头结点的空链表</span><br><span class="line">	for(i=0;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		p = new LNode;//生成新结点*p</span><br><span class="line">		cin&gt;&gt;p-&gt;data;//输入值赋给数据域</span><br><span class="line">		p-&gt;next = L-&gt;next;</span><br><span class="line">		L-&gt;next = p;//这两步是将新结点插入到头结点之后</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">显然，时间复杂度为O(n)</span><br></pre></td></tr></table></figure></p>
-<h2 id="后插法"><a href="#后插法" class="headerlink" title="后插法"></a>后插法</h2><p>【算法步骤】<br>（1）创建一个只有头结点的空链表<br>（2）尾指针r初始化，指向头结点<br>（3）根据创建链表包含的元素个数，循环执行以下操作</p>
+<p>【算法描述】</p>
+<pre><code>void CreateList_H(LinkList &amp;L,int n)
+{
+    L = new node;//头结点
+    L-&gt;next = NULL;//创建一个带头结点的空链表
+    for(i=0;i&lt;n;i++)
+    {
+        p = new LNode;//生成新结点*p
+        cin&gt;&gt;p-&gt;data;//输入值赋给数据域
+        p-&gt;next = L-&gt;next;
+        L-&gt;next = p;//这两步是将新结点插入到头结点之后
+    }
+}
+显然，时间复杂度为O(n)
+</code></pre><h2 id="后插法"><a href="#后插法" class="headerlink" title="后插法"></a>后插法</h2><p>【算法步骤】<br>（1）创建一个只有头结点的空链表<br>（2）尾指针r初始化，指向头结点<br>（3）根据创建链表包含的元素个数，循环执行以下操作</p>
 <blockquote>
 <p>生成一个新结点p<br>输入元素值赋给新结点的数据域<br>将新结点p插入到尾节点r之后<br>尾指针指向新的尾节点p</p>
 </blockquote>
-<p>【算法描述】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void Create_R(LinkList &amp;L,int n)</span><br><span class="line">&#123;</span><br><span class="line">	L = new LNode;</span><br><span class="line">	L-&gt;next = NULL;</span><br><span class="line">	r = L;//尾指针指向头结点</span><br><span class="line">	for(i=0;i&lt;n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		p = new LNode;</span><br><span class="line">		cin&gt;&gt;p-&gt;data;</span><br><span class="line">		p-&gt;next=NULL;r-&gt;next=p;//将新结点插入到尾节点之后</span><br><span class="line">		r = p;//r指向新的尾节点</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">时间复杂度O(n)</span><br></pre></td></tr></table></figure></p>
-<h1 id="单链表的按值查找"><a href="#单链表的按值查找" class="headerlink" title="单链表的按值查找"></a>单链表的按值查找</h1><p>【算法步骤】<br>（1）用指针p指向首元结点<br>（2）从首元结点依次顺着链域next向下查找，只要指向当前结点的指针p不为空，并且p所指结点的数据域不等于给定值e，则循环执行以下操作：p指向下一结点<br>（3）返回p，若查找成功，p此时即为结点的地址值，若查找失败，p的值即为NULL<br>【算法描述】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">LNode *LocateElem(LinkList L,ElemType e)</span><br><span class="line">&#123;//在带头结点的单链表中查找值为e的元素</span><br><span class="line">	p = L-&gt;next;//初始化，p指向首元结点</span><br><span class="line">	while(p &amp;&amp; p-&gt;data!=e)//只要p不为空或值不等于p</span><br><span class="line">		p = p-&gt;next;//p指向下一结点</span><br><span class="line">	return p;</span><br><span class="line">&#125;</span><br><span class="line">时间复杂度为O(n)</span><br></pre></td></tr></table></figure></p>
-<h1 id="单链表的创建-1"><a href="#单链表的创建-1" class="headerlink" title="单链表的创建"></a>单链表的创建</h1><h1 id="单链表的删除"><a href="#单链表的删除" class="headerlink" title="单链表的删除"></a>单链表的删除</h1><p>【算法步骤】<br>1.查找结点a(i-1)并由指针p指向改结点<br>2.临时保存待删除结点的a(i)地址在p中，以备释放<br>3.将结点p的指针域指向a(i)的直接后继结点<br>4.释放结点a(i)的空间<br>【算法描述】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Status ListDelete(LinkList &amp;,int i)</span><br><span class="line">&#123;//在带头结点的单链表中，删除第i个元素</span><br><span class="line">	p=L;j=0;</span><br><span class="line">	while((p-&gt;next) &amp;&amp; (j&lt;i-1))//查找第i-1个结点，p指向该结点</span><br><span class="line">		&#123;p=p-&gt;next;++j;&#125;</span><br><span class="line">	if(!(p-&gt;next)||(j&gt;i-1)) return REEOR;//当i&gt;n或i&lt;1时，删除位置不合理</span><br><span class="line">	q=p-&gt;next;//临时保存被删除结点的地址以备释放</span><br><span class="line">	p-&gt;next=q-&gt;next;//改变被删除结点前驱结点的指针域</span><br><span class="line">	delete q;//释放删除结点的空间</span><br><span class="line">	return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="单链表的插入"><a href="#单链表的插入" class="headerlink" title="单链表的插入"></a>单链表的插入</h1><p>【算法步骤】<br>将值为e的新结点插入到表的第i个结点的位置上，即插入到a(i-1)与a(i)之间，五个步骤如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(1)查找结点a(i-1)并由指针p指向该结点</span><br><span class="line">(2)生成一个新结点S</span><br><span class="line">(3)将新结点S的数据域置为e</span><br><span class="line">(4)将新结点S的指针域指向结点a(i)</span><br><span class="line">(5)将结点P的指针域指向新结点S</span><br></pre></td></tr></table></figure></p>
-<p>【算法描述】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Status ListInsert(LinkList &amp;L,int i,ElemType e)</span><br><span class="line">&#123;</span><br><span class="line">	p=L;j=0;</span><br><span class="line">	while(p &amp;&amp; (j&lt;i-1))</span><br><span class="line">		(p=p-&gt;next;++j;)//查找第i-1个结点，p指向该结点</span><br><span class="line">	if(!p||j&gt;i-1) return ERROR;//i&gt;n+1或者i&lt;1</span><br><span class="line">	s = new LNode;//生成新结点S</span><br><span class="line">	s-&gt;data=e;//将S的数据域置为e</span><br><span class="line">	s-&gt;next=p-&gt;next;//将结点S的指针域指向a(i)</span><br><span class="line">	p-&gt;next=s;//将结点P的指针域指向结点S</span><br><span class="line">	return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="小知识点"><a href="#小知识点" class="headerlink" title="小知识点"></a>小知识点</h1><p>使用malloc<br><figure class="highlight plain"><figcaption><span>< malloc.h >```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">分配空间</span><br><span class="line">```L = (LinkList)malloc(sizeof(ListNode));</span><br></pre></td></tr></table></figure></p>
-<p>使用ElemType<br><figure class="highlight plain"><figcaption><span>int ElemType;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 栈的初始化</span><br><span class="line">【算法步骤】</span><br><span class="line">（1）为顺序栈分配一个最大容量为MAXSIZE的数组空间，使base指向这段空间的基地址，即栈底</span><br><span class="line">（2）栈顶指针top初始为base，表示栈空</span><br><span class="line">（3）stacksize置为栈的最大容量MAXSIZE</span><br><span class="line">【算法描述】</span><br></pre></td></tr></table></figure></p>
-<p>Status InitStack(SqStack &amp;S)<br>{//构造一个空栈<br>    S.base=new SElemType[MAXSIZE]<br>    if(!S.base) exit(OVERFLOW);//动态分配数组空间<br>    S.top=S.base;//空栈<br>    S.stacksize=MAXSIZE;//最大容量<br>    return OK;<br>}<br><code>`</code></p>
+<p>【算法描述】</p>
+<pre><code>void Create_R(LinkList &amp;L,int n)
+{
+    L = new LNode;
+    L-&gt;next = NULL;
+    r = L;//尾指针指向头结点
+    for(i=0;i&lt;n;++i)
+    {
+        p = new LNode;
+        cin&gt;&gt;p-&gt;data;
+        p-&gt;next=NULL;r-&gt;next=p;//将新结点插入到尾节点之后
+        r = p;//r指向新的尾节点
+    }
+}
+时间复杂度O(n)
+</code></pre><h1 id="单链表的按值查找"><a href="#单链表的按值查找" class="headerlink" title="单链表的按值查找"></a>单链表的按值查找</h1><p>【算法步骤】<br>（1）用指针p指向首元结点<br>（2）从首元结点依次顺着链域next向下查找，只要指向当前结点的指针p不为空，并且p所指结点的数据域不等于给定值e，则循环执行以下操作：p指向下一结点<br>（3）返回p，若查找成功，p此时即为结点的地址值，若查找失败，p的值即为NULL<br>【算法描述】</p>
+<pre><code>LNode *LocateElem(LinkList L,ElemType e)
+{//在带头结点的单链表中查找值为e的元素
+    p = L-&gt;next;//初始化，p指向首元结点
+    while(p &amp;&amp; p-&gt;data!=e)//只要p不为空或值不等于p
+        p = p-&gt;next;//p指向下一结点
+    return p;
+}
+时间复杂度为O(n)
+</code></pre><h1 id="单链表的创建-1"><a href="#单链表的创建-1" class="headerlink" title="单链表的创建"></a>单链表的创建</h1><h1 id="单链表的删除"><a href="#单链表的删除" class="headerlink" title="单链表的删除"></a>单链表的删除</h1><p>【算法步骤】<br>1.查找结点a(i-1)并由指针p指向改结点<br>2.临时保存待删除结点的a(i)地址在p中，以备释放<br>3.将结点p的指针域指向a(i)的直接后继结点<br>4.释放结点a(i)的空间<br>【算法描述】</p>
+<pre><code>Status ListDelete(LinkList &amp;,int i)
+{//在带头结点的单链表中，删除第i个元素
+    p=L;j=0;
+    while((p-&gt;next) &amp;&amp; (j&lt;i-1))//查找第i-1个结点，p指向该结点
+        {p=p-&gt;next;++j;}
+    if(!(p-&gt;next)||(j&gt;i-1)) return REEOR;//当i&gt;n或i&lt;1时，删除位置不合理
+    q=p-&gt;next;//临时保存被删除结点的地址以备释放
+    p-&gt;next=q-&gt;next;//改变被删除结点前驱结点的指针域
+    delete q;//释放删除结点的空间
+    return OK;
+}
 
+</code></pre><h1 id="单链表的插入"><a href="#单链表的插入" class="headerlink" title="单链表的插入"></a>单链表的插入</h1><p>【算法步骤】<br>将值为e的新结点插入到表的第i个结点的位置上，即插入到a(i-1)与a(i)之间，五个步骤如下</p>
+<pre><code>(1)查找结点a(i-1)并由指针p指向该结点
+(2)生成一个新结点S
+(3)将新结点S的数据域置为e
+(4)将新结点S的指针域指向结点a(i)
+(5)将结点P的指针域指向新结点S
+</code></pre><p>【算法描述】</p>
+<pre><code>Status ListInsert(LinkList &amp;L,int i,ElemType e)
+{
+    p=L;j=0;
+    while(p &amp;&amp; (j&lt;i-1))
+        (p=p-&gt;next;++j;)//查找第i-1个结点，p指向该结点
+    if(!p||j&gt;i-1) return ERROR;//i&gt;n+1或者i&lt;1
+    s = new LNode;//生成新结点S
+    s-&gt;data=e;//将S的数据域置为e
+    s-&gt;next=p-&gt;next;//将结点S的指针域指向a(i)
+    p-&gt;next=s;//将结点P的指针域指向结点S
+    return OK;
+}
+</code></pre><h1 id="小知识点"><a href="#小知识点" class="headerlink" title="小知识点"></a>小知识点</h1><p>使用malloc<br><code>include &lt; malloc.h &gt;</code><br>分配空间<br><code>L = (LinkList)malloc(sizeof(ListNode));</code><br>使用ElemType<br><code>typedef int ElemType;</code></p>
+<h1 id="栈的初始化"><a href="#栈的初始化" class="headerlink" title="栈的初始化"></a>栈的初始化</h1><p>【算法步骤】<br>（1）为顺序栈分配一个最大容量为MAXSIZE的数组空间，使base指向这段空间的基地址，即栈底<br>（2）栈顶指针top初始为base，表示栈空<br>（3）stacksize置为栈的最大容量MAXSIZE<br>【算法描述】</p>
+<pre><code>Status InitStack(SqStack &amp;S)
+{//构造一个空栈
+    S.base=new SElemType[MAXSIZE]
+    if(!S.base) exit(OVERFLOW);//动态分配数组空间
+    S.top=S.base;//空栈
+    S.stacksize=MAXSIZE;//最大容量
+    return OK;
+}
+</code></pre>
             </div>
             <hr>
 
