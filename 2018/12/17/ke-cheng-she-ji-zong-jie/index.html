@@ -4,8 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="god_13">
-    <meta name="description" content="god_13">
+    <meta name="keywords" content="课程设计总结, god_13">
+    <meta name="description" content="单链表的创建
+前插法：（1）创建只有一个头结点的空链表（2）根据创建链表包括的元素个数n，循环n次执行以下操作
+
+生成一个新结点p输入元素值赋给新结点p的数据域将新结点插入到头结点之后
+
+【算法描述】
+void CreateList_H(L">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +19,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>god_13</title>
+    <title>课程设计总结 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -263,7 +269,7 @@
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        课程设计总结
                     </div>
                 </div>
             </div>
@@ -372,9 +378,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/杂记/" target="_blank">
+                                <span class="chip bg-color">杂记</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -385,7 +395,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-05-30
+                    2018-12-17
                 </div>
 
                 
@@ -396,74 +406,96 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Hexo-Prism-Plugin"><a href="#Hexo-Prism-Plugin" class="headerlink" title="Hexo-Prism-Plugin "></a>Hexo-Prism-Plugin <a href="https://www.npmjs.com/package/hexo-prism-plugin" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/hexo-prism-plugin.svg" alt="NPM"></a></h1><p>Since <code>highlight.js</code> didn’t support JSX syntax properly, I wrote this plugin to replace<br>Hexo’s default code highlight plugin.</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><pre><code>npm i -S hexo-prism-plugin
-</code></pre><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Firstly, you should edit your <code>_config.yml</code> by adding following configuration.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">prism_plugin</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mode</span><span class="token punctuation">:</span> <span class="token string">'preprocess'</span>    <span class="token comment" spellcheck="true"># realtime/preprocess</span>
-  <span class="token key atrule">theme</span><span class="token punctuation">:</span> <span class="token string">'default'</span>
-  <span class="token key atrule">line_number</span><span class="token punctuation">:</span> <span class="token boolean important">false    </span><span class="token comment" spellcheck="true"># default false</span>
-  <span class="token key atrule">custom_css</span><span class="token punctuation">:</span> <span class="token string">'path/to/your/custom.css'</span>     <span class="token comment" spellcheck="true"># optional</span>
-</code></pre>
-<p>After that, check <code>highlight</code> option in <code>_config.yml</code>. Make sure that default code highlight plugin is disabled.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">highlight</span><span class="token punctuation">:</span>
-  <span class="token key atrule">enable</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-</code></pre>
-<p>Finally, clean and re-generate your project by running following commands:</p>
-<pre><code>hexo clean
-</code></pre><pre><code>hexo generate
-</code></pre><h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><ul>
-<li><p>mode:</p>
-<ul>
-<li>realtime  (Parse code on browser in real time)</li>
-<li>preprocess  (Preprocess code in node)</li>
-</ul>
-</li>
-<li><p>theme:</p>
-<ul>
-<li>default</li>
-<li>coy</li>
-<li>dark</li>
-<li>funky</li>
-<li>okaidia</li>
-<li>solarizedlight</li>
-<li>tomorrow</li>
-<li>twilight</li>
-<li>atom-dark</li>
-<li>base16-ateliersulphurpool.light</li>
-<li>cb</li>
-<li>duotone-dark</li>
-<li>duotone-earth</li>
-<li>duotone-forest</li>
-<li>duotone-light</li>
-<li>duotone-sea</li>
-<li>duotone-space</li>
-<li>ghcolors</li>
-<li>hopscotch</li>
-<li>pojoaque</li>
-<li>vs</li>
-<li>xonokai</li>
-</ul>
-</li>
-<li><p>line_number:</p>
-<ul>
-<li>true (Show line numbers)</li>
-<li>false (Default, Hide line numbers)</li>
-</ul>
-</li>
-<li><p>no_assets</p>
-<ul>
-<li>true (Stop loading asset files)</li>
-<li>false (Default, load script and stylesheets files)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h2><p>You can check out prism-themes project for additional theme preview:</p>
-<p><a href="https://github.com/PrismJS/prism-themes#available-themes" target="_blank" rel="noopener">https://github.com/PrismJS/prism-themes#available-themes</a></p>
-<h2 id="Supported-languages"><a href="#Supported-languages" class="headerlink" title="Supported languages"></a>Supported languages</h2><p>You could find the supported languages here:</p>
-<p><a href="http://prismjs.com/#languages-list" target="_blank" rel="noopener">http://prismjs.com/#languages-list</a></p>
-<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT</p>
+                <h1 id="单链表的创建"><a href="#单链表的创建" class="headerlink" title="单链表的创建"></a>单链表的创建</h1><a id="more"></a>
+<h2 id="前插法："><a href="#前插法：" class="headerlink" title="前插法："></a>前插法：</h2><p>（1）创建只有一个头结点的空链表<br>（2）根据创建链表包括的元素个数n，循环n次执行以下操作</p>
+<blockquote>
+<p>生成一个新结点p<br>输入元素值赋给新结点p的数据域<br>将新结点插入到头结点之后</p>
+</blockquote>
+<p>【算法描述】</p>
+<pre><code>void CreateList_H(LinkList &amp;L,int n)
+{
+    L = new node;//头结点
+    L-&gt;next = NULL;//创建一个带头结点的空链表
+    for(i=0;i&lt;n;i++)
+    {
+        p = new LNode;//生成新结点*p
+        cin&gt;&gt;p-&gt;data;//输入值赋给数据域
+        p-&gt;next = L-&gt;next;
+        L-&gt;next = p;//这两步是将新结点插入到头结点之后
+    }
+}
+显然，时间复杂度为O(n)
+</code></pre><h2 id="后插法"><a href="#后插法" class="headerlink" title="后插法"></a>后插法</h2><p>【算法步骤】<br>（1）创建一个只有头结点的空链表<br>（2）尾指针r初始化，指向头结点<br>（3）根据创建链表包含的元素个数，循环执行以下操作</p>
+<blockquote>
+<p>生成一个新结点p<br>输入元素值赋给新结点的数据域<br>将新结点p插入到尾节点r之后<br>尾指针指向新的尾节点p</p>
+</blockquote>
+<p>【算法描述】</p>
+<pre><code>void Create_R(LinkList &amp;L,int n)
+{
+    L = new LNode;
+    L-&gt;next = NULL;
+    r = L;//尾指针指向头结点
+    for(i=0;i&lt;n;++i)
+    {
+        p = new LNode;
+        cin&gt;&gt;p-&gt;data;
+        p-&gt;next=NULL;r-&gt;next=p;//将新结点插入到尾节点之后
+        r = p;//r指向新的尾节点
+    }
+}
+时间复杂度O(n)
+</code></pre><h1 id="单链表的按值查找"><a href="#单链表的按值查找" class="headerlink" title="单链表的按值查找"></a>单链表的按值查找</h1><p>【算法步骤】<br>（1）用指针p指向首元结点<br>（2）从首元结点依次顺着链域next向下查找，只要指向当前结点的指针p不为空，并且p所指结点的数据域不等于给定值e，则循环执行以下操作：p指向下一结点<br>（3）返回p，若查找成功，p此时即为结点的地址值，若查找失败，p的值即为NULL<br>【算法描述】</p>
+<pre><code>LNode *LocateElem(LinkList L,ElemType e)
+{//在带头结点的单链表中查找值为e的元素
+    p = L-&gt;next;//初始化，p指向首元结点
+    while(p &amp;&amp; p-&gt;data!=e)//只要p不为空或值不等于p
+        p = p-&gt;next;//p指向下一结点
+    return p;
+}
+时间复杂度为O(n)
+</code></pre><h1 id="单链表的创建-1"><a href="#单链表的创建-1" class="headerlink" title="单链表的创建"></a>单链表的创建</h1><h1 id="单链表的删除"><a href="#单链表的删除" class="headerlink" title="单链表的删除"></a>单链表的删除</h1><p>【算法步骤】<br>1.查找结点a(i-1)并由指针p指向改结点<br>2.临时保存待删除结点的a(i)地址在p中，以备释放<br>3.将结点p的指针域指向a(i)的直接后继结点<br>4.释放结点a(i)的空间<br>【算法描述】</p>
+<pre><code>Status ListDelete(LinkList &amp;,int i)
+{//在带头结点的单链表中，删除第i个元素
+    p=L;j=0;
+    while((p-&gt;next) &amp;&amp; (j&lt;i-1))//查找第i-1个结点，p指向该结点
+        {p=p-&gt;next;++j;}
+    if(!(p-&gt;next)||(j&gt;i-1)) return REEOR;//当i&gt;n或i&lt;1时，删除位置不合理
+    q=p-&gt;next;//临时保存被删除结点的地址以备释放
+    p-&gt;next=q-&gt;next;//改变被删除结点前驱结点的指针域
+    delete q;//释放删除结点的空间
+    return OK;
+}
 
+</code></pre><h1 id="单链表的插入"><a href="#单链表的插入" class="headerlink" title="单链表的插入"></a>单链表的插入</h1><p>【算法步骤】<br>将值为e的新结点插入到表的第i个结点的位置上，即插入到a(i-1)与a(i)之间，五个步骤如下</p>
+<pre><code>(1)查找结点a(i-1)并由指针p指向该结点
+(2)生成一个新结点S
+(3)将新结点S的数据域置为e
+(4)将新结点S的指针域指向结点a(i)
+(5)将结点P的指针域指向新结点S
+</code></pre><p>【算法描述】</p>
+<pre><code>Status ListInsert(LinkList &amp;L,int i,ElemType e)
+{
+    p=L;j=0;
+    while(p &amp;&amp; (j&lt;i-1))
+        (p=p-&gt;next;++j;)//查找第i-1个结点，p指向该结点
+    if(!p||j&gt;i-1) return ERROR;//i&gt;n+1或者i&lt;1
+    s = new LNode;//生成新结点S
+    s-&gt;data=e;//将S的数据域置为e
+    s-&gt;next=p-&gt;next;//将结点S的指针域指向a(i)
+    p-&gt;next=s;//将结点P的指针域指向结点S
+    return OK;
+}
+</code></pre><h1 id="小知识点"><a href="#小知识点" class="headerlink" title="小知识点"></a>小知识点</h1><p>使用malloc<br><code>include &lt; malloc.h &gt;</code><br>分配空间<br><code>L = (LinkList)malloc(sizeof(ListNode));</code><br>使用ElemType<br><code>typedef int ElemType;</code></p>
+<h1 id="栈的初始化"><a href="#栈的初始化" class="headerlink" title="栈的初始化"></a>栈的初始化</h1><p>【算法步骤】<br>（1）为顺序栈分配一个最大容量为MAXSIZE的数组空间，使base指向这段空间的基地址，即栈底<br>（2）栈顶指针top初始为base，表示栈空<br>（3）stacksize置为栈的最大容量MAXSIZE<br>【算法描述】</p>
+<pre><code>Status InitStack(SqStack &amp;S)
+{//构造一个空栈
+    S.base=new SElemType[MAXSIZE]
+    if(!S.base) exit(OVERFLOW);//动态分配数组空间
+    S.top=S.base;//空栈
+    S.stacksize=MAXSIZE;//最大容量
+    return OK;
+}
+</code></pre>
             </div>
             <hr>
 
@@ -618,9 +650,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《》
+                    《课程设计总结》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/hexo-prism-plugin/README.html" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/12/17/ke-cheng-she-ji-zong-jie/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -661,28 +693,28 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/12/27/i-chun-qiu-wp/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="i春秋wp">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">i春秋wp</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！
+爆破1我是按照做题人数有多到少来做的，由简入繁嘛！这道题需要传入参数hello，post和get方式都可以。做了一个简单的正则匹配，意思是输入字母或数字。主要看的是var_dump(
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-27
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -691,7 +723,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/" target="_blank">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -699,27 +738,27 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="fa fa-dot-circle-o"></i>
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/12/09/bi-sai-xin-de/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="比赛心得">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">比赛心得</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            第一次参加线下攻防赛，尽管之前做了一些准备，但真正开始的时候还是有些不知道该做什么。刚开始时，超尴尬，不知道登陆名是什么，本来以为是自己的队名，没想到是自己的名字。。。进入网站发现有两道题，第一步就是用xshell和winscap去连，后来
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-09
                             </span>
                         <span class="publish-author">
                             
@@ -729,7 +768,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/杂记/" target="_blank">
+                        <span class="chip bg-color">杂记</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

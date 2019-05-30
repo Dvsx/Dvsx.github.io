@@ -4,8 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="god_13">
-    <meta name="description" content="god_13">
+    <meta name="keywords" content="DVWA指南, god_13">
+    <meta name="description" content="Brute Force1.LOW级别源代码
+&amp;lt;?php
+
+if( isset( $_GET[ &amp;#39;Login&amp;#39; ] ) ) {
+// Get username
+$user = $_GET[ &amp;#39;username&amp;#">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>god_13</title>
+    <title>DVWA指南 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +262,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        DVWA指南
                     </div>
                 </div>
             </div>
@@ -372,9 +377,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/漏洞学习/" target="_blank">
+                                <span class="chip bg-color">漏洞学习</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -385,7 +394,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-05-30
+                    2018-11-20
                 </div>
 
                 
@@ -396,73 +405,66 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Hexo-Prism-Plugin"><a href="#Hexo-Prism-Plugin" class="headerlink" title="Hexo-Prism-Plugin "></a>Hexo-Prism-Plugin <a href="https://www.npmjs.com/package/hexo-prism-plugin" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/hexo-prism-plugin.svg" alt="NPM"></a></h1><p>Since <code>highlight.js</code> didn’t support JSX syntax properly, I wrote this plugin to replace<br>Hexo’s default code highlight plugin.</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><pre><code>npm i -S hexo-prism-plugin
-</code></pre><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Firstly, you should edit your <code>_config.yml</code> by adding following configuration.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">prism_plugin</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mode</span><span class="token punctuation">:</span> <span class="token string">'preprocess'</span>    <span class="token comment" spellcheck="true"># realtime/preprocess</span>
-  <span class="token key atrule">theme</span><span class="token punctuation">:</span> <span class="token string">'default'</span>
-  <span class="token key atrule">line_number</span><span class="token punctuation">:</span> <span class="token boolean important">false    </span><span class="token comment" spellcheck="true"># default false</span>
-  <span class="token key atrule">custom_css</span><span class="token punctuation">:</span> <span class="token string">'path/to/your/custom.css'</span>     <span class="token comment" spellcheck="true"># optional</span>
-</code></pre>
-<p>After that, check <code>highlight</code> option in <code>_config.yml</code>. Make sure that default code highlight plugin is disabled.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">highlight</span><span class="token punctuation">:</span>
-  <span class="token key atrule">enable</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-</code></pre>
-<p>Finally, clean and re-generate your project by running following commands:</p>
-<pre><code>hexo clean
-</code></pre><pre><code>hexo generate
-</code></pre><h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><ul>
-<li><p>mode:</p>
-<ul>
-<li>realtime  (Parse code on browser in real time)</li>
-<li>preprocess  (Preprocess code in node)</li>
-</ul>
-</li>
-<li><p>theme:</p>
-<ul>
-<li>default</li>
-<li>coy</li>
-<li>dark</li>
-<li>funky</li>
-<li>okaidia</li>
-<li>solarizedlight</li>
-<li>tomorrow</li>
-<li>twilight</li>
-<li>atom-dark</li>
-<li>base16-ateliersulphurpool.light</li>
-<li>cb</li>
-<li>duotone-dark</li>
-<li>duotone-earth</li>
-<li>duotone-forest</li>
-<li>duotone-light</li>
-<li>duotone-sea</li>
-<li>duotone-space</li>
-<li>ghcolors</li>
-<li>hopscotch</li>
-<li>pojoaque</li>
-<li>vs</li>
-<li>xonokai</li>
-</ul>
-</li>
-<li><p>line_number:</p>
-<ul>
-<li>true (Show line numbers)</li>
-<li>false (Default, Hide line numbers)</li>
-</ul>
-</li>
-<li><p>no_assets</p>
-<ul>
-<li>true (Stop loading asset files)</li>
-<li>false (Default, load script and stylesheets files)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h2><p>You can check out prism-themes project for additional theme preview:</p>
-<p><a href="https://github.com/PrismJS/prism-themes#available-themes" target="_blank" rel="noopener">https://github.com/PrismJS/prism-themes#available-themes</a></p>
-<h2 id="Supported-languages"><a href="#Supported-languages" class="headerlink" title="Supported languages"></a>Supported languages</h2><p>You could find the supported languages here:</p>
-<p><a href="http://prismjs.com/#languages-list" target="_blank" rel="noopener">http://prismjs.com/#languages-list</a></p>
-<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT</p>
+                <h1 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h1><h2 id="1-LOW级别"><a href="#1-LOW级别" class="headerlink" title="1.LOW级别"></a>1.LOW级别</h2><p><img src="/2018/11/20/dvwa-zhi-nan/1.PNG" alt=""><br>源代码<br><a id="more"></a></p>
+<pre><code>&lt;?php
+
+if( isset( $_GET[ &#39;Login&#39; ] ) ) {
+// Get username
+$user = $_GET[ &#39;username&#39; ];
+
+// Get password
+$pass = $_GET[ &#39;password&#39; ];
+$pass = md5( $pass );
+
+// Check the database
+$query  = &quot;SELECT * FROM `users` WHERE user = &#39;$user&#39; AND password = &#39;$pass&#39;;&quot;;//查询数据库
+$result = mysqli_query($GLOBALS[&quot;___mysqli_ston&quot;],  $query ) or die( &#39;&lt;pre&gt;&#39; . ((is_object($GLOBALS[&quot;___mysqli_ston&quot;])) ? mysqli_error($GLOBALS[&quot;___mysqli_ston&quot;]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . &#39;&lt;/pre&gt;&#39; );
+
+if( $result &amp;&amp; mysqli_num_rows( $result ) == 1 ) {
+    // Get users details
+    $row    = mysqli_fetch_assoc( $result );
+    $avatar = $row[&quot;avatar&quot;];
+
+    // Login successful
+    echo &quot;&lt;p&gt;Welcome to the password protected area {$user}&lt;/p&gt;&quot;;
+    echo &quot;&lt;img src=\&quot;{$avatar}\&quot; /&gt;&quot;;
+}
+else {
+    // Login failed
+    echo &quot;&lt;pre&gt;&lt;br /&gt;Username and/or password incorrect.&lt;/pre&gt;&quot;;
+}
+
+((is_null($___mysqli_res = mysqli_close($GLOBALS[&quot;___mysqli_ston&quot;]))) ? false : $___mysqli_res);
+}
+
+?&gt; 
+</code></pre><p>源代码里没有做什么过滤，可以通过爆破和sql注入的方法来解，先把代码看懂吧。<br><strong>isset()函数：</strong>在PHP中用来检测变量是否设置，该函数返回的是布尔类型的值，即true/false，<br><strong>mysql_query()函数：</strong>执行一条mysql查询<br>语法：mysql_query(query,connection)</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td style="text-align:center">必需。规定要发送的SQL查询。注释：查询字符串不应以分号结束。</td>
+<td></td>
+</tr>
+<tr>
+<td>connection</td>
+<td style="text-align:center">可选。规定SQL连接标识符。如果未规定，则使用上一个打开的连接。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>$GLOBALS[“_mysql_ston”]这是一个自定义的全局变量，可以不用在意。（ps：MysqlConverter假定此全局变量设置为数据库连接对象，如果转换器找到一个mysql——connect，它将代码转换成为包含$GLOBALS[“__mysqli_ston”]的赋值给mysql_connect函数的结果）</p>
+<p><strong>is_object()函数：</strong>用于检测变量是否是一个对象，是返回TRUE，否返回FALSE<br><strong>mysql_error()函数：</strong>返回最近调用函数的最后一个错误描述<br><strong>mysql_fetch_assoc()函数：</strong>从结果集中取得一行作为关联数组。返回根据根据从结果集中取得的行生成的关联数组，如果没有更多行，则返回false<br><strong>mysqli_num_rows() 函数</strong>返回结果集中行的数量。</p>
+<p>好了，源码分析完了，就很好理解了，对于没有做任何过滤的题目，我们可以通过如下的两种方法来解决。</p>
+<h3 id="（1）抓包爆破"><a href="#（1）抓包爆破" class="headerlink" title="（1）抓包爆破"></a>（1）抓包爆破</h3><p>说到爆破，就要先了解burp爆破的几个模块<br><img src="/2018/11/20/dvwa-zhi-nan/2.PNG" alt=""><br>Sniper：单参数爆破，当有多个参数时同一个字典按顺序替换各参数，总之初始值有一个不变<br>Battering ram：多参数同时爆破，但用的是同一个字典<br>Pichfork：多参数同时爆破，但用的是不同的字典<br>Cluster bamb：多参数做笛卡尔乘积模式爆破</p>
+<p>由于DVWA给的爆破太过于弱智，账号和密码就是admin和password，象征性的爆破一下<br><img src="/2018/11/20/dvwa-zhi-nan/3.PNG" alt=""><br>要注意箭头位置的参数是2，因为有两个payload需要爆破<br>结果如下<br><img src="/2018/11/20/dvwa-zhi-nan/4.PNG" alt=""></p>
+<h3 id="（2）sql注入"><a href="#（2）sql注入" class="headerlink" title="（2）sql注入"></a>（2）sql注入</h3><p>以前也做过这样的sql注入题，因为我们提交的数据需要后端执行sql语句来查询是否有这样的用户和密码是否正确，简单的是<br><code>select * from tablename where username=&#39;...&#39; and password=&#39;...&#39;</code><br>我们利用单引号闭合的方法去制造万能密码来绕过，如下所示<br><code>admin&#39; or &#39;1&#39;=&#39;1#</code><br><img src="/2018/11/20/dvwa-zhi-nan/5.PNG" alt=""></p>
 
             </div>
             <hr>
@@ -618,9 +620,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《》
+                    《DVWA指南》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/hexo-prism-plugin/README.html" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/11/20/dvwa-zhi-nan/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -661,28 +663,27 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/11/30/php-fan-xu-lie-hua-lou-dong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="PHP反序列化漏洞">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">PHP反序列化漏洞</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-30
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -691,7 +692,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/漏洞/" target="_blank">
+                        <span class="chip bg-color">漏洞</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -699,27 +707,28 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="fa fa-dot-circle-o"></i>
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/11/10/shi-yan-ba-writeup/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="实验吧 writeup">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">实验吧 writeup</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            后台登陆
+进入链接查看页面源代码，发现如下所示下面这一行代码是执行上面的sql语句并将结果赋值给result$result=mysqli_query($link,$sql);如果result的结果大于0if(mysqli_num_rows(
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-10
                             </span>
                         <span class="publish-author">
                             
@@ -729,7 +738,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/" target="_blank">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

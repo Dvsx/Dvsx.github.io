@@ -4,8 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="god_13">
-    <meta name="description" content="god_13">
+    <meta name="keywords" content="kali下钓鱼网站的制作, god_13">
+    <meta name="description" content="尽管当今互联网的安全措施已经很完善，但是还是会出现“被盗号”的情况，很多情况下是“有心人”的钓鱼网站导致的，今天的文章主要讲一下kali下使用setoolkit来制作钓鱼网站。
+setoolkit简介setoolkit是kali下的社会工程">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>god_13</title>
+    <title>kali下钓鱼网站的制作 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +258,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        kali下钓鱼网站的制作
                     </div>
                 </div>
             </div>
@@ -372,9 +373,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/渗透/" target="_blank">
+                                <span class="chip bg-color">渗透</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -385,7 +390,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-05-30
+                    2019-04-05
                 </div>
 
                 
@@ -396,73 +401,41 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Hexo-Prism-Plugin"><a href="#Hexo-Prism-Plugin" class="headerlink" title="Hexo-Prism-Plugin "></a>Hexo-Prism-Plugin <a href="https://www.npmjs.com/package/hexo-prism-plugin" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/hexo-prism-plugin.svg" alt="NPM"></a></h1><p>Since <code>highlight.js</code> didn’t support JSX syntax properly, I wrote this plugin to replace<br>Hexo’s default code highlight plugin.</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><pre><code>npm i -S hexo-prism-plugin
-</code></pre><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Firstly, you should edit your <code>_config.yml</code> by adding following configuration.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">prism_plugin</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mode</span><span class="token punctuation">:</span> <span class="token string">'preprocess'</span>    <span class="token comment" spellcheck="true"># realtime/preprocess</span>
-  <span class="token key atrule">theme</span><span class="token punctuation">:</span> <span class="token string">'default'</span>
-  <span class="token key atrule">line_number</span><span class="token punctuation">:</span> <span class="token boolean important">false    </span><span class="token comment" spellcheck="true"># default false</span>
-  <span class="token key atrule">custom_css</span><span class="token punctuation">:</span> <span class="token string">'path/to/your/custom.css'</span>     <span class="token comment" spellcheck="true"># optional</span>
-</code></pre>
-<p>After that, check <code>highlight</code> option in <code>_config.yml</code>. Make sure that default code highlight plugin is disabled.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">highlight</span><span class="token punctuation">:</span>
-  <span class="token key atrule">enable</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-</code></pre>
-<p>Finally, clean and re-generate your project by running following commands:</p>
-<pre><code>hexo clean
-</code></pre><pre><code>hexo generate
-</code></pre><h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><ul>
-<li><p>mode:</p>
-<ul>
-<li>realtime  (Parse code on browser in real time)</li>
-<li>preprocess  (Preprocess code in node)</li>
-</ul>
-</li>
-<li><p>theme:</p>
-<ul>
-<li>default</li>
-<li>coy</li>
-<li>dark</li>
-<li>funky</li>
-<li>okaidia</li>
-<li>solarizedlight</li>
-<li>tomorrow</li>
-<li>twilight</li>
-<li>atom-dark</li>
-<li>base16-ateliersulphurpool.light</li>
-<li>cb</li>
-<li>duotone-dark</li>
-<li>duotone-earth</li>
-<li>duotone-forest</li>
-<li>duotone-light</li>
-<li>duotone-sea</li>
-<li>duotone-space</li>
-<li>ghcolors</li>
-<li>hopscotch</li>
-<li>pojoaque</li>
-<li>vs</li>
-<li>xonokai</li>
-</ul>
-</li>
-<li><p>line_number:</p>
-<ul>
-<li>true (Show line numbers)</li>
-<li>false (Default, Hide line numbers)</li>
-</ul>
-</li>
-<li><p>no_assets</p>
-<ul>
-<li>true (Stop loading asset files)</li>
-<li>false (Default, load script and stylesheets files)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h2><p>You can check out prism-themes project for additional theme preview:</p>
-<p><a href="https://github.com/PrismJS/prism-themes#available-themes" target="_blank" rel="noopener">https://github.com/PrismJS/prism-themes#available-themes</a></p>
-<h2 id="Supported-languages"><a href="#Supported-languages" class="headerlink" title="Supported languages"></a>Supported languages</h2><p>You could find the supported languages here:</p>
-<p><a href="http://prismjs.com/#languages-list" target="_blank" rel="noopener">http://prismjs.com/#languages-list</a></p>
-<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT</p>
+                <p>尽管当今互联网的安全措施已经很完善，但是还是会出现“被盗号”的情况，很多情况下是“有心人”的钓鱼网站导致的，今天的文章主要讲一下kali下使用setoolkit来制作钓鱼网站。<br><a id="more"></a></p>
+<h2 id="setoolkit简介"><a href="#setoolkit简介" class="headerlink" title="setoolkit简介"></a>setoolkit简介</h2><p>setoolkit是kali下的社会工程学工具集，有很多功能，在命令行输入setoolkit<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/1.PNG" alt=""><br>有几个选项<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/2.PNG" alt=""></p>
+<pre><code>社会工程学攻击
+快速追踪测试
+第三方模块
+升级软件
+升级配置
+帮助
+</code></pre><p>这里我们选择1，社会工程学攻击，还有选项<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/3.PNG" alt=""></p>
+<pre><code>鱼叉式网络攻击
+网页攻击
+传染媒介式
+建立payload和listener
+邮件群发攻击
+Arduino基础攻击
+无线接入点攻击
+二维码攻击
+Powershell攻击
+第三反方模块
+</code></pre><p>我们选择2，网页攻击<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/4.PNG" alt=""></p>
+<pre><code>Java applet攻击
+Metasploit浏览器攻击
+钓鱼网站攻击
+标签钓鱼攻击
+网站jacking攻击
+多种网站攻击
+全屏幕攻击
+</code></pre><p>这里选择3，钓鱼网站攻击<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/5.PNG" alt=""></p>
+<pre><code>网站模板
+站点克隆
+用自己的网站
+</code></pre><p>如果选择网站模板的话，会有几个默认的登陆界面的模板<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/6.PNG" alt=""><br>如果想克隆指定的页面的话，就选择2站点克隆，当然，这个功能虽然强大，但是有的网站是无法克隆的，如果无法克隆，就选择3，自己制作一样的网站去钓鱼。这里我详细讲一下站点克隆的方法。</p>
+<h2 id="站点克隆"><a href="#站点克隆" class="headerlink" title="站点克隆"></a>站点克隆</h2><p>选择完2之后，需要我们输入一些信息<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/7.PNG" alt=""><br>这个是我们克隆完之后的网站返回的ip地址，一般就写虚拟机的IP地址，然后我们需要填写想要克隆的网站的url<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/8.PNG" alt=""><br>回车之后，显示如下信息就代表克隆完成<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/9.PNG" alt=""><br>我们可以对比一下克隆的网站和原网站<br>这是原网站<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/10.PNG" alt=""><br>这是克隆的网站<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/11.PNG" alt=""><br>我们将账号和密码都设为admin，点击登陆，发现有跳转到了真正的页面，也不会返回账号信息错误的界面，同时，kali也将我们输入的信息截获了，并在终端显示<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/12.PNG" alt=""><br>现在做的这些只能在同一个局域网内实现，在同一局域网的小伙伴可以试试玩一下，如果想让外网也能访问该怎么做呢？这就需要做一个内网穿透来实现了。</p>
+<h2 id="内网穿透"><a href="#内网穿透" class="headerlink" title="内网穿透"></a>内网穿透</h2><p>简单来说内网穿透的目的是：让外网能访问你本地的应用，例如在外网打开你本地<a href="http://127.0.0.1" target="_blank" rel="noopener">http://127.0.0.1</a> 指向的Web站点。<br>那怎么才能实现内网穿透呢？现有工具有花生壳，natapp，小米球工具，前两个都是收费的，最后一个生成的域名前缀是自己设置的，穿透域名是<br>xx.ngrok.xiaomiqiu.cn.有兴趣的可以玩一下。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大家也可以看到，钓鱼网站的制作其实并不难，所以我们平常在访问一些常用的有账号登陆的地方一定要看清楚url，防止被钓鱼。</p>
 
             </div>
             <hr>
@@ -618,9 +591,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《》
+                    《kali下钓鱼网站的制作》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/hexo-prism-plugin/README.html" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -661,28 +634,28 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="攻防世界writeup">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">攻防世界writeup</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波
+题目介绍打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没有发现
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -691,7 +664,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/" target="_blank">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -699,27 +679,27 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="fa fa-dot-circle-o"></i>
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2019/03/22/xin-xi-shou-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="信息收集">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">信息收集</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            信息收集信息收集对于渗透测试前期来说是非常重要的，因为只有我们掌握了目标网站或目标主机足够多的信息之后，我们才能更好地对其进行漏洞检测。正所谓，知己知彼百战百胜！信息收集的方式可以分为两种：主动和被动主动信息收集：通过直接访问、扫描网站，这
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-22
                             </span>
                         <span class="publish-author">
                             
@@ -729,7 +709,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/渗透/" target="_blank">
+                        <span class="chip bg-color">渗透</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

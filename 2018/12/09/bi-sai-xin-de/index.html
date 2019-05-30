@@ -4,8 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="god_13">
-    <meta name="description" content="god_13">
+    <meta name="keywords" content="比赛心得, god_13">
+    <meta name="description" content="第一次参加线下攻防赛，尽管之前做了一些准备，但真正开始的时候还是有些不知道该做什么。刚开始时，超尴尬，不知道登陆名是什么，本来以为是自己的队名，没想到是自己的名字。。。进入网站发现有两道题，第一步就是用xshell和winscap去连，后来">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>god_13</title>
+    <title>比赛心得 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +257,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        比赛心得
                     </div>
                 </div>
             </div>
@@ -372,9 +372,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/杂记/" target="_blank">
+                                <span class="chip bg-color">杂记</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -385,7 +389,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-05-30
+                    2018-12-09
                 </div>
 
                 
@@ -396,73 +400,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Hexo-Prism-Plugin"><a href="#Hexo-Prism-Plugin" class="headerlink" title="Hexo-Prism-Plugin "></a>Hexo-Prism-Plugin <a href="https://www.npmjs.com/package/hexo-prism-plugin" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/hexo-prism-plugin.svg" alt="NPM"></a></h1><p>Since <code>highlight.js</code> didn’t support JSX syntax properly, I wrote this plugin to replace<br>Hexo’s default code highlight plugin.</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><pre><code>npm i -S hexo-prism-plugin
-</code></pre><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Firstly, you should edit your <code>_config.yml</code> by adding following configuration.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">prism_plugin</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mode</span><span class="token punctuation">:</span> <span class="token string">'preprocess'</span>    <span class="token comment" spellcheck="true"># realtime/preprocess</span>
-  <span class="token key atrule">theme</span><span class="token punctuation">:</span> <span class="token string">'default'</span>
-  <span class="token key atrule">line_number</span><span class="token punctuation">:</span> <span class="token boolean important">false    </span><span class="token comment" spellcheck="true"># default false</span>
-  <span class="token key atrule">custom_css</span><span class="token punctuation">:</span> <span class="token string">'path/to/your/custom.css'</span>     <span class="token comment" spellcheck="true"># optional</span>
-</code></pre>
-<p>After that, check <code>highlight</code> option in <code>_config.yml</code>. Make sure that default code highlight plugin is disabled.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">highlight</span><span class="token punctuation">:</span>
-  <span class="token key atrule">enable</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-</code></pre>
-<p>Finally, clean and re-generate your project by running following commands:</p>
-<pre><code>hexo clean
-</code></pre><pre><code>hexo generate
-</code></pre><h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><ul>
-<li><p>mode:</p>
-<ul>
-<li>realtime  (Parse code on browser in real time)</li>
-<li>preprocess  (Preprocess code in node)</li>
-</ul>
-</li>
-<li><p>theme:</p>
-<ul>
-<li>default</li>
-<li>coy</li>
-<li>dark</li>
-<li>funky</li>
-<li>okaidia</li>
-<li>solarizedlight</li>
-<li>tomorrow</li>
-<li>twilight</li>
-<li>atom-dark</li>
-<li>base16-ateliersulphurpool.light</li>
-<li>cb</li>
-<li>duotone-dark</li>
-<li>duotone-earth</li>
-<li>duotone-forest</li>
-<li>duotone-light</li>
-<li>duotone-sea</li>
-<li>duotone-space</li>
-<li>ghcolors</li>
-<li>hopscotch</li>
-<li>pojoaque</li>
-<li>vs</li>
-<li>xonokai</li>
-</ul>
-</li>
-<li><p>line_number:</p>
-<ul>
-<li>true (Show line numbers)</li>
-<li>false (Default, Hide line numbers)</li>
-</ul>
-</li>
-<li><p>no_assets</p>
-<ul>
-<li>true (Stop loading asset files)</li>
-<li>false (Default, load script and stylesheets files)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h2><p>You can check out prism-themes project for additional theme preview:</p>
-<p><a href="https://github.com/PrismJS/prism-themes#available-themes" target="_blank" rel="noopener">https://github.com/PrismJS/prism-themes#available-themes</a></p>
-<h2 id="Supported-languages"><a href="#Supported-languages" class="headerlink" title="Supported languages"></a>Supported languages</h2><p>You could find the supported languages here:</p>
-<p><a href="http://prismjs.com/#languages-list" target="_blank" rel="noopener">http://prismjs.com/#languages-list</a></p>
-<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT</p>
+                <p>第一次参加线下攻防赛<a id="more"></a>，尽管之前做了一些准备，但真正开始的时候还是有些不知道该做什么。<br>刚开始时，超尴尬，不知道登陆名是什么，本来以为是自己的队名，没想到是自己的名字。。。进入网站发现有两道题，第一步就是用xshell和winscap去连，后来还担心ssh密码会被人改掉，所以就改了ssh密码，连上winscap肯定是先下源码，但第一道题就给我整懵逼了，html里面啥也没有，让我下什么源码（后来才知道不同版本的服务器源码放的位置不一样）。。。第二道还能够找到源码，就以最快的速度下了下来，然后上文件监控和用D盾扫源码，当时就有点迷茫了，还好队友手速快，发现了预留的后门，然后运行脚本去拿flag。然后删掉自己服务器上的预留后门（最后发现主要就是靠预留后门得分了）。因为知道的漏洞形式太少了，所以中间并没有发现什么有价值的漏洞，中间找到了sql注入之类的漏洞，但是却是在数据库里的，所以我就在数据库上面花了一些时间，但后来被告知，flag是动态生成的，sql注入需要结合命令执行来获取flag，不用在数据库上花费一些不必要的时间（需注意啊），到比赛快要结束的时候，另一个学二进制的队友发现了一道pwn的题，并有现成的脚本，所以就拿来跑一跑，在后期就多了一个得分点。<br>在比赛的前期上了文件监控，别人上传的文件都可以监控到还好，但到了后期，被人又挖到了新的漏洞，就只能被动挨打了，而且每一轮都要被扣去好多分，这时候就需要一个流量监控的脚本了，但由于没有准备充分，被谁打的，怎么被吊打的都不知道，所以这一点是需要注意的。<br>一些漏洞的学习和使用还要一步步慢慢学，不能着急，先复习对应期末考试和六级再说！</p>
 
             </div>
             <hr>
@@ -618,9 +556,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《》
+                    《比赛心得》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/hexo-prism-plugin/README.html" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/12/09/bi-sai-xin-de/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -661,28 +599,33 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/12/17/ke-cheng-she-ji-zong-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="课程设计总结">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">课程设计总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            单链表的创建
+前插法：（1）创建只有一个头结点的空链表（2）根据创建链表包括的元素个数n，循环n次执行以下操作
+
+生成一个新结点p输入元素值赋给新结点p的数据域将新结点插入到头结点之后
+
+【算法描述】
+void CreateList_H(L
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-17
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -691,7 +634,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/杂记/" target="_blank">
+                        <span class="chip bg-color">杂记</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -699,27 +649,27 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="fa fa-dot-circle-o"></i>
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/11/30/php-fan-xu-lie-hua-lou-dong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="PHP反序列化漏洞">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">PHP反序列化漏洞</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-30
                             </span>
                         <span class="publish-author">
                             
@@ -729,7 +679,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/漏洞/" target="_blank">
+                        <span class="chip bg-color">漏洞</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

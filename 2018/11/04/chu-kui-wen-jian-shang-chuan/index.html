@@ -4,8 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="god_13">
-    <meta name="description" content="god_13">
+    <meta name="keywords" content="初窥文件上传, god_13">
+    <meta name="description" content="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧
+基于DVWA的文件上传（1）LOW级别low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行php一句话木马如下所示&amp;lt;?php @e">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>god_13</title>
+    <title>初窥文件上传 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +258,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        初窥文件上传
                     </div>
                 </div>
             </div>
@@ -372,9 +373,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/漏洞/" target="_blank">
+                                <span class="chip bg-color">漏洞</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -385,7 +390,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-05-30
+                    2018-11-04
                 </div>
 
                 
@@ -396,73 +401,12 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Hexo-Prism-Plugin"><a href="#Hexo-Prism-Plugin" class="headerlink" title="Hexo-Prism-Plugin "></a>Hexo-Prism-Plugin <a href="https://www.npmjs.com/package/hexo-prism-plugin" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/hexo-prism-plugin.svg" alt="NPM"></a></h1><p>Since <code>highlight.js</code> didn’t support JSX syntax properly, I wrote this plugin to replace<br>Hexo’s default code highlight plugin.</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><pre><code>npm i -S hexo-prism-plugin
-</code></pre><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Firstly, you should edit your <code>_config.yml</code> by adding following configuration.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">prism_plugin</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mode</span><span class="token punctuation">:</span> <span class="token string">'preprocess'</span>    <span class="token comment" spellcheck="true"># realtime/preprocess</span>
-  <span class="token key atrule">theme</span><span class="token punctuation">:</span> <span class="token string">'default'</span>
-  <span class="token key atrule">line_number</span><span class="token punctuation">:</span> <span class="token boolean important">false    </span><span class="token comment" spellcheck="true"># default false</span>
-  <span class="token key atrule">custom_css</span><span class="token punctuation">:</span> <span class="token string">'path/to/your/custom.css'</span>     <span class="token comment" spellcheck="true"># optional</span>
-</code></pre>
-<p>After that, check <code>highlight</code> option in <code>_config.yml</code>. Make sure that default code highlight plugin is disabled.</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">highlight</span><span class="token punctuation">:</span>
-  <span class="token key atrule">enable</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-</code></pre>
-<p>Finally, clean and re-generate your project by running following commands:</p>
-<pre><code>hexo clean
-</code></pre><pre><code>hexo generate
-</code></pre><h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><ul>
-<li><p>mode:</p>
-<ul>
-<li>realtime  (Parse code on browser in real time)</li>
-<li>preprocess  (Preprocess code in node)</li>
-</ul>
-</li>
-<li><p>theme:</p>
-<ul>
-<li>default</li>
-<li>coy</li>
-<li>dark</li>
-<li>funky</li>
-<li>okaidia</li>
-<li>solarizedlight</li>
-<li>tomorrow</li>
-<li>twilight</li>
-<li>atom-dark</li>
-<li>base16-ateliersulphurpool.light</li>
-<li>cb</li>
-<li>duotone-dark</li>
-<li>duotone-earth</li>
-<li>duotone-forest</li>
-<li>duotone-light</li>
-<li>duotone-sea</li>
-<li>duotone-space</li>
-<li>ghcolors</li>
-<li>hopscotch</li>
-<li>pojoaque</li>
-<li>vs</li>
-<li>xonokai</li>
-</ul>
-</li>
-<li><p>line_number:</p>
-<ul>
-<li>true (Show line numbers)</li>
-<li>false (Default, Hide line numbers)</li>
-</ul>
-</li>
-<li><p>no_assets</p>
-<ul>
-<li>true (Stop loading asset files)</li>
-<li>false (Default, load script and stylesheets files)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h2><p>You can check out prism-themes project for additional theme preview:</p>
-<p><a href="https://github.com/PrismJS/prism-themes#available-themes" target="_blank" rel="noopener">https://github.com/PrismJS/prism-themes#available-themes</a></p>
-<h2 id="Supported-languages"><a href="#Supported-languages" class="headerlink" title="Supported languages"></a>Supported languages</h2><p>You could find the supported languages here:</p>
-<p><a href="http://prismjs.com/#languages-list" target="_blank" rel="noopener">http://prismjs.com/#languages-list</a></p>
-<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT</p>
+                <h2 id="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"><a href="#头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧" class="headerlink" title="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"></a>头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧</h2><a id="more"></a>
+<h2 id="基于DVWA的文件上传"><a href="#基于DVWA的文件上传" class="headerlink" title="基于DVWA的文件上传"></a>基于DVWA的文件上传</h2><p><strong>（1）LOW级别</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/low.PNG" alt=""><br>low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行<br>php一句话木马如下所示<br><code>&lt;?php @eval($_POST[yjh]);?&gt;</code><br>上传结果如下所示<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/1.PNG" alt=""><br>这时候就可以上菜刀连了<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/2.PNG" alt=""><br>这就算是一次简单的上传了<br><strong>（2）Medium级别</strong><br>这个级别再上传php文件就不行了<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/3.PNG" alt=""><br>这时候就要靠抓包了，上传png文件然后抓包，把feilname的后缀改为php，再把burp给off掉就能上传上去了，之后就能上菜刀连了<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/4.PNG" alt=""><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/5.PNG" alt=""></p>
+<p><strong>（3）High级别</strong><br>这道题目需要上传的是自制的图片，其中附带有一句话木马<br>需要的原材料有：一张图片，写好的一句话木马，里面写上cmd的bat文件<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/6.PNG" alt=""><br>然后打开cmd，敲命令<br><code>copy header.jpg/b+1.php header1.jpg</code><br>把制作好的header1上传上去就能上传成功，之后就能连菜刀了</p>
+<h2 id="南邮题目上传绕过（00截断）"><a href="#南邮题目上传绕过（00截断）" class="headerlink" title="南邮题目上传绕过（00截断）"></a>南邮题目上传绕过（00截断）</h2><p><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/7.PNG" alt=""></p>
+<p><strong>传.jpg类型的文件，结果爆出了一条路径/uploads/</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/8.PNG" alt=""><br><strong>那我传.php的文件</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/9.PNG" alt=""><br><strong>就没有爆出路径</strong><br><strong>所以就抓包，而且是抓上传.jpg文件的包</strong><br><strong>原包</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/10.PNG" alt=""><br><strong>修改过后的包，就是在原来爆出的路径后面加上1.php，注意1.php后面有空格方便找出hex为20的值并改为00（00截断）</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/11.PNG" alt=""><br>爆出flag<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/12.PNG" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>上传绕过的方法很多，还有很长的路要走啊！</strong></p>
 
             </div>
             <hr>
@@ -618,9 +562,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《》
+                    《初窥文件上传》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/hexo-prism-plugin/README.html" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/11/04/chu-kui-wen-jian-shang-chuan/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -661,28 +605,28 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/11/10/shi-yan-ba-writeup/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="实验吧 writeup">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">实验吧 writeup</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            后台登陆
+进入链接查看页面源代码，发现如下所示下面这一行代码是执行上面的sql语句并将结果赋值给result$result=mysqli_query($link,$sql);如果result的结果大于0if(mysqli_num_rows(
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -691,7 +635,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/" target="_blank">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -699,27 +650,27 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="fa fa-dot-circle-o"></i>
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/hexo-prism-plugin/README.html">
+                <a href="/2018/10/27/php-wei-xie-yi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="PHP伪协议">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">PHP伪协议</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo-Prism-Plugin Since highlight.js didn’t support JSX syntax properly, I wrote this plugin to replaceHexo’s default co
+                            php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile(
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-30
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-27
                             </span>
                         <span class="publish-author">
                             
@@ -729,7 +680,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
