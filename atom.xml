@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-05-30T12:03:35.035Z</updated>
+  <updated>2019-06-03T12:37:19.743Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -17,38 +17,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>验证码绕过小技巧</title>
+    <link href="http://dvsx.github.io/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/"/>
+    <id>http://dvsx.github.io/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/</id>
+    <published>2019-06-03T10:39:47.000Z</published>
+    <updated>2019-06-03T12:37:19.743Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。&lt;/p&gt;
+&lt;h2 id=&quot;验证码不刷新（服务器端）&quot;&gt;&lt;a href=&quot;#验证码不刷新（服务器端）&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
+    
+  </entry>
+  
+  <entry>
     <title>文件上传之条件竞争</title>
     <link href="http://dvsx.github.io/2019/04/29/wen-jian-shang-chuan-zhi-tiao-jian-jing-zheng/"/>
     <id>http://dvsx.github.io/2019/04/29/wen-jian-shang-chuan-zhi-tiao-jian-jing-zheng/</id>
     <published>2019-04-29T14:00:58.000Z</published>
-    <updated>2019-05-30T12:03:35.035Z</updated>
+    <updated>2019-06-03T11:12:06.838Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;upload-labs-master第十七关&quot;&gt;&lt;a href=&quot;#upload-labs-master第十七关&quot; class=&quot;headerlink&quot; title=&quot;upload-labs-master第十七关&quot;&gt;&lt;/a&gt;upload-labs-master第十七关&lt;/h1&gt;&lt;p&gt;真的感到写出这个lab的大佬的强大，膜拜~~~&lt;br&gt;&lt;/p&gt;
+      &lt;h2 id=&quot;upload-labs-master第十七关&quot;&gt;&lt;a href=&quot;#upload-labs-master第十七关&quot; class=&quot;headerlink&quot; title=&quot;upload-labs-master第十七关&quot;&gt;&lt;/a&gt;upload-labs-master第十七关&lt;/h2&gt;&lt;p&gt;真的感到写出这个lab的大佬的强大，膜拜~~~&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
     
       <category term="文件上传" scheme="http://dvsx.github.io/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DDCTF writeup</title>
-    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
-    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
-    <published>2019-04-22T05:12:44.000Z</published>
-    <updated>2019-05-30T12:00:09.046Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h1&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
     
   </entry>
   
@@ -77,15 +84,33 @@
   </entry>
   
   <entry>
+    <title>DDCTF writeup</title>
+    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
+    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
+    <published>2019-04-22T05:12:44.000Z</published>
+    <updated>2019-06-03T11:04:11.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>攻防世界writeup</title>
     <link href="http://dvsx.github.io/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/"/>
     <id>http://dvsx.github.io/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/</id>
     <published>2019-04-09T07:57:30.000Z</published>
-    <updated>2019-05-30T12:02:28.523Z</updated>
+    <updated>2019-06-03T11:10:45.894Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;攻防世界-confusion1&quot;&gt;&lt;a href=&quot;#攻防世界-confusion1&quot; class=&quot;headerlink&quot; title=&quot;攻防世界 confusion1&quot;&gt;&lt;/a&gt;攻防世界 confusion1&lt;/h1&gt;&lt;p&gt;第一次接触这样的漏洞，认真学习了一波&lt;br&gt;&lt;/p&gt;
+      &lt;h2 id=&quot;攻防世界-confusion1&quot;&gt;&lt;a href=&quot;#攻防世界-confusion1&quot; class=&quot;headerlink&quot; title=&quot;攻防世界 confusion1&quot;&gt;&lt;/a&gt;攻防世界 confusion1&lt;/h2&gt;&lt;p&gt;第一次接触这样的漏洞，认真学习了一波&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -149,11 +174,11 @@
     <link href="http://dvsx.github.io/2018/12/27/i-chun-qiu-wp/"/>
     <id>http://dvsx.github.io/2018/12/27/i-chun-qiu-wp/</id>
     <published>2018-12-27T13:13:30.000Z</published>
-    <updated>2019-04-23T00:32:55.693Z</updated>
+    <updated>2019-06-03T11:06:19.308Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&quot;&gt;&lt;a href=&quot;#我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&quot; class=&quot;headerlink&quot; title=&quot;我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&quot;&gt;&lt;/a&gt;我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&lt;/h2&gt;
+      &lt;h1 id=&quot;我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&quot;&gt;&lt;a href=&quot;#我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&quot; class=&quot;headerlink&quot; title=&quot;我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&quot;&gt;&lt;/a&gt;我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！&lt;/h1&gt;
     
     </summary>
     
@@ -203,11 +228,11 @@
     <link href="http://dvsx.github.io/2018/11/30/php-fan-xu-lie-hua-lou-dong/"/>
     <id>http://dvsx.github.io/2018/11/30/php-fan-xu-lie-hua-lou-dong/</id>
     <published>2018-11-30T11:38:34.000Z</published>
-    <updated>2018-11-30T12:47:51.079Z</updated>
+    <updated>2019-06-03T10:59:25.048Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;漏洞简介&quot;&gt;&lt;a href=&quot;#漏洞简介&quot; class=&quot;headerlink&quot; title=&quot;漏洞简介&quot;&gt;&lt;/a&gt;漏洞简介&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;
+      &lt;h2 id=&quot;漏洞简介&quot;&gt;&lt;a href=&quot;#漏洞简介&quot; class=&quot;headerlink&quot; title=&quot;漏洞简介&quot;&gt;&lt;/a&gt;漏洞简介&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -239,11 +264,11 @@
     <link href="http://dvsx.github.io/2018/11/10/shi-yan-ba-writeup/"/>
     <id>http://dvsx.github.io/2018/11/10/shi-yan-ba-writeup/</id>
     <published>2018-11-10T02:01:37.000Z</published>
-    <updated>2019-04-23T00:56:51.252Z</updated>
+    <updated>2019-06-03T11:11:33.354Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;后台登陆&quot;&gt;&lt;a href=&quot;#后台登陆&quot; class=&quot;headerlink&quot; title=&quot;后台登陆&quot;&gt;&lt;/a&gt;后台登陆&lt;/h1&gt;
+      &lt;h2 id=&quot;后台登陆&quot;&gt;&lt;a href=&quot;#后台登陆&quot; class=&quot;headerlink&quot; title=&quot;后台登陆&quot;&gt;&lt;/a&gt;后台登陆&lt;/h2&gt;
     
     </summary>
     

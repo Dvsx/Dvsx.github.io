@@ -4,8 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="PHP反序列化漏洞, god_13">
-    <meta name="description" content="漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而">
+    <meta name="keywords" content="验证码绕过小技巧, god_13">
+    <meta name="description" content="在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。
+验证码不刷新（服务器端）原理为什么会产生验证码不刷新的情况呢？原因就是你第一次输入">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>PHP反序列化漏洞 | god_13</title>
+    <title>验证码绕过小技巧 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -263,7 +264,7 @@
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        PHP反序列化漏洞
+                        验证码绕过小技巧
                     </div>
                 </div>
             </div>
@@ -389,7 +390,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2018-11-30
+                    2019-06-03
                 </div>
 
                 
@@ -400,17 +401,14 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h2><p><strong>PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。</strong><br><a id="more"></a></p>
-<h2 id="深层理解"><a href="#深层理解" class="headerlink" title="深层理解"></a>深层理解</h2><p><strong>为什么要有序列化这种机制呢?因为在传递变量的过程中，有可能遇到变量值要跨脚本文件传递的过程。试想，如果在一个脚本中想要调用之前一个脚本的变量，但是前一个脚本已经执行完毕，所有的变量和内容释放掉了，我们要如何操作呢?难道要前一个脚本不断的循环，等待后面脚本调用?这肯定是不现实的。serialize和unserialize就是用来解决这一问题的。serialize可以将变量转换为字符串并且在转换中可以保存当前变量的值；unserialize则可以将serialize生成的字符串变换回变量。</strong></p>
-<h2 id="magic函数"><a href="#magic函数" class="headerlink" title="magic函数"></a>magic函数</h2><p>magic函数一般以_开头，通常会因为某些条件而触发不用我们手动调用<br>常见的magic函数</p>
-<pre><code>__construct()当一个对象创建时被调用
-__destruct()当一个对象销毁时被调用
-__toString()当一个对象被当作一个字符串使用
-__sleep() 在对象在被序列化之前运行
-__wakeup将在序列化之后立即被调用
-</code></pre><h2 id="反序列化漏洞需要满足两个条件"><a href="#反序列化漏洞需要满足两个条件" class="headerlink" title="反序列化漏洞需要满足两个条件"></a>反序列化漏洞需要满足两个条件</h2><pre><code>1、程序中存在序列化字符串的输入点
-2、程序中存在可以利用的magic函数
-</code></pre>
+                <p>在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。</p>
+<h2 id="验证码不刷新（服务器端）"><a href="#验证码不刷新（服务器端）" class="headerlink" title="验证码不刷新（服务器端）"></a>验证码不刷新（服务器端）</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>为什么会产生验证码不刷新的情况呢？原因就是你第一次输入的错误信息产生的session存储在服务器里，这时我们用抓包工具抓个包就可以用初始的那个验证码爆破了</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>0x00<br>Pikachu平台上的环境<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/1.PNG" alt=""><br>抓包显示<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/2.PNG" alt=""><br>说明此时的用户名或密码错误，现在我们不改验证码，只改密码为正确密码123456，再go一下<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/3.PNG" alt=""><br>登陆成功，说明验证码不刷新，确实可以直接就爆破的<br>0x01<br>还有一种情况是验证码在特定条件下不会刷新，比如失败后弹框，只要不点击取消或者确定，验证码就一直不刷新，这时候也可以进行爆破的</p>
+<h2 id="验证码刷新（客户端）"><a href="#验证码刷新（客户端）" class="headerlink" title="验证码刷新（客户端）"></a>验证码刷新（客户端）</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>这种情况在早期的一些网站中比较常见，主要是因为程序员在写代码的时候安全意识不足导致的。验证码通常会被他们隐藏在网站的源码中或者高级一点的隐藏在请求的Cookie中，但这两种情况都可以被攻击者轻松绕过。</p>
+<h3 id="验证码藏在源码中"><a href="#验证码藏在源码中" class="headerlink" title="验证码藏在源码中"></a>验证码藏在源码中</h3><p>验证这种情况很简单，我们只需要记住验证码，然后右键打开网站源代码，Ctrl+F搜索，输入刚才的验证码，如果可以成功匹配到，那恭喜你，接下来就可以写工具，提取源码中的验证码并将其放入每次请求的报文中，来进行帐号破解，这里推荐使用python。</p>
+<h2 id="验证码空值绕过"><a href="#验证码空值绕过" class="headerlink" title="验证码空值绕过"></a>验证码空值绕过</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>顾名思义，我们抓一个包，把有关验证码的cookie和参数给删去，那发送给服务器的验证就不起作用了。</p>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>错误的密码，正确的验证码<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/4.PNG" alt=""><br>正确的密码，并把相关的验证信息删除<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/5.PNG" alt=""><br>成功绕过<br>未完待续~~</p>
+
             </div>
             <hr>
 
@@ -565,9 +563,9 @@ __wakeup将在序列化之后立即被调用
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《PHP反序列化漏洞》
+                    《验证码绕过小技巧》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/11/30/php-fan-xu-lie-hua-lou-dong/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -608,27 +606,29 @@ __wakeup将在序列化之后立即被调用
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2018/12/09/bi-sai-xin-de/">
+                <a href="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="比赛心得">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="验证码绕过小技巧">
                         
-                        <span class="card-title">比赛心得</span>
+                        <span class="card-title">验证码绕过小技巧</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            第一次参加线下攻防赛，尽管之前做了一些准备，但真正开始的时候还是有些不知道该做什么。刚开始时，超尴尬，不知道登陆名是什么，本来以为是自己的队名，没想到是自己的名字。。。进入网站发现有两道题，第一步就是用xshell和winscap去连，后来
+                            在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。
+验证码不刷新（服务器端）原理为什么会产生验证码不刷新的情况呢？原因就是你第一次输入
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -637,11 +637,12 @@ __wakeup将在序列化之后立即被调用
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/杂记/" target="_blank">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/漏洞/" target="_blank">
+                        <span class="chip bg-color">漏洞</span>
                     </a>
                     
                 </div>
@@ -655,29 +656,24 @@ __wakeup将在序列化之后立即被调用
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/11/20/dvwa-zhi-nan/">
+                <a href="/2019/04/29/wen-jian-shang-chuan-zhi-tiao-jian-jing-zheng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="DVWA指南">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="文件上传之条件竞争">
                         
-                        <span class="card-title">DVWA指南</span>
+                        <span class="card-title">文件上传之条件竞争</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Brute Force1.LOW级别源代码
-&lt;?php
-
-if( isset( $_GET[ &#39;Login&#39; ] ) ) {
-// Get username
-$user = $_GET[ &#39;username&#
+                            upload-labs-master第十七关真的感到写出这个lab的大佬的强大，膜拜~~~整个lab共计20关，因为最近学长布置了任务让学习一下条件竞争，就开始用这个lab因为主要是讲条件竞争，所以就先记录一下第十七关的学习经历这里先将文件
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-20
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-29
                             </span>
                         <span class="publish-author">
                             
@@ -690,8 +686,8 @@ $user = $_GET[ &#39;username&#
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞学习/" target="_blank">
-                        <span class="chip bg-color">漏洞学习</span>
+                    <a href="/tags/文件上传/" target="_blank">
+                        <span class="chip bg-color">文件上传</span>
                     </a>
                     
                 </div>
