@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-06-03T12:37:19.743Z</updated>
+  <updated>2019-06-04T11:57:58.425Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>XSS</title>
+    <link href="http://dvsx.github.io/2019/06/04/xss/"/>
+    <id>http://dvsx.github.io/2019/06/04/xss/</id>
+    <published>2019-06-04T00:53:13.000Z</published>
+    <updated>2019-06-04T11:57:58.425Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
+    
+  </entry>
   
   <entry>
     <title>验证码绕过小技巧</title>
@@ -61,6 +85,24 @@
   
   <entry>
     <title>DDCTF writeup</title>
+    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
+    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
+    <published>2019-04-22T05:12:44.000Z</published>
+    <updated>2019-06-03T11:04:11.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DDCTF writeup</title>
     <link href="http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
     <id>http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/</id>
     <published>2019-04-22T05:12:44.000Z</published>
@@ -80,24 +122,6 @@
     
     
       <category term="工具" scheme="http://dvsx.github.io/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DDCTF writeup</title>
-    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
-    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
-    <published>2019-04-22T05:12:44.000Z</published>
-    <updated>2019-06-03T11:04:11.391Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
     
   </entry>
   

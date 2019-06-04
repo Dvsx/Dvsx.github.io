@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>XSS</title>
+      <link href="/2019/06/04/xss/"/>
+      <url>/2019/06/04/xss/</url>
+      
+        <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Cross-Site-Scripting简称“CSS”，为了避免与前端叠成样式表的缩写“CSS”冲突，故又称XSS。一般分为反射型，存储型，DOM型。形成XSS的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前端时被当作代码解析从而产生危害。</p><h2 id="反射型XSS（get）"><a href="#反射型XSS（get）" class="headerlink" title="反射型XSS（get）"></a>反射型XSS（get）</h2><p><img src="/2019/06/04/xss/1.PNG" alt=""><br>这是get类型的XSS，只需要输入<br><code>&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;</code><br>即可，但是此处限制了输入长度，我们可以在url里输入，来摆脱长度限制<br><img src="/2019/06/04/xss/2.PNG" alt=""><br>结果成功弹窗<br><img src="/2019/06/04/xss/3.PNG" alt=""></p><h2 id="反射型XSS（post）"><a href="#反射型XSS（post）" class="headerlink" title="反射型XSS（post）"></a>反射型XSS（post）</h2><p>直接post xss语句就行<br><img src="/2019/06/04/xss/4.PNG" alt=""><br>结果成功弹窗<br><img src="/2019/06/04/xss/5.PNG" alt=""></p><h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><p>存储型XSS主要指指XSS语句存储在服务器上，如个人信息或发表文章等地方，当用户访问该页面的时候，会触发代码执行，例如此处是一个留言框<br><img src="/2019/06/04/xss/6.PNG" alt=""><br>我们在留言框里输入XSS语句，就相当于病毒存储在服务器上，当有人访问，就会被触发，从而造成危害<br><img src="/2019/06/04/xss/7.PNG" alt=""></p><h2 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h2><p>DOM型XSS其实是一种特殊的反射型XSS，它是基于DOM文档对象模型的一种漏洞，常见的dom型漏洞是由img标签形成的<br><code>&lt;img src=1 onerror=alert(1)&gt;</code><br>这就是一条最简单的dom型XSS语句<br>源码如下<br><img src="/2019/06/04/xss/8.PNG" alt=""><br>根据源码，我们可以构造payload(字符类型的记得要加引号)<br><code>&#39;&gt; &lt;img src=1 onerror=alert(&quot;xss&quot;)&gt;</code><br><img src="/2019/06/04/xss/9.PNG" alt=""><br>也可以弹窗<br><img src="/2019/06/04/xss/10.PNG" alt=""></p><h2 id="DOM型XSS-X"><a href="#DOM型XSS-X" class="headerlink" title="DOM型XSS-X"></a>DOM型XSS-X</h2><p>这个XSS类型和上面的差别是，第一种xss是会直接反射，就是会直接弹窗，这一种还需要点击才会触发xss<br><img src="/2019/06/04/xss/11.PNG" alt=""><br>点击链接<br><img src="/2019/06/04/xss/12.PNG" alt=""><br>显示出结果<br><img src="/2019/06/04/xss/13.PNG" alt=""></p><h2 id="XSS之过滤"><a href="#XSS之过滤" class="headerlink" title="XSS之过滤"></a>XSS之过滤</h2><p>一些网站会对XSS作出一定的防护，例如对script的过滤<br><img src="/2019/06/04/xss/15.PNG" alt=""><br>这种情况下也可以用dom型的payload来绕过<br><code>&#39;&gt; &lt;img src=1 onerror=alert(&quot;xss&quot;)&gt;</code></p><h2 id="xss之htmlspecialchars"><a href="#xss之htmlspecialchars" class="headerlink" title="xss之htmlspecialchars"></a>xss之htmlspecialchars</h2><p><img src="/2019/06/04/xss/16.PNG" alt=""><br>htmlspecialchars() 函数把预定义的字符转换为 HTML 实体。<br>使用了htmlspecialchars进行处理,是不是就没问题了呢,htmlspecialchars默认不对’处理<br>构造payload<br><code>&#39; onclick=&#39;alert(111)&#39;</code><br>同样可以弹窗</p><h2 id="XSS之href输出"><a href="#XSS之href输出" class="headerlink" title="XSS之href输出"></a>XSS之href输出</h2><p><img src="/2019/06/04/xss/17.PNG" alt=""><br>这种类型的xss你上传的内容都会储存在a标签的href属性里面，可以里利用javascript协议来执行js，从而绕过，构造payload<br><code>javascript:alert(&quot;XSS之href输出&quot;)</code><br>从而弹窗</p><h2 id="XSS之js输出"><a href="#XSS之js输出" class="headerlink" title="XSS之js输出"></a>XSS之js输出</h2><p>这种类型的xss和href类型的有什么区别呢？最大的区别就是虽然都存储到了前端，但是位置不同，比如，我们传入参数“111”，会发现参数存储到了这里<img src="/2019/06/04/xss/18.PNG" alt=""><br>只要我们构造出来xss语句，先让上一个script标签闭合，然后构造xss语句即可，payload如下<br><code>a&#39; &lt;/script&gt;&lt;script&gt;alert(111)&lt;/script&gt;</code><br>就可以触发xss了</p><p>未完待续~~</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>验证码绕过小技巧</title>
       <link href="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/"/>
       <url>/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/</url>
@@ -43,25 +62,6 @@
     
     <entry>
       <title>DDCTF writeup</title>
-      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
-      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
-      
-        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>DDCTF writeup</title>
       <link href="/2019/04/22/ddctf-writeup/"/>
       <url>/2019/04/22/ddctf-writeup/</url>
       
@@ -72,6 +72,25 @@
         <tags>
             
             <tag> CTF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>DDCTF writeup</title>
+      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
+      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
             
         </tags>
       
