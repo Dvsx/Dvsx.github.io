@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>CSRF</title>
+      <link href="/2019/06/10/csrf/"/>
+      <url>/2019/06/10/csrf/</url>
+      
+        <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>CSRF是跨站请求伪造攻击的简称，在CSRF的攻击场景中攻击者会伪造一个请求（一般是一个链接），然后哦欺骗用户进行点击，用户一旦点击这个链接，整个攻击就完成了。所以CSRF也叫“one click”攻击。</p><h2 id="CSRF-GET"><a href="#CSRF-GET" class="headerlink" title="CSRF(GET)"></a>CSRF(GET)</h2><p>get方式的csrf最容易理解。想象一个场景，小王已经登陆了一个网站，这个网站有csrf漏洞，他点击了一个修改个人信息的请求，由于他在登陆状态，点击完之后就会完成个人信息修改的操作。比如链接的url一部分为<br><code>http://www.xxx.com/edit.php?username=xiaoli&amp;password=123456</code><br>由于没有验证的过程，所以点击这个链接就会直接把自己的个人信息给修改了。想要攻击的话，就可以使用工具把url先缩短，然后上传到网站的评论区或其他能上传的地方，诱导管理员点击就行了。</p><h2 id="CSRF-POST"><a href="#CSRF-POST" class="headerlink" title="CSRF(POST)"></a>CSRF(POST)</h2><p>这个也一样，构造一个链接，里面有自己构造的网页，然后是post请求，比如下面的一个<br><img src="/2019/06/10/csrf/1.PNG" alt=""><br>构造的是一个添加管理员的请求，由于网站没有CSRF的验证，管理员点击链接之后就相当于添加了一个管理员。</p><h2 id="CSRF-TOOKEN"><a href="#CSRF-TOOKEN" class="headerlink" title="CSRF(TOOKEN)"></a>CSRF(TOOKEN)</h2><p>这个是添加了tooken的验证，先要绕过tooken就要结合xss与csrf，找到xss的注入点，通过xss获取登陆的令牌tooken，然后在构造的链接里加上tooken，然后绕过。<br>未完待续~~</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>XSS</title>
       <link href="/2019/06/04/xss/"/>
       <url>/2019/06/04/xss/</url>
