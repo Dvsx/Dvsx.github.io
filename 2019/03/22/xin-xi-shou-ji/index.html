@@ -396,14 +396,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        850
+                        1.1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        3 Min
+                        4 Min
                     </div>
                     
                 
@@ -415,7 +415,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>信息收集对于渗透测试前期来说是非常重要的，因为只有我们掌握了目标网站或目标主机足够多的信息之后，我们才能更好地对其进行漏洞检测。正所谓，知己知彼百战百胜！<br>信息收集的方式可以分为两种：<font color="red">主动和被动</font><br><strong>主动信息收集：通过直接访问、扫描网站，这种流量将流经网站</strong><br><strong>被动信息收集：利用第三方的服务对目标进行访问了解，比如：Google搜索</strong><br><a id="more"></a></p>
-<h3 id="Google-Hacking"><a href="#Google-Hacking" class="headerlink" title="Google Hacking"></a>Google Hacking</h3><p>Google Hacking 是利用谷歌搜索的强大，来在浩瀚的互联网中搜索到我们需要的信息。轻量级的搜索可以搜素出一些遗留后门，不想被发现的后台入口，中量级的搜索出一些用户信息泄露，源代码泄露，未授权访问等等，重量级的则可能是mdb文件下载，CMS 未被锁定install页面，网站配置密码，php远程文件包含漏洞等重要信息。</p>
+<h2 id="Google-Hacking"><a href="#Google-Hacking" class="headerlink" title="Google Hacking"></a>Google Hacking</h2><p>Google Hacking 是利用谷歌搜索的强大，来在浩瀚的互联网中搜索到我们需要的信息。轻量级的搜索可以搜素出一些遗留后门，不想被发现的后台入口，中量级的搜索出一些用户信息泄露，源代码泄露，未授权访问等等，重量级的则可能是mdb文件下载，CMS 未被锁定install页面，网站配置密码，php远程文件包含漏洞等重要信息。</p>
 <ul>
 <li>intitle：搜索网页标题中包含有特定字符的网页。例如intitle: 后台，这样网页标题中带有‘后台’的网页都会被搜索出来。</li>
 <li>inurl：搜索包含有特定字符的URL。例如inurl:admin，可以用来查找网站后台。</li>
@@ -432,7 +432,48 @@
 <li>allinurl: 结果的url中包含多个关键词。例如allinurl:byr jobs，等于inurl:byr inurl:jobs。allinurl也是排他性指令</li>
 <li>define: 查询关键词的词义，起的是字典的作用。Google会返回包含查询关键词定义的网页，例define:computer.</li>
 </ul>
-
+<h3 id="Google-hacking-实例"><a href="#Google-hacking-实例" class="headerlink" title="Google hacking 实例"></a>Google hacking 实例</h3><pre><code>site:xxxx.com intext:管理
+site:xxxx.com inurl:login
+site:xxxx.com intitle:管理
+site:xxxx.com filetype:asp//查看服务器使用的程序
+site:xxxx.com filetype:php
+site:xxxx.com filetype:aspx
+site:xxxx.com inurl:file//查看文件上传漏洞
+site:xxxx.com inurl:load
+site:xxxx.com//收集域名
+site:Github.com sa password//github泄露
+site:Github.com root password
+site:Github.com User ID=&#39;sa&#39;;Password
+site:Github.com smtp
+site:Github.com smtp @qq.com
+site:Github.com smtp @126.com
+site:Github.com smtp @163.com
+site:Github.com smtp @sina.com.cn
+site:Github.com smtp password
+site:Github.com String password smtp
+inurl:auth_user_file.txt//敏感信息泄露
+inurl:orders.txt
+inurl:”wwwroot/*.”
+inurl:adpassword.txt
+inurl:webeditor.php
+inurl:file_upload.php
+inurl:gov filetype:xls “restricted”
+index of ftp +.mdb allinurl:/cgi-bin/ +mailto
+intitle:”Index of” .sh_history
+intitle:”Index of” .bash_history
+intitle:”index of” passwd
+intitle:”index of” people.lst
+intitle:”index of” pwd.db
+intitle:”index of” etc/shadow
+intitle:”index of” spwd
+intitle:”index of” master.passwd
+intitle:”index of” htpasswd
+inurl:forward filetype:forward –cvs
+filetype:mail intext:password subject
+filetype:eml intext:password subject
+filetype:mbx intext:password subject
+filetype:mbx intext:password subject
+</code></pre>
             </div>
             <hr>
 
@@ -859,7 +900,7 @@ setoolkit简介setoolkit是kali下的社会工程
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">14.3k</span>
+                <span class="white-color">14.7k</span>
             
 
             
