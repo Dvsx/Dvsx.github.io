@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>渗透测试靶机练习 DC-1</title>
+      <link href="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/"/>
+      <url>/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考"><a href="#第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考" class="headerlink" title="第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考"></a>第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考</h1><h2 id="靶机介绍"><a href="#靶机介绍" class="headerlink" title="靶机介绍"></a>靶机介绍</h2><p>我所用的靶机是在vulnhub上下载的，网址如下<br><code>https://www.vulnhub.com/?page=1</code><br>里面有许多靶机可以供我们练习，我之后也将会花很多时间去练习，来提高自己的技术。对DC-1的介绍如下<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/1.PNG" alt=""><br>大概意思啊是这个靶机需要你获得root权限，并找到所有的5个flag</p><h2 id="入侵靶机"><a href="#入侵靶机" class="headerlink" title="入侵靶机"></a>入侵靶机</h2><p>DC-1下载好之后，可以在VMware中打开，是一个命令行界面的linux操作系统。本来我还纳闷呢，没有密码要我怎么做啊，后来才知道，我们就是要渗透进去嘛~~真菜！<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/2.PNG" alt=""></p><h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><p>既然DC-1是和我们在同一个局域网，我们可以使用arp-scan去主机发现，命令如下<br><code>arp-scan -l</code><br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/3.PNG" alt=""><br>发现第三个是目标主机，ip：192.168.75.134</p><h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><p>按照正常的渗透测试流程，其实我们是要先信息收集的，现在就不需要了，直接扫描端口，查看开放了哪些服务，命令如下<br><code>nmap -sV -p- 192.168.75.134</code><br>-p-表示扫描0-65535的所有的端口<br>结果如下<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/4.PNG" alt=""><br>发现80端口开着，那么就应该可以访问网页了<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/5.PNG" alt=""><br>发现下面有一句“Powered by Drupal”，说明用的是Drupal的框架。<br>还有一个叫做wappalyzer的插件可以鉴别出使用的是什么CMS，可以进行网站指纹识别。</p><h2 id="漏洞查找"><a href="#漏洞查找" class="headerlink" title="漏洞查找"></a>漏洞查找</h2><p>kali上自带的msfconsose可以自动化查找出一些框架的漏洞，并加以利用（都是已经公布过的）。第一次使用之前，需要先进行一些配置，主要是启动msf的数据库连接并进行初始化。<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/6.PNG" alt=""><br>之后输入msfconsole就可以启动这个工具了，然后直接search框架名字，就可以找到他存在的漏洞了<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/7.PNG" alt=""><br>随便找一个利用一下，还要show options一下，发现里面的RHOSRTS还需要自己设置一下<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/8.PNG" alt=""><br>设置完之后就可以利用了<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/9.PNG" alt=""></p><h2 id="get-shell"><a href="#get-shell" class="headerlink" title="get shell"></a>get shell</h2><p>通过上面的shell命令，我们已经可以对靶机的目录进行操作了，ls发现flag1.txt，cat查看内容<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/10.PNG" alt=""><br>里面给了提示：<br><code>Every good CMS needs a config file - and so do you.</code><br>让我们去看配置文件，drupal的配置文件默认是/sites/defult/settings.php,我们切换过去看看<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/11.PNG" alt=""><br>发现又给出了提示，说暴力破解不是唯一的方法，还给出了数据库的账号和密码，所以就想到登陆一下看看里面的用户能不能得到网站登陆的账号和密码。但是发现在shell下的mysql无法打开。<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/12.PNG" alt=""><br>所以就要另找思路了。</p><h2 id="另寻思路"><a href="#另寻思路" class="headerlink" title="另寻思路"></a>另寻思路</h2><p>linux下有两个专门存在的存放密码的路径，一个是/etc/passwd,一个是/etc/shadow。</p><pre><code>/etc/passwd是用户数据库，其中的域给出了用户名、加密口令和用户的其他信息. /etc/shadow是在安装了影子(shadow)口令软件的系统上的影子口令文件。影子口令文件将/etc/passwd 文件中的加密口令移动到/etc/shadow中，而后者只对超级用户root可读。这使破译口令更困难，以此增加系统的安全性。</code></pre><p>既然我们看不了shadow,那么就直接看passwd的内容吧<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/13.PNG" alt=""><br>发现flag4用户。这里可以用到hydra+john the Ripper爆破。<br>hydra是kali自带的工具，john需要下载使用</p><pre><code>下载：wget http://www.openwall.com/john/j/john-1.8.0.tar.gz解压：tar -xvf john-1.8.0.tar.gz进入src目录：cd john-1.8.0 &amp;&amp; cd srcmake:选择自己当前的操作系统然后就可以爆破了</code></pre><p><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/14.PNG" alt=""><br>得到flag4用户的密码为orange<br>通过ssh远程连接<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/15.PNG" alt=""><br>然后再用上面得到的mysql账号和密码去登陆<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/16.PNG" alt=""><br>这样就可以通过mysql进行数据库的一系列操作了</p><pre><code>show databases;use drupaldb;show tables;select * from users;</code></pre><p><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/17.PNG" alt=""><br>得到了用户的账号和密码，但是密码经过加密了，百度查找drupal重置密码的方法，直接把user表里的管理员字段改为<br><code>$S$CDbdwZvjHQ09IVRs88G0fnaxPr50/kb81YI9.8M/D9okW7J/s5U4</code><br>然后就可以用下面的密码登陆了！<br><code>password</code><br>原理就是字符串的SHA-512加密运算的结果就是$S$CDbdwZvjHQ09IVRs88G0fnaxPr50/kb81YI9.8M/D9okW7J/s5U4<br>现在成功的修改了密码<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/18.PNG" alt=""><br>尝试在网站上登陆，可以成功登陆，并且发现提示<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/19.PNG" alt=""></p><h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>根据上面的提示发现perm，是让我们通过suid提权，SUID可以让调用者以文件拥有者的身份运行该文件，所以我们利用SUID提权的思路就是运行root用户所拥有的SUID的文件，那么我们运行该文件的时候就得获得root用户的身份了。</p><pre><code>想要有root权限：1.以root账户登陆（爆破未果）2.普通用户登陆，查找具有suid权限位的命令去get shell</code></pre><p>suid提权的详细介绍连接如下<br><code>https://blog.csdn.net/qq_36119192/article/details/84872644</code><br>在这里经过测试发现可以使用find,命令如下<br><code>find / -type f -perm -u=s 2&gt;/dev/null</code><br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/20.PNG" alt=""><br>发现find命令被设置为suid权限位</p><pre><code>~$ touch getflag~$ find / -typefind / -type f -name getflag -exec &quot;whoami&quot; \;root~$ find / -type f -name getflag -exec &quot;/bin/sh&quot; \;# ls(成功提权)</code></pre><p>上面的命令意思是先通过touch创建一个文件，然后通过find…exec “…”查找文件后并执行命令<br>可以拿到root权限<br><img src="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/21.PNG" alt=""><br>至此，本次渗透测试就算结束了，第一次发渗透测试的博客，希望自己能够坚持下去，保持对渗透测试的热情，加油！</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 渗透测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Sql-inject</title>
       <link href="/2019/06/10/sql-inject/"/>
       <url>/2019/06/10/sql-inject/</url>
@@ -99,25 +118,6 @@
     
     
     <entry>
-      <title>sqlmap使用详解</title>
-      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
-      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
-      
-        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>DDCTF writeup</title>
       <link href="/2019/04/22/ddctf-writeup/"/>
       <url>/2019/04/22/ddctf-writeup/</url>
@@ -129,6 +129,25 @@
         <tags>
             
             <tag> CTF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>sqlmap使用详解</title>
+      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
+      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
             
         </tags>
       
