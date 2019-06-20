@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-06-15T11:28:56.222Z</updated>
+  <updated>2019-06-20T08:14:57.264Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dedeCMS后台代码执行漏洞复现[CNVD-2018-01221]</title>
+    <link href="http://dvsx.github.io/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/"/>
+    <id>http://dvsx.github.io/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/</id>
+    <published>2019-06-19T13:48:23.000Z</published>
+    <updated>2019-06-20T08:14:57.264Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;复现的第一个漏洞，CNVD-2018-01221，虽然有些鸡肋（要拿到管理员权限），但还是从中学到了很多&quot;&gt;&lt;a href=&quot;#复现的第一个漏洞，CNVD-2018-01221，虽然有些鸡肋（要拿到管理员权限），但还是从中学到了很多&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>渗透测试靶机练习 DC-1</title>
@@ -388,22 +412,6 @@
     
     
       <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP伪协议</title>
-    <link href="http://dvsx.github.io/2018/10/27/php-wei-xie-yi/"/>
-    <id>http://dvsx.github.io/2018/10/27/php-wei-xie-yi/</id>
-    <published>2018-10-27T03:48:29.000Z</published>
-    <updated>2019-04-23T00:41:57.842Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;php-filter的妙用&quot;&gt;&lt;a href=&quot;#php-filter的妙用&quot; class=&quot;headerlink&quot; title=&quot;php://filter的妙用&quot;&gt;&lt;/a&gt;php://filter的妙用&lt;/h1&gt;&lt;h2 id=&quot;1-解释&quot;&gt;&lt;a href=&quot;#1-解释&quot; class=&quot;headerlink&quot; title=&quot;1.解释&quot;&gt;&lt;/a&gt;1.解释&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
     
   </entry>
   
