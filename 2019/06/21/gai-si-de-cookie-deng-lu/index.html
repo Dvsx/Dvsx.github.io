@@ -5,7 +5,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="该死的cookie登陆, god_13">
-    <meta name="description" content="该死的cookie登陆 | god_13">
+    <meta name="description" content="通过xss获取到的cookie，可以实现免密登陆，实际操作方法是获取到cookie时，把cookie存放到本地浏览器，url是登陆之后进入的页面，直接回车就能登陆进去了。之前一直遇到的问题是，一直用一个浏览器进行操作，尽管我把cookie给">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -372,9 +372,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/。。。/" target="_blank">
+                                <span class="chip bg-color">。。。</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -392,7 +396,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        0
+                        115
                     </div>
                     
 
@@ -410,7 +414,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>通过xss获取到的cookie，可以实现免密登陆，实际操作方法是获取到cookie时，把cookie存放到本地浏览器，url是登陆之后进入的页面，直接回车就能登陆进去了。<br>之前一直遇到的问题是，一直用一个浏览器进行操作，尽管我把cookie给删除了，但是还是不能完成登陆，只能再用另一个浏览器进行登陆了。。。</p>
+
             </div>
             <hr>
 
@@ -844,7 +849,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">18k</span>
+                <span class="white-color">18.1k</span>
             
 
             
