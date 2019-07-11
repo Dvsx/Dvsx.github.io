@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-11T03:48:07.392Z</updated>
+  <updated>2019-07-11T07:37:37.198Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://dvsx.github.io/2019/07/11/ubuntu-16-04-geng-huan-guo-nei-yuan/"/>
+    <id>http://dvsx.github.io/2019/07/11/ubuntu-16-04-geng-huan-guo-nei-yuan/</id>
+    <published>2019-07-11T07:32:01.133Z</published>
+    <updated>2019-07-11T07:37:37.198Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;hr&gt;
+&lt;p&gt;title: Ubuntu 16.04更换国内源&lt;br&gt;date: 2019-07-11 15:32:01&lt;/p&gt;
+&lt;h2 id=&quot;tags-换源&quot;&gt;&lt;a href=&quot;#tags-换源&quot; class=&quot;headerlink&quot; title=&quot;tags:
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>wordpresss 插件XSS漏洞复现</title>
@@ -228,24 +252,6 @@
   </entry>
   
   <entry>
-    <title>DDCTF writeup</title>
-    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
-    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
-    <published>2019-04-22T05:12:44.000Z</published>
-    <updated>2019-06-03T11:04:11.391Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>sqlmap使用详解</title>
     <link href="http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
     <id>http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/</id>
@@ -266,6 +272,24 @@
     
     
       <category term="工具" scheme="http://dvsx.github.io/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DDCTF writeup</title>
+    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
+    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
+    <published>2019-04-22T05:12:44.000Z</published>
+    <updated>2019-06-03T11:04:11.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
     
   </entry>
   
@@ -406,24 +430,6 @@
     
     
       <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DVWA指南</title>
-    <link href="http://dvsx.github.io/2018/11/20/dvwa-zhi-nan/"/>
-    <id>http://dvsx.github.io/2018/11/20/dvwa-zhi-nan/</id>
-    <published>2018-11-20T11:10:05.000Z</published>
-    <updated>2019-04-23T00:31:13.680Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Brute-Force&quot;&gt;&lt;a href=&quot;#Brute-Force&quot; class=&quot;headerlink&quot; title=&quot;Brute Force&quot;&gt;&lt;/a&gt;Brute Force&lt;/h1&gt;&lt;h2 id=&quot;1-LOW级别&quot;&gt;&lt;a href=&quot;#1-LOW级别&quot; class=&quot;headerlink&quot; title=&quot;1.LOW级别&quot;&gt;&lt;/a&gt;1.LOW级别&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2018/11/20/dvwa-zhi-nan/1.PNG&quot; alt=&quot;&quot;&gt;&lt;br&gt;源代码&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="漏洞学习" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
