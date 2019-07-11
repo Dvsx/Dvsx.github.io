@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-11T08:00:48.191Z</updated>
+  <updated>2019-07-11T08:53:09.089Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vulhub漏洞环境搭建</title>
+    <link href="http://dvsx.github.io/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/"/>
+    <id>http://dvsx.github.io/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/</id>
+    <published>2019-07-11T08:53:09.000Z</published>
+    <updated>2019-07-11T08:53:09.089Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>ubuntu 换源</title>
@@ -252,24 +266,6 @@
   </entry>
   
   <entry>
-    <title>DDCTF writeup</title>
-    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
-    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
-    <published>2019-04-22T05:12:44.000Z</published>
-    <updated>2019-06-03T11:04:11.391Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>sqlmap使用详解</title>
     <link href="http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
     <id>http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/</id>
@@ -290,6 +286,24 @@
     
     
       <category term="工具" scheme="http://dvsx.github.io/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DDCTF writeup</title>
+    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
+    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
+    <published>2019-04-22T05:12:44.000Z</published>
+    <updated>2019-06-03T11:04:11.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
     
   </entry>
   
@@ -412,24 +426,6 @@
     
     
       <category term="杂记" scheme="http://dvsx.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP反序列化漏洞</title>
-    <link href="http://dvsx.github.io/2018/11/30/php-fan-xu-lie-hua-lou-dong/"/>
-    <id>http://dvsx.github.io/2018/11/30/php-fan-xu-lie-hua-lou-dong/</id>
-    <published>2018-11-30T11:38:34.000Z</published>
-    <updated>2019-06-03T10:59:25.048Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;漏洞简介&quot;&gt;&lt;a href=&quot;#漏洞简介&quot; class=&quot;headerlink&quot; title=&quot;漏洞简介&quot;&gt;&lt;/a&gt;漏洞简介&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
     
   </entry>
   
