@@ -61,11 +61,11 @@
     
     
     <entry>
-      <title>Vulhub漏洞环境搭建</title>
+      <title>Vulhub vulapps漏洞环境搭建</title>
       <link href="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/"/>
       <url>/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/</url>
       
-        <content type="html"><![CDATA[<h2 id="Vulhub简介"><a href="#Vulhub简介" class="headerlink" title="Vulhub简介"></a>Vulhub简介</h2><p>Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。</p><h2 id="Vulhub下载"><a href="#Vulhub下载" class="headerlink" title="Vulhub下载"></a>Vulhub下载</h2><p>地址：</p><pre><code>https://github.com/vulhub/vulhub</code></pre><h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><p>安装docker的命令</p><pre><code>apt-get install docker.io</code></pre><h2 id="docker-compose安装"><a href="#docker-compose安装" class="headerlink" title="docker-compose安装"></a>docker-compose安装</h2><p>命令</p><pre><code>apt  install docker-compose</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><pre><code>service docker startcd vulhub/weblogic/CVE-2018-2894(以这一漏洞为例)docker-compose up -d(开始搭建环境)</code></pre><h2 id="查看docker进程"><a href="#查看docker进程" class="headerlink" title="查看docker进程"></a>查看docker进程</h2><pre><code>docker ps</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/1.PNG" alt=""><br>发现是在7001端口，那就先ifconfig查看下ip，再去访问网站就行了</p><h2 id="结束docker进程"><a href="#结束docker进程" class="headerlink" title="结束docker进程"></a>结束docker进程</h2><pre><code>docker-compose down</code></pre>]]></content>
+        <content type="html"><![CDATA[<h2 id="Vulhub简介"><a href="#Vulhub简介" class="headerlink" title="Vulhub简介"></a>Vulhub简介</h2><p>Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。</p><h2 id="Vulhub下载"><a href="#Vulhub下载" class="headerlink" title="Vulhub下载"></a>Vulhub下载</h2><p>地址：</p><pre><code>https://github.com/vulhub/vulhub</code></pre><h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><p>安装docker的命令</p><pre><code>apt-get install docker.io</code></pre><h2 id="docker-compose安装"><a href="#docker-compose安装" class="headerlink" title="docker-compose安装"></a>docker-compose安装</h2><p>命令</p><pre><code>apt  install docker-compose</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><pre><code>service docker startcd vulhub/weblogic/CVE-2018-2894(以这一漏洞为例)docker-compose up -d(开始搭建环境)</code></pre><h2 id="查看docker进程"><a href="#查看docker进程" class="headerlink" title="查看docker进程"></a>查看docker进程</h2><pre><code>docker ps</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/1.PNG" alt=""><br>发现是在7001端口，那就先ifconfig查看下ip，再去访问网站就行了</p><h2 id="结束docker进程"><a href="#结束docker进程" class="headerlink" title="结束docker进程"></a>结束docker进程</h2><pre><code>docker-compose down</code></pre><h2 id="进入docker容器"><a href="#进入docker容器" class="headerlink" title="进入docker容器"></a>进入docker容器</h2><pre><code>docker exec -it docker_name bin/bash</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/2.PNG" alt=""></p><h2 id="vulapps简介"><a href="#vulapps简介" class="headerlink" title="vulapps简介"></a>vulapps简介</h2><p>和vulhub一样，都是github上的项目，上面收集了各种漏洞环境，统一采用的是dockerfile的形式，使用的时候需要查看相应漏洞的README文件，以 Struts2 S2-037 漏洞环境为例：<br>1.获取镜像</p><pre><code>docker pull medicean/vulapps:s_struts2_s2-037</code></pre><p>2.创建并启动容器</p><pre><code>docker run -d -p 80:8080 medicean/vulapps:s_struts2_s2-037</code></pre><p>访问 <a href="http://127.0.0.1/" target="_blank" rel="noopener">http://127.0.0.1/</a> 即可访问启动好的 s2-037 环境.不同的环境端口设置可能不一样，根据对应的README文件来操作就行<br>3.终止一个容器</p><pre><code>docker stop docker_name</code></pre>]]></content>
       
       
       
@@ -270,25 +270,6 @@
     
     
     <entry>
-      <title>sqlmap使用详解</title>
-      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
-      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
-      
-        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>DDCTF writeup</title>
       <link href="/2019/04/22/ddctf-writeup/"/>
       <url>/2019/04/22/ddctf-writeup/</url>
@@ -300,6 +281,25 @@
         <tags>
             
             <tag> CTF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>sqlmap使用详解</title>
+      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
+      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
             
         </tags>
       

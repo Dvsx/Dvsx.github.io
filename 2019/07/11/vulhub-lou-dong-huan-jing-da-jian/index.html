@@ -4,7 +4,7 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Vulhub漏洞环境搭建, god_13">
+    <meta name="keywords" content="Vulhub vulapps漏洞环境搭建, god_13">
     <meta name="description" content="Vulhub简介Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。
 Vulhub下载地址：
 https://git">
@@ -15,7 +15,7 @@ https://git">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Vulhub漏洞环境搭建 | god_13</title>
+    <title>Vulhub vulapps漏洞环境搭建 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -259,13 +259,13 @@ https://git">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Vulhub漏洞环境搭建
+                        Vulhub vulapps漏洞环境搭建
                     </div>
                 </div>
             </div>
@@ -398,7 +398,7 @@ https://git">
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        173
+                        328
                     </div>
                     
 
@@ -436,6 +436,14 @@ docker-compose up -d(开始搭建环境)
 </code></pre><h2 id="查看docker进程"><a href="#查看docker进程" class="headerlink" title="查看docker进程"></a>查看docker进程</h2><pre><code>docker ps
 </code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/1.PNG" alt=""><br>发现是在7001端口，那就先ifconfig查看下ip，再去访问网站就行了</p>
 <h2 id="结束docker进程"><a href="#结束docker进程" class="headerlink" title="结束docker进程"></a>结束docker进程</h2><pre><code>docker-compose down
+</code></pre><h2 id="进入docker容器"><a href="#进入docker容器" class="headerlink" title="进入docker容器"></a>进入docker容器</h2><pre><code>docker exec -it docker_name bin/bash
+</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/2.PNG" alt=""></p>
+<h2 id="vulapps简介"><a href="#vulapps简介" class="headerlink" title="vulapps简介"></a>vulapps简介</h2><p>和vulhub一样，都是github上的项目，上面收集了各种漏洞环境，统一采用的是dockerfile的形式，使用的时候需要查看相应漏洞的README文件，以 Struts2 S2-037 漏洞环境为例：<br>1.获取镜像</p>
+<pre><code>docker pull medicean/vulapps:s_struts2_s2-037
+</code></pre><p>2.创建并启动容器</p>
+<pre><code>docker run -d -p 80:8080 medicean/vulapps:s_struts2_s2-037
+</code></pre><p>访问 <a href="http://127.0.0.1/" target="_blank" rel="noopener">http://127.0.0.1/</a> 即可访问启动好的 s2-037 环境.不同的环境端口设置可能不一样，根据对应的README文件来操作就行<br>3.终止一个容器</p>
+<pre><code>docker stop docker_name
 </code></pre>
             </div>
             <hr>
@@ -591,7 +599,7 @@ docker-compose up -d(开始搭建环境)
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《Vulhub漏洞环境搭建》
+                    《Vulhub vulapps漏洞环境搭建》
                 </span> by
             <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
@@ -892,7 +900,7 @@ docker-compose up -d(开始搭建环境)
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">20.4k</span>
+                <span class="white-color">20.6k</span>
             
 
             
