@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-15T01:54:32.000Z</updated>
+  <updated>2019-07-16T07:10:22.659Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mysql MOF UDF 反弹端口提权</title>
+    <link href="http://dvsx.github.io/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/"/>
+    <id>http://dvsx.github.io/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/</id>
+    <published>2019-07-16T01:08:54.000Z</published>
+    <updated>2019-07-16T07:10:22.659Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;MOF提权&quot;&gt;&lt;a href=&quot;#MOF提权&quot; class=&quot;headerlink&quot; title=&quot;MOF提权&quot;&gt;&lt;/a&gt;MOF提权&lt;/h2&gt;&lt;p&gt;关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的
+        
+      
+    
+    </summary>
+    
+    
+      <category term="提权" scheme="http://dvsx.github.io/tags/%E6%8F%90%E6%9D%83/"/>
+    
+  </entry>
   
   <entry>
     <title>身份认证绕过漏洞(CVE-2012-2122)</title>
@@ -440,20 +464,6 @@
     
     
       <category term="渗透" scheme="http://dvsx.github.io/tags/%E6%B8%97%E9%80%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>正则表达式</title>
-    <link href="http://dvsx.github.io/2018/12/27/zheng-ze-biao-da-shi/"/>
-    <id>http://dvsx.github.io/2018/12/27/zheng-ze-biao-da-shi/</id>
-    <published>2018-12-27T13:28:50.000Z</published>
-    <updated>2018-12-27T13:28:50.681Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
     
   </entry>
   

