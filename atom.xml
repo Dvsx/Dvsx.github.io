@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-17T03:28:15.208Z</updated>
+  <updated>2019-07-17T09:41:29.953Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://dvsx.github.io/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/"/>
     <id>http://dvsx.github.io/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/</id>
     <published>2019-07-16T01:08:54.000Z</published>
-    <updated>2019-07-17T03:28:15.208Z</updated>
+    <updated>2019-07-17T09:41:29.953Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,7 @@
       
         
         
-          &lt;h2 id=&quot;MOF提权&quot;&gt;&lt;a href=&quot;#MOF提权&quot; class=&quot;headerlink&quot; title=&quot;MOF提权&quot;&gt;&lt;/a&gt;MOF提权&lt;/h2&gt;&lt;p&gt;关于MOF提取的原理其实很简单，就是利用了c:/windows/system32/wbem/mof/目录下的
+          &lt;h2 id=&quot;数据库提权常用的命令&quot;&gt;&lt;a href=&quot;#数据库提权常用的命令&quot; class=&quot;headerlink&quot; title=&quot;数据库提权常用的命令&quot;&gt;&lt;/a&gt;数据库提权常用的命令&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;查询数据库路径：select @@basedir as
         
       
     
@@ -372,6 +372,24 @@
   </entry>
   
   <entry>
+    <title>DDCTF writeup</title>
+    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
+    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
+    <published>2019-04-22T05:12:44.000Z</published>
+    <updated>2019-06-03T11:04:11.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>sqlmap使用详解</title>
     <link href="http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
     <id>http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/</id>
@@ -392,24 +410,6 @@
     
     
       <category term="工具" scheme="http://dvsx.github.io/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DDCTF writeup</title>
-    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
-    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
-    <published>2019-04-22T05:12:44.000Z</published>
-    <updated>2019-06-03T11:04:11.391Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
     
   </entry>
   
