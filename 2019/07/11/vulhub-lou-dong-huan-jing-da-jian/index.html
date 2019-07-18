@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Vulhub vulapps漏洞环境搭建, god_13">
     <meta name="description" content="Vulhub简介Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。
-Vulhub下载地址：
-https://git">
+Vulhub下载git clone https">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -398,7 +397,7 @@ https://git">
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        328
+                        340
                     </div>
                     
 
@@ -422,13 +421,13 @@ https://git">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="Vulhub简介"><a href="#Vulhub简介" class="headerlink" title="Vulhub简介"></a>Vulhub简介</h2><p>Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。</p>
-<h2 id="Vulhub下载"><a href="#Vulhub下载" class="headerlink" title="Vulhub下载"></a>Vulhub下载</h2><p>地址：</p>
-<pre><code>https://github.com/vulhub/vulhub
+<h2 id="Vulhub下载"><a href="#Vulhub下载" class="headerlink" title="Vulhub下载"></a>Vulhub下载</h2><pre><code>git clone https://github.com/vulhub/vulhub
 </code></pre><h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><p>安装docker的命令</p>
 <pre><code>apt-get install docker.io
 </code></pre><h2 id="docker-compose安装"><a href="#docker-compose安装" class="headerlink" title="docker-compose安装"></a>docker-compose安装</h2><p>命令</p>
 <pre><code>apt  install docker-compose
-</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><pre><code>service docker start
+</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>前提是用户提升到管理员权限</p>
+<pre><code>service docker start
 
 cd vulhub/weblogic/CVE-2018-2894(以这一漏洞为例)
 
@@ -863,7 +862,7 @@ docker-compose up -d(开始搭建环境)
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">22.2k</span>
+                <span class="white-color">22.3k</span>
             
 
             
