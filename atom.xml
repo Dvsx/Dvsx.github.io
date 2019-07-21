@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-17T12:01:34.691Z</updated>
+  <updated>2019-07-21T02:17:20.664Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>文件上传绕过姿势总结</title>
+    <link href="http://dvsx.github.io/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/"/>
+    <id>http://dvsx.github.io/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/</id>
+    <published>2019-07-20T14:40:40.000Z</published>
+    <updated>2019-07-21T02:17:20.664Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;为什么有文件上传漏洞？&quot;&gt;&lt;a href=&quot;#为什么有文件上传漏洞？&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="文件上传" scheme="http://dvsx.github.io/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>mysql MOF UDF 反弹端口提权</title>
     <link href="http://dvsx.github.io/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/"/>
     <id>http://dvsx.github.io/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/</id>
     <published>2019-07-16T01:08:54.000Z</published>
-    <updated>2019-07-17T12:01:34.691Z</updated>
+    <updated>2019-07-18T10:02:13.416Z</updated>
     
     <summary type="html">
     
@@ -213,7 +237,7 @@
     <link href="http://dvsx.github.io/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/"/>
     <id>http://dvsx.github.io/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/</id>
     <published>2019-06-19T13:48:23.000Z</published>
-    <updated>2019-06-20T08:14:57.264Z</updated>
+    <updated>2019-07-18T03:16:06.578Z</updated>
     
     <summary type="html">
     
@@ -372,24 +396,6 @@
   </entry>
   
   <entry>
-    <title>DDCTF writeup</title>
-    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
-    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
-    <published>2019-04-22T05:12:44.000Z</published>
-    <updated>2019-06-03T11:04:11.391Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>sqlmap使用详解</title>
     <link href="http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
     <id>http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/</id>
@@ -410,6 +416,24 @@
     
     
       <category term="工具" scheme="http://dvsx.github.io/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DDCTF writeup</title>
+    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
+    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
+    <published>2019-04-22T05:12:44.000Z</published>
+    <updated>2019-06-03T11:04:11.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
     
   </entry>
   
@@ -441,24 +465,6 @@
     <summary type="html">
     
       &lt;p&gt;尽管当今互联网的安全措施已经很完善，但是还是会出现“被盗号”的情况，很多情况下是“有心人”的钓鱼网站导致的，今天的文章主要讲一下kali下使用setoolkit来制作钓鱼网站。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="渗透" scheme="http://dvsx.github.io/tags/%E6%B8%97%E9%80%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>信息收集</title>
-    <link href="http://dvsx.github.io/2019/03/22/xin-xi-shou-ji/"/>
-    <id>http://dvsx.github.io/2019/03/22/xin-xi-shou-ji/</id>
-    <published>2019-03-22T08:16:21.000Z</published>
-    <updated>2019-06-13T07:40:03.329Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;信息收集&quot;&gt;&lt;a href=&quot;#信息收集&quot; class=&quot;headerlink&quot; title=&quot;信息收集&quot;&gt;&lt;/a&gt;信息收集&lt;/h2&gt;&lt;p&gt;信息收集对于渗透测试前期来说是非常重要的，因为只有我们掌握了目标网站或目标主机足够多的信息之后，我们才能更好地对其进行漏洞检测。正所谓，知己知彼百战百胜！&lt;br&gt;信息收集的方式可以分为两种：&lt;font color=&quot;red&quot;&gt;主动和被动&lt;/font&gt;&lt;br&gt;&lt;strong&gt;主动信息收集：通过直接访问、扫描网站，这种流量将流经网站&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;被动信息收集：利用第三方的服务对目标进行访问了解，比如：Google搜索&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;
     
     </summary>
     

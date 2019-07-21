@@ -4,9 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Vulhub vulapps漏洞环境搭建, god_13">
-    <meta name="description" content="Vulhub简介Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。
-Vulhub下载git clone https">
+    <meta name="keywords" content="文件上传绕过姿势总结, god_13">
+    <meta name="description" content="为什么有文件上传漏洞？上传文件时，如果服务器端没有对客户端上传的文件作严格的过滤和验证，就可以造成任意文件上传的漏洞，上传的脚本文件包括(asp,aspx,php,jsp等)
+绕过前端检测绕过如果控制文件上传的地方只有简单的前端验证，就是上">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@ Vulhub下载git clone https">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Vulhub vulapps漏洞环境搭建 | god_13</title>
+    <title>文件上传绕过姿势总结 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -258,13 +258,13 @@ Vulhub下载git clone https">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Vulhub vulapps漏洞环境搭建
+                        文件上传绕过姿势总结
                     </div>
                 </div>
             </div>
@@ -375,8 +375,8 @@ Vulhub下载git clone https">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/漏洞复现/" target="_blank">
-                                <span class="chip bg-color">漏洞复现</span>
+                            <a href="/tags/文件上传/" target="_blank">
+                                <span class="chip bg-color">文件上传</span>
                             </a>
                         
                     </div>
@@ -390,21 +390,21 @@ Vulhub下载git clone https">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-07-11
+                    2019-07-20
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        340
+                        1.5k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        5 Min
                     </div>
                     
                 
@@ -420,30 +420,36 @@ Vulhub下载git clone https">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Vulhub简介"><a href="#Vulhub简介" class="headerlink" title="Vulhub简介"></a>Vulhub简介</h2><p>Vulhub是一个比较全面的漏洞集合，收集了近年来许多的重要漏洞，以开源的形式呈现，以docker的形式进行环境配置，提供了更简单的漏洞复现，只需要简单的命令即可实现漏洞复现。</p>
-<h2 id="Vulhub下载"><a href="#Vulhub下载" class="headerlink" title="Vulhub下载"></a>Vulhub下载</h2><pre><code>git clone https://github.com/vulhub/vulhub
-</code></pre><h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><p>安装docker的命令</p>
-<pre><code>apt-get install docker.io
-</code></pre><h2 id="docker-compose安装"><a href="#docker-compose安装" class="headerlink" title="docker-compose安装"></a>docker-compose安装</h2><p>命令</p>
-<pre><code>apt  install docker-compose
-</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>前提是用户提升到管理员权限</p>
-<pre><code>service docker start
+                <h2 id="为什么有文件上传漏洞？"><a href="#为什么有文件上传漏洞？" class="headerlink" title="为什么有文件上传漏洞？"></a>为什么有文件上传漏洞？</h2><p>上传文件时，如果服务器端没有对客户端上传的文件作严格的过滤和验证，就可以造成任意文件上传的漏洞，上传的脚本文件包括(asp,aspx,php,jsp等)</p>
+<h2 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h2><h3 id="前端检测绕过"><a href="#前端检测绕过" class="headerlink" title="前端检测绕过"></a>前端检测绕过</h3><p>如果控制文件上传的地方只有简单的前端验证，就是上传的文件后缀名不符合要求，那么就可以先上传一个符合条件的名称，内容是一句话木马，然后抓包，把后缀改成php或其他的<br>还有一种js验证，我们可以先把当前网站的js验证功能关闭，这步操作可以在浏览器里进行，然后就可以上传任意类型的文件了</p>
+<h3 id="文件后缀绕过-服务器端"><a href="#文件后缀绕过-服务器端" class="headerlink" title="文件后缀绕过(服务器端)"></a>文件后缀绕过(服务器端)</h3><p><strong>原理</strong><br>这是指在服务器端有验证代码，限制某些后缀名的上传。但是有些Apache是允许解析其他文件的，例如在httpd.conf中，如果配置有如下代码</p>
+<pre><code>AddType application/x-httpd-php .php .phtml
+</code></pre><p>就能解析php和phtml文件。<br><strong>绕过方法</strong><br>在Apache解析顺序中，是从右向左开始解析文件的，如果最右侧的文件类型不可识别，就继续向左判断，直到遇到可以解析的文件为止。如果上传的文件类型类似1.php.xxx,因为xxx不可解析，所以向左解析php。因此实际上传的时候可以使用1.php.phtml等其他这一类的</p>
+<h3 id="文件类型绕过-服务器端"><a href="#文件类型绕过-服务器端" class="headerlink" title="文件类型绕过(服务器端)"></a>文件类型绕过(服务器端)</h3><p><strong>原理</strong><br>在客户端上传文件时，通过burp suite抓取数据包，当上传一个php文件时，可以看到content-type的值为appliction/octet-stream，而上传一个jpg格式的文件时，值为image/jpeg。<br><strong>绕过方法</strong><br>如果服务器端是通过content-type来判断文件类型时，那么就存在被绕过的可能，因为conten-type的值是客户端传递的，是可以任意修改的。<br>所以当上传一个php文件时，在burp里把content-type修改为image/jpeg就可以绕过服务器端的检验。<br>在PHP中还存在一种相似的文件上传漏洞，PHP函数getimagesize()函数可以获取到图片的宽，高等信息，如果上传的不是图片文件，那么getimagesize()函数就获取不到信息，就不允许上传。但是，我们可以通过将一个图片和一个webshell合并为一个文件，也就是生成一个图片木马。<br><strong>具体操作</strong><br>准备好写有一句话木马的php文件1.php，一张图片1.jpg，然后敲命令</p>
+<pre><code>copy 1.jpg/b+1.php 2.jpg
+</code></pre><h3 id="文件截断绕过"><a href="#文件截断绕过" class="headerlink" title="文件截断绕过"></a>文件截断绕过</h3><p><strong>截断类型：</strong>PHP%00截断<br><strong>截断原理：</strong>由于00代表结束符，所以会把00后面的所有字符删去<br><strong>截断条件：</strong>PHP版本小于5.3.4，PHP的magic_quotes_gpc为OFF状态<br>比如上传一个1.php%00.jpg，由于服务器是从右向左检验，所以检验的文件类型是jpg，但是当文件被保存到服务器的时候，%00会把后面的内容截断，因此，1.php就会被保存到服务器中。有时候windows不支持有特殊符号的文件，可以在burp suite中改包，也有两种方式，一种是直接改filename=”1.php%00.jpg”，还有一种是在HEX值里改，找到文件名对应的HEX值的位置，修改成00即可。</p>
+<h3 id="条件竞争绕过"><a href="#条件竞争绕过" class="headerlink" title="条件竞争绕过"></a>条件竞争绕过</h3><p><strong>原理</strong><br>一些网站上传文件的逻辑是先允许上传任意文件，然后检查上传的文件是否包含webshell脚本，如果包含则删除该文件。这里存在的问题是文件上传成功后和删除文件之间存在一个短的时间差(因为要执行检查文件和删除文件的操作)，攻击者可以利用这个短的时间差完成条件竞争的上传漏洞攻击。<br><strong>绕过方法</strong><br>攻击者可以先上传一个1.php,里面的内容是</p>
+<pre><code>&lt;?php 
+    fputs(fopen(&#39;../shell.php&#39;,&#39;w&#39;),&#39;&lt;?php @eval($_POST[&quot;hello&quot;]); ?&gt;&#39;);
+?&gt;
+</code></pre><p>1.php的作用是生成一个shell.php,而且里面写有一句话。当1.php上传成功时，服务器会在当前目录下自动生成shell.php，虽然1.php会被删除，但是留下了shell.php.</p>
+<h3 id="重写编辑规则绕过"><a href="#重写编辑规则绕过" class="headerlink" title="重写编辑规则绕过"></a>重写编辑规则绕过</h3><p><strong>原理</strong><br>上传.htaccess文件，覆盖服务器上的原有文件，重写编辑规则，将上传的带有脚本马的图片以脚本方式解析<br><strong>绕过方法</strong></p>
+<pre><code>如果条件允许我们上传.htaccess文件，先上传.htaccess文件，覆盖掉原先的.htaccess文件，在上传eval.jpg，可以使用如下的脚本
+&lt;FilesMatch &quot;evil.jpg&quot;&gt;
 
-cd vulhub/weblogic/CVE-2018-2894(以这一漏洞为例)
+SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;
+</code></pre><h3 id="其他方式绕过"><a href="#其他方式绕过" class="headerlink" title="其他方式绕过"></a>其他方式绕过</h3><p><strong>原理</strong><br>部分程序员的思维不严谨，并使用逻辑不完善的上传文件合法性检测手段，导致可以找到方式绕过其检测方式。<br><strong>绕过方法</strong></p>
+<ol>
+<li><p>后缀名大小写绕过<br>用于只将小写的脚本后缀名(如php)过滤掉的场合；<br>例如:将Burpsuite截获的数据包中的文件名【evil.php】改为【evil.Php】</p>
+</li>
+<li><p>双写后缀名绕过<br>用于只将文件后缀名，例如”php”字符串过滤的场合；<br>例如:上传时将Burpsuite截获的数据包中文件名【evil.php】改为【evil.pphphp】，那么过滤了第一个”php”字符串”后，开头的’p’和结尾的’hp’就组合又形成了【php】。</p>
+</li>
+<li><p>特殊后缀名绕过<br>用于检测文件合法性的脚本有问题的场合；<br>例如:将Burpsuite截获的数据包中【evil.php】名字改为【evil.php6】，或加个空格改为【evil.php 】等。</p>
+</li>
+</ol>
+<h3 id="一些骚姿势"><a href="#一些骚姿势" class="headerlink" title="一些骚姿势"></a>一些骚姿势</h3><p>只能看大佬总结的了(持续更新…)<br><a href="https://www.cnblogs.com/Fluorescence-tjy/p/7268829.html" target="_blank" rel="noopener">https://www.cnblogs.com/Fluorescence-tjy/p/7268829.html</a></p>
 
-docker-compose up -d(开始搭建环境)
-</code></pre><h2 id="查看docker进程"><a href="#查看docker进程" class="headerlink" title="查看docker进程"></a>查看docker进程</h2><pre><code>docker ps
-</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/1.PNG" alt=""><br>发现是在7001端口，那就先ifconfig查看下ip，再去访问网站就行了</p>
-<h2 id="结束docker进程"><a href="#结束docker进程" class="headerlink" title="结束docker进程"></a>结束docker进程</h2><pre><code>docker-compose down
-</code></pre><h2 id="进入docker容器"><a href="#进入docker容器" class="headerlink" title="进入docker容器"></a>进入docker容器</h2><pre><code>docker exec -it docker_name bin/bash
-</code></pre><p><img src="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/2.PNG" alt=""></p>
-<h2 id="vulapps简介"><a href="#vulapps简介" class="headerlink" title="vulapps简介"></a>vulapps简介</h2><p>和vulhub一样，都是github上的项目，上面收集了各种漏洞环境，统一采用的是dockerfile的形式，使用的时候需要查看相应漏洞的README文件，以 Struts2 S2-037 漏洞环境为例：<br>1.获取镜像</p>
-<pre><code>docker pull medicean/vulapps:s_struts2_s2-037
-</code></pre><p>2.创建并启动容器</p>
-<pre><code>docker run -d -p 80:8080 medicean/vulapps:s_struts2_s2-037
-</code></pre><p>访问 <a href="http://127.0.0.1/" target="_blank" rel="noopener">http://127.0.0.1/</a> 即可访问启动好的 s2-037 环境.不同的环境端口设置可能不一样，根据对应的README文件来操作就行<br>3.终止一个容器</p>
-<pre><code>docker stop docker_name
-</code></pre>
             </div>
             <hr>
 
@@ -598,9 +604,9 @@ docker-compose up -d(开始搭建环境)
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《Vulhub vulapps漏洞环境搭建》
+                    《文件上传绕过姿势总结》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/11/vulhub-lou-dong-huan-jing-da-jian/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -663,27 +669,29 @@ docker-compose up -d(开始搭建环境)
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/07/11/weblogic-ren-yi-wen-jian-shang-chuan-lou-dong-cve-2018-2894/">
+                <a href="/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Weblogic 任意文件上传漏洞（CVE-2018-2894）">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="文件上传绕过姿势总结">
                         
-                        <span class="card-title">Weblogic 任意文件上传漏洞（CVE-2018-2894）</span>
+                        <span class="card-title">文件上传绕过姿势总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言影响的版本：Oracle WebLogic Server，版本10.3.6.0，12.1.3.0，12.2.1.2，12.2.1.3。受到影响的页面为/ws_utc/config.do和ws_utc/begin.do利用该漏洞，可以上传
+                            为什么有文件上传漏洞？上传文件时，如果服务器端没有对客户端上传的文件作严格的过滤和验证，就可以造成任意文件上传的漏洞，上传的脚本文件包括(asp,aspx,php,jsp等)
+绕过前端检测绕过如果控制文件上传的地方只有简单的前端验证，就是上
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -692,11 +700,12 @@ docker-compose up -d(开始搭建环境)
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞复现/" target="_blank">
-                        <span class="chip bg-color">漏洞复现</span>
+                    <a href="/tags/文件上传/" target="_blank">
+                        <span class="chip bg-color">文件上传</span>
                     </a>
                     
                 </div>
@@ -710,24 +719,26 @@ docker-compose up -d(开始搭建环境)
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/07/11/ubuntu-huan-yuan/">
+                <a href="/2019/07/16/mysql-mof-udf-fan-dan-duan-kou-ti-quan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="ubuntu 换源">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="mysql MOF UDF 反弹端口提权">
                         
-                        <span class="card-title">ubuntu 换源</span>
+                        <span class="card-title">mysql MOF UDF 反弹端口提权</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言安装好ubuntu系统后，默认的软件更新源是国外的，在国内使用速度很慢，用”apt install xxx”安装软件时可能出现”网络不可达”、”你的网络需要认证吗”、”无法定位软件包”等错误，所以我们需要更换成国内的源，这样才能正常安装
+                            数据库提权常用的命令查询数据库路径：select @@basedir as basePath from dual;
+查询用户及密码：select * from mysql.user;
+注册函数：CREATE FUNCTION shell R
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-11
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-16
                             </span>
                         <span class="publish-author">
                             
@@ -740,8 +751,8 @@ docker-compose up -d(开始搭建环境)
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/换源/" target="_blank">
-                        <span class="chip bg-color">换源</span>
+                    <a href="/tags/提权/" target="_blank">
+                        <span class="chip bg-color">提权</span>
                     </a>
                     
                 </div>

@@ -450,7 +450,7 @@ else if($action==&#39;savetagfile&#39;)
 (4)preg_replace的意思是执行一个正则表达式的搜索和替换，我们可以通过例子来分析一下,发现得到的$tagname的值为moonsec
 (5)stripslashes()的作用是引用用一个引用字符串，此处没有多大的作用
 (6)最后是把$content里的内容写入到相对用的路径里，问题就出在了这里，这一部分代码除了对写入的文件名字做了简单的过滤，除了有一个csrf防护之外，其他并没有什么安全措施，导致我们可以任意写入代码，如果我们直接写入一句话木马，那么就可以直接连上去拿webshell了
-</code></pre><p><img src="/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/7.PNG" alt=""><br>分析完之后就可以进行实际操作了，先理一下思路，我们根据上面的代码知道要上传的参数有：action,token,filename,content.现在只剩下获取token了，要怎么才能获取到token呢？我们再去tpl.php里看一下，发现action的参数有很多，比如del，upoladok，edit，upload等等，但只有传入upload的时候页面才会回显正常，而其他的都会显示token异常，所以只能通过action=upload来获取token，查看页面源代码<br><img src="/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/8.PNG" alt=""><br>所以构造payload如下<br><code>域名+/tpl.php?action=savetagfile&amp;token=&amp;filename=abc.lib.php&amp;content=&lt;?php @eval($_POST[&#39;xxx&#39;])?&gt;</code><br>发现成功写入<br><img src="/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/9.PNG" alt=""><br>并且在相应的目录下也找到了abc.lib.php,接下来的菜刀连接就不用再多说了吧！（手动滑稽）</p>
+</code></pre><p><img src="/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/7.PNG" alt=""><br>分析完之后就可以进行实际操作了，先理一下思路，我们根据上面的代码知道要上传的参数有：action,token,filename,content.现在只剩下获取token了，要怎么才能获取到token呢？通过查看网站根目录发现在/uploads/dede/tpl.php,我们再去tpl.php里看一下，发现action的参数有很多，比如del，upoladok，edit，upload等等，但只有传入upload的时候页面才会回显正常，而其他的都会显示token异常，所以只能通过action=upload来获取token，查看页面源代码<br><img src="/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/8.PNG" alt=""><br>所以构造payload如下<br><code>域名+/tpl.php?action=savetagfile&amp;token=&amp;filename=abc.lib.php&amp;content=&lt;?php @eval($_POST[&#39;xxx&#39;]);?&gt;</code><br>发现成功写入<br><img src="/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/9.PNG" alt=""><br>并且在相应的目录下也找到了abc.lib.php,接下来的菜刀连接就不用再多说了吧！（手动滑稽）</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>漏洞复现的目的是让自己明白哪些地方容易有漏洞，应该怎么处理发现的漏洞，通过反复的练习才会有长足的进步。</p>
 
             </div>
@@ -871,7 +871,7 @@ else if($action==&#39;savetagfile&#39;)
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">22.3k</span>
+                <span class="white-color">23.8k</span>
             
 
             
