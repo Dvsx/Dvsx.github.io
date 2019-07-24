@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-21T02:17:20.664Z</updated>
+  <updated>2019-07-24T12:36:42.210Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -17,11 +17,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>weblogic ssrf 漏洞复现</title>
+    <link href="http://dvsx.github.io/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/"/>
+    <id>http://dvsx.github.io/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/</id>
+    <published>2019-07-24T10:45:23.000Z</published>
+    <updated>2019-07-24T12:36:42.210Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;ssrf简介&quot;&gt;&lt;a href=&quot;#ssrf简介&quot; class=&quot;headerlink&quot; title=&quot;ssrf简介&quot;&gt;&lt;/a&gt;ssrf简介&lt;/h2&gt;&lt;p&gt;SSRF(Server-Side Request Forgery:服务器端请求伪造)
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sql-inject</title>
+    <link href="http://dvsx.github.io/2019/07/23/sql-inject/"/>
+    <id>http://dvsx.github.io/2019/07/23/sql-inject/</id>
+    <published>2019-07-23T03:20:59.000Z</published>
+    <updated>2019-07-24T08:08:05.612Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
+    
+  </entry>
+  
+  <entry>
     <title>文件上传绕过姿势总结</title>
     <link href="http://dvsx.github.io/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/"/>
     <id>http://dvsx.github.io/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/</id>
     <published>2019-07-20T14:40:40.000Z</published>
-    <updated>2019-07-21T02:17:20.664Z</updated>
+    <updated>2019-07-21T02:33:17.315Z</updated>
     
     <summary type="html">
     
@@ -281,30 +329,6 @@
   </entry>
   
   <entry>
-    <title>Sql-inject</title>
-    <link href="http://dvsx.github.io/2019/06/10/sql-inject/"/>
-    <id>http://dvsx.github.io/2019/06/10/sql-inject/</id>
-    <published>2019-06-10T03:20:59.000Z</published>
-    <updated>2019-06-10T03:40:26.327Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
-    
-  </entry>
-  
-  <entry>
     <title>CSRF</title>
     <link href="http://dvsx.github.io/2019/06/10/csrf/"/>
     <id>http://dvsx.github.io/2019/06/10/csrf/</id>
@@ -396,6 +420,24 @@
   </entry>
   
   <entry>
+    <title>DDCTF writeup</title>
+    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
+    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
+    <published>2019-04-22T05:12:44.000Z</published>
+    <updated>2019-06-03T11:04:11.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>sqlmap使用详解</title>
     <link href="http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
     <id>http://dvsx.github.io/2019/04/22/sqlmap-shi-yong-xiang-jie/</id>
@@ -420,24 +462,6 @@
   </entry>
   
   <entry>
-    <title>DDCTF writeup</title>
-    <link href="http://dvsx.github.io/2019/04/22/ddctf-writeup/"/>
-    <id>http://dvsx.github.io/2019/04/22/ddctf-writeup/</id>
-    <published>2019-04-22T05:12:44.000Z</published>
-    <updated>2019-06-03T11:04:11.391Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>攻防世界writeup</title>
     <link href="http://dvsx.github.io/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/"/>
     <id>http://dvsx.github.io/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/</id>
@@ -452,24 +476,6 @@
     
     
       <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kali下钓鱼网站的制作</title>
-    <link href="http://dvsx.github.io/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/"/>
-    <id>http://dvsx.github.io/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/</id>
-    <published>2019-04-05T02:02:01.218Z</published>
-    <updated>2019-05-30T12:01:38.789Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;尽管当今互联网的安全措施已经很完善，但是还是会出现“被盗号”的情况，很多情况下是“有心人”的钓鱼网站导致的，今天的文章主要讲一下kali下使用setoolkit来制作钓鱼网站。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="渗透" scheme="http://dvsx.github.io/tags/%E6%B8%97%E9%80%8F/"/>
     
   </entry>
   

