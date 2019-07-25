@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-24T12:48:10.209Z</updated>
+  <updated>2019-07-25T12:19:58.951Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>weblogic weak_password复现</title>
+    <link href="http://dvsx.github.io/2019/07/25/weblogic-weak-password-fu-xian/"/>
+    <id>http://dvsx.github.io/2019/07/25/weblogic-weak-password-fu-xian/</id>
+    <published>2019-07-25T08:43:56.000Z</published>
+    <updated>2019-07-25T12:19:58.951Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;环境&quot;&gt;&lt;a href=&quot;#环境&quot; class=&quot;headerlink&quot; title=&quot;环境&quot;&gt;&lt;/a&gt;环境&lt;/h2&gt;&lt;p&gt;基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞&lt;/p&gt;
+&lt;h2 id=&quot;弱口令&quot;&gt;&lt;a href=&quot;#弱口令&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>weblogic ssrf 漏洞复现</title>
@@ -453,24 +478,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;滴&quot;&gt;&lt;a href=&quot;#滴&quot; class=&quot;headerlink&quot; title=&quot;滴~&quot;&gt;&lt;/a&gt;滴~&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://dvsx.github.io/tags/CTF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>攻防世界writeup</title>
-    <link href="http://dvsx.github.io/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/"/>
-    <id>http://dvsx.github.io/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/</id>
-    <published>2019-04-09T07:57:30.000Z</published>
-    <updated>2019-06-03T11:10:45.894Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;攻防世界-confusion1&quot;&gt;&lt;a href=&quot;#攻防世界-confusion1&quot; class=&quot;headerlink&quot; title=&quot;攻防世界 confusion1&quot;&gt;&lt;/a&gt;攻防世界 confusion1&lt;/h2&gt;&lt;p&gt;第一次接触这样的漏洞，认真学习了一波&lt;br&gt;&lt;/p&gt;
     
     </summary>
     

