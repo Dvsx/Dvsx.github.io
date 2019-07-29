@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>tomcat后台弱口令getshell漏洞复现</title>
+      <link href="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/"/>
+      <url>/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>tomcat版本</p><pre><code>Tomcat 8.0</code></pre><p>Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。其中，预访问后台，需要对应用户有相应的权限。</p><h2 id="tomcat后台"><a href="#tomcat后台" class="headerlink" title="tomcat后台"></a>tomcat后台</h2><p>能上传war包的前提是先进入tomcat的后台，tomcat的用户配置文件在<strong>conf/tomcat-users.xml</strong>里,默认密码是tomcat</p><pre><code>root@bdd685ded26d:/usr/local/tomcat/conf# cat tomcat-users.xml&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;tomcat-users xmlns=&quot;http://tomcat.apache.org/xml&quot;              xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;              xsi:schemaLocation=&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;              version=&quot;1.0&quot;&gt;    &lt;role rolename=&quot;manager-gui&quot;/&gt;    &lt;role rolename=&quot;manager-script&quot;/&gt;    &lt;role rolename=&quot;manager-jmx&quot;/&gt;    &lt;role rolename=&quot;manager-status&quot;/&gt;    &lt;role rolename=&quot;admin-gui&quot;/&gt;    &lt;role rolename=&quot;admin-script&quot;/&gt;    &lt;user username=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script&quot; /&gt;&lt;/tomcat-users&gt;</code></pre><p>并且tomcat本来是有限制ip访问的，配置文件位置如下，分别对应这Tomat Web应用管理与部署后台接入的控制以及虚拟主机管理的介入控制</p><pre><code>/usr/local/tomcat/webapps/manager/META-INF/context.xml/usr/local/tomcat/webapps/host-manager/META-INF/context.xml</code></pre><p>只允许本地用户访问</p><pre><code>&lt;Context privileged=&quot;true&quot;&gt;         &lt;Valve className=&quot;org.apache.catalina.valves.RemoteAddrValve&quot;                allow=&quot;127\.0\.0\.1&quot;/&gt;&lt;/Context&gt;</code></pre><p>但是在vulhub的环境中，设置了任意ip均可以访问</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Context antiResourceLocking=&quot;false&quot; privileged=&quot;true&quot; &gt;  &lt;Valve className=&quot;org.apache.catalina.valves.RemoteAddrValve&quot;         allow=&quot;\d+\.\d+\.\d+\.\d+&quot; /&gt;&lt;/Context&gt;</code></pre><p>有大佬说在实际情况中可以通过csrf来操作，到时候遇到了再说吧。<br>一些后台的管理名称</p><pre><code>manager（后台管理）manager-gui 拥有html页面权限manager-status 拥有查看status的权限manager-script 拥有text接口的权限，和status权限manager-jmx 拥有jmx权限，和status权限host-manager（虚拟主机管理）admin-gui 拥有html页面权限admin-script 拥有text接口权限</code></pre><h2 id="上传war包"><a href="#上传war包" class="headerlink" title="上传war包"></a>上传war包</h2><p>说了这么多的后台的问题，现在来说一下war包的上传。之前写过weblogic的war包上传，其实很类似，我们上传的war包到服务器中会自动解压并部署在服务器上。<br><img src="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/1.PNG" alt=""><br>选择文件，然后上传，发现上传的文件出现在Applications里面<br><img src="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/2.PNG" alt=""><br>然后访问指定目录，发现可以进行命令执行<br><img src="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/3.PNG" alt=""><br>脚本是用的上一篇文章里用到的。</p><h2 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h2><p>1、在系统上以低权限运行Tomcat应用程序。创建一个专门的 Tomcat服务用户，该用户只能拥有一组最小权限（例如不允许远程登录）。</p><p>2、增加对于本地和基于证书的身份验证，部署账户锁定机制（对于集中式认证，目录服务也要做相应配置）。在CATALINA_HOME/conf/web.xml文件设置锁定机制和时间超时限制。</p><p>3、以及针对manager-gui/manager-status/manager-script等目录页面设置最小权限访问限制。</p><h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><pre><code>https://blog.csdn.net/blood_pupil/article/details/88660728</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tomcat CVE-2017-12615</title>
       <link href="/2019/07/29/tomcat-cve-2017-12615/"/>
       <url>/2019/07/29/tomcat-cve-2017-12615/</url>

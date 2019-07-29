@@ -4,14 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="weblogic weak_password复现, god_13">
-    <meta name="description" content="环境基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞
-弱口令本环境存在弱口令
-用户名：weblogic
-密码：Oracle@123
-weblogic常见的弱口令组合
-1.  Oracle - WebLogic
-Method  ">
+    <meta name="keywords" content="tomcat后台弱口令getshell漏洞复现, god_13">
+    <meta name="description" content="前言tomcat版本
+Tomcat 8.0
+Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。其中，预访问后台，需要对应用户有相应的权限。
+tomcat后台能上传war包的前提是先进入tomcat的后台，t">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +16,7 @@ Method  ">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>weblogic weak_password复现 | god_13</title>
+    <title>tomcat后台弱口令getshell漏洞复现 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -263,13 +260,13 @@ Method  ">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        weblogic weak_password复现
+                        tomcat后台弱口令getshell漏洞复现
                     </div>
                 </div>
             </div>
@@ -395,14 +392,14 @@ Method  ">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-07-25
+                    2019-07-29
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        810
+                        784
                     </div>
                     
 
@@ -425,87 +422,55 @@ Method  ">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>基于vulhub的weblogic弱口令漏洞和任意文件读取漏洞</p>
-<h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><p>本环境存在弱口令</p>
-<pre><code>用户名：weblogic
-密码：Oracle@123
-</code></pre><p>weblogic常见的弱口令组合</p>
-<pre><code>1.  Oracle - WebLogic
-Method    HTTP
-User ID    system
-Password    password
-Level    Administrator
-Doc    
-Notes    Login located at /console
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>tomcat版本</p>
+<pre><code>Tomcat 8.0
+</code></pre><p>Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。其中，预访问后台，需要对应用户有相应的权限。</p>
+<h2 id="tomcat后台"><a href="#tomcat后台" class="headerlink" title="tomcat后台"></a>tomcat后台</h2><p>能上传war包的前提是先进入tomcat的后台，tomcat的用户配置文件在<strong>conf/tomcat-users.xml</strong>里,默认密码是tomcat</p>
+<pre><code>root@bdd685ded26d:/usr/local/tomcat/conf# cat tomcat-users.xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;tomcat-users xmlns=&quot;http://tomcat.apache.org/xml&quot;
+              xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+              xsi:schemaLocation=&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;
+              version=&quot;1.0&quot;&gt;
 
-2.  Oracle - WebLogic
-Method    HTTP
-User ID    weblogic
-Password    weblogic
-Level    Administrator
-Doc    
-Notes    Login located at /console
+    &lt;role rolename=&quot;manager-gui&quot;/&gt;
+    &lt;role rolename=&quot;manager-script&quot;/&gt;
+    &lt;role rolename=&quot;manager-jmx&quot;/&gt;
+    &lt;role rolename=&quot;manager-status&quot;/&gt;
+    &lt;role rolename=&quot;admin-gui&quot;/&gt;
+    &lt;role rolename=&quot;admin-script&quot;/&gt;
+    &lt;user username=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script&quot; /&gt;
 
-3.  Oracle - WebLogic
-Version    9.0 Beta (Diablo)
-User ID    weblogic
-Password    weblogic
-Doc    
-
-4.  Oracle - WebLogic Process Integrator
-Version    2.0
-User ID    admin
-Password    security
-Doc    
-
-5.  Oracle - WebLogic Process Integrator
-Version    2.0
-User ID    joe
-Password    password
-Doc    
-
-6.  Oracle - WebLogic Process Integrator
-Version    2.0
-User ID    mary
-Password    password
-Doc    
-
-7.  Oracle - WebLogic Process Integrator
-Version    2.0
-User ID    system
-Password    security
-Doc    
-
-8.  Oracle - WebLogic Process Integrator
-Version    2.0
-User ID    wlcsystem
-Password    wlcsystem
-Doc    
-
-9.  Oracle - WebLogic Process Integrator
-Version    2.0
-User ID    wlpisystem
-Password    wlpisystem
-Doc    
-</code></pre><p>获取到账号和密码之后，我们可以进入到后台去上传war的web应用程序和木马获得权限</p>
-<h2 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h2><p>搭建好的环境有任意文件读取漏洞，具体路径是</p>
-<pre><code>http://192.168.75.131:7001/hello/file.jsp?path=/etc/passwd
-</code></pre><p>会读取到账号和密码<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/1.PNG" alt=""><br>但是还没有什么实质性的作用，要怎么利用这个漏洞呢？下面就是一些干货了。weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。这两个文件均位于base_domain下，名为SerializedSystemIni.dat和config.xml。<br>SerializedSystemIni.dat是一个二进制文件，所以一定要用burpsuite来读取，用浏览器直接下载可能引入一些干扰字符。在burp里选中读取到的那一串乱码，这就是密钥，右键copy to file就可以保存成一个文件：</p>
-<pre><code>http://192.168.75.131:7001/hello/file.jsp?path=security/SerializedSystemIni.dat
-</code></pre><p><img src="/2019/07/25/weblogic-weak-password-fu-xian/2.PNG" alt=""><br>config.xml是base_domain的全局配置文件，所以乱七八糟的内容比较多，找到其中的<node-manager-password-encrypted>的值，即为加密后的管理员密码，不要找错了：</node-manager-password-encrypted></p>
-<pre><code>http://192.168.75.131:7001/hello/file.jsp?path=config/config.xml
-</code></pre><p><img src="/2019/07/25/weblogic-weak-password-fu-xian/3.PNG" alt=""></p>
-<h3 id="解密密文"><a href="#解密密文" class="headerlink" title="解密密文"></a>解密密文</h3><p>我们有了密钥和密码，下面就要解密了，然后使用工具weblogic_decrypt.jar解密<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/4.PNG" alt=""><br>同样获取到了明文密码，就算没有弱口令也是可以进入后台上传shell的</p>
-<h2 id="后台上传shell"><a href="#后台上传shell" class="headerlink" title="后台上传shell"></a>后台上传shell</h2><h3 id="war简介"><a href="#war简介" class="headerlink" title="war简介"></a>war简介</h3><p>war是一个可以直接运行的web模块，通常用于网站，打成包部署到容器中。war包放置到web目录下之后，可以自动解压，就相当于发布了。<br>简单来说，war包是JavaWeb程序打的包，war包里面包括写的代码编译成的class文件，依赖的包，配置文件，所有的网站页面，包括html，jsp等等。一个war包可以理解为是一个web项目，里面是项目的所有东西。</p>
-<h3 id="war打包"><a href="#war打包" class="headerlink" title="war打包"></a>war打包</h3><p>linux下把文件打包成war的压缩包，命令如下</p>
-<pre><code>jar -cvf blog.war *
-</code></pre><p>查看example.war</p>
-<pre><code>jar -tf blog.war
-</code></pre><p>也可以先把文件压缩成zip，再改后缀名为war</p>
-<h3 id="部署war文件"><a href="#部署war文件" class="headerlink" title="部署war文件"></a>部署war文件</h3><p>上传war的流程如下图所示<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/1.gif" alt=""><br>总结起来就是：域结构-部署-安装-上传文件-将此部署安装为应用程序。然后访问项目名称即可。<br>最后访问的路径是</p>
-<pre><code>http://192.168.75.131:7001/JspSpy/JspSpy.jsp
-</code></pre><p>截图如下<br><img src="/2019/07/25/weblogic-weak-password-fu-xian/5.PNG" alt=""><br>至此就拿到了shell</p>
-
+&lt;/tomcat-users&gt;
+</code></pre><p>并且tomcat本来是有限制ip访问的，配置文件位置如下，分别对应这Tomat Web应用管理与部署后台接入的控制以及虚拟主机管理的介入控制</p>
+<pre><code>/usr/local/tomcat/webapps/manager/META-INF/context.xml
+/usr/local/tomcat/webapps/host-manager/META-INF/context.xml
+</code></pre><p>只允许本地用户访问</p>
+<pre><code>&lt;Context privileged=&quot;true&quot;&gt;
+         &lt;Valve className=&quot;org.apache.catalina.valves.RemoteAddrValve&quot;
+                allow=&quot;127\.0\.0\.1&quot;/&gt;
+&lt;/Context&gt;
+</code></pre><p>但是在vulhub的环境中，设置了任意ip均可以访问</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Context antiResourceLocking=&quot;false&quot; privileged=&quot;true&quot; &gt;
+  &lt;Valve className=&quot;org.apache.catalina.valves.RemoteAddrValve&quot;
+         allow=&quot;\d+\.\d+\.\d+\.\d+&quot; /&gt;
+&lt;/Context&gt;
+</code></pre><p>有大佬说在实际情况中可以通过csrf来操作，到时候遇到了再说吧。<br>一些后台的管理名称</p>
+<pre><code>manager（后台管理）
+manager-gui 拥有html页面权限
+manager-status 拥有查看status的权限
+manager-script 拥有text接口的权限，和status权限
+manager-jmx 拥有jmx权限，和status权限
+host-manager（虚拟主机管理）
+admin-gui 拥有html页面权限
+admin-script 拥有text接口权限
+</code></pre><h2 id="上传war包"><a href="#上传war包" class="headerlink" title="上传war包"></a>上传war包</h2><p>说了这么多的后台的问题，现在来说一下war包的上传。之前写过weblogic的war包上传，其实很类似，我们上传的war包到服务器中会自动解压并部署在服务器上。<br><img src="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/1.PNG" alt=""><br>选择文件，然后上传，发现上传的文件出现在Applications里面<br><img src="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/2.PNG" alt=""><br>然后访问指定目录，发现可以进行命令执行<br><img src="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/3.PNG" alt=""><br>脚本是用的上一篇文章里用到的。</p>
+<h2 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h2><p>1、在系统上以低权限运行Tomcat应用程序。创建一个专门的 Tomcat服务用户，该用户只能拥有一组最小权限（例如不允许远程登录）。</p>
+<p>2、增加对于本地和基于证书的身份验证，部署账户锁定机制（对于集中式认证，目录服务也要做相应配置）。在CATALINA_HOME/conf/web.xml文件设置锁定机制和时间超时限制。</p>
+<p>3、以及针对manager-gui/manager-status/manager-script等目录页面设置最小权限访问限制。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><pre><code>https://blog.csdn.net/blood_pupil/article/details/88660728
+</code></pre>
             </div>
             <hr>
 
@@ -660,9 +625,9 @@ Doc
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《weblogic weak_password复现》
+                    《tomcat后台弱口令getshell漏洞复现》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/25/weblogic-weak-password-fu-xian/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -725,29 +690,31 @@ Doc
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/">
+                <a href="/2019/07/29/tomcat-hou-tai-ruo-kou-ling-getshell-lou-dong-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="weblogic XMLDecoder反序列化漏洞复现">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="tomcat后台弱口令getshell漏洞复现">
                         
-                        <span class="card-title">weblogic XMLDecoder反序列化漏洞复现</span>
+                        <span class="card-title">tomcat后台弱口令getshell漏洞复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言weblogic的WLS Security组件对外提供webservice服务，其中使用了XMLDecoder来解析用户传进来的XML数据，在解析的过程中出现反序列化漏洞，导致可执行任意命令。影响版本
-10.3.6.0.0
-12.1.3
+                            前言tomcat版本
+Tomcat 8.0
+Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。其中，预访问后台，需要对应用户有相应的权限。
+tomcat后台能上传war包的前提是先进入tomcat的后台，t
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -756,6 +723,7 @@ Doc
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -774,24 +742,24 @@ Doc
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/">
+                <a href="/2019/07/29/tomcat-cve-2017-12615/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="weblogic ssrf 漏洞复现">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="tomcat CVE-2017-12615">
                         
-                        <span class="card-title">weblogic ssrf 漏洞复现</span>
+                        <span class="card-title">tomcat CVE-2017-12615</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ssrf简介SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻
+                            前言CVE-2017-12615属于文件上传漏洞，当tomcat运行在windows主机上，且启用了http put请求方法（将readonly初始化参数设置为false），攻击者将有可能通过精心构造的攻击请求向服务器上传包含恶意代码的js
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-24
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-29
                             </span>
                         <span class="publish-author">
                             
