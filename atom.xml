@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-29T07:48:26.515Z</updated>
+  <updated>2019-07-30T08:04:03.494Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx文件名逻辑漏洞CVE-2013-4547</title>
+    <link href="http://dvsx.github.io/2019/07/30/nginx-wen-jian-ming-luo-ji-lou-dong-cve-2013-4547/"/>
+    <id>http://dvsx.github.io/2019/07/30/nginx-wen-jian-ming-luo-ji-lou-dong-cve-2013-4547/</id>
+    <published>2019-07-30T07:23:01.000Z</published>
+    <updated>2019-07-30T08:04:03.494Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;漏洞说明&quot;&gt;&lt;a href=&quot;#漏洞说明&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>tomcat后台弱口令getshell漏洞复现</title>
@@ -464,31 +488,6 @@
         
         
           &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>验证码绕过小技巧</title>
-    <link href="http://dvsx.github.io/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/"/>
-    <id>http://dvsx.github.io/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/</id>
-    <published>2019-06-03T10:39:47.000Z</published>
-    <updated>2019-06-03T12:37:19.743Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。&lt;/p&gt;
-&lt;h2 id=&quot;验证码不刷新（服务器端）&quot;&gt;&lt;a href=&quot;#验证码不刷新（服务器端）&quot;
         
       
     
