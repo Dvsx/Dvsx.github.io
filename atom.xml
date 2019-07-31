@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-07-30T08:04:03.494Z</updated>
+  <updated>2019-07-31T07:29:04.946Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx越界读取缓存漏洞CVE-2017-7529</title>
+    <link href="http://dvsx.github.io/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/"/>
+    <id>http://dvsx.github.io/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/</id>
+    <published>2019-07-31T06:58:00.000Z</published>
+    <updated>2019-07-31T07:29:04.946Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;漏洞原理&quot;&gt;&lt;a href=&quot;#漏洞原理&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>nginx文件名逻辑漏洞CVE-2013-4547</title>
@@ -456,30 +480,6 @@
     <id>http://dvsx.github.io/2019/06/10/csrf/</id>
     <published>2019-06-10T01:54:21.000Z</published>
     <updated>2019-06-10T02:58:05.699Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>XSS</title>
-    <link href="http://dvsx.github.io/2019/06/04/xss/"/>
-    <id>http://dvsx.github.io/2019/06/04/xss/</id>
-    <published>2019-06-04T00:53:13.000Z</published>
-    <updated>2019-06-04T11:57:58.425Z</updated>
     
     <summary type="html">
     
