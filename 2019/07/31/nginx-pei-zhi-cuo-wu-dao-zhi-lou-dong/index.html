@@ -4,9 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="验证码绕过小技巧, god_13">
-    <meta name="description" content="在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。
-验证码不刷新（服务器端）原理为什么会产生验证码不刷新的情况呢？原因就是你第一次输入">
+    <meta name="keywords" content="Nginx配置错误导致漏洞, god_13">
+    <meta name="description" content="前言这篇文章主要讲nginx配置错误导致的漏洞，分别是
+1.CRLF注入漏洞
+2.目录穿越漏洞
+3.add_header被覆盖
+CRLF漏洞前提知识CRLF是“回车+换行”（\r\n）的简称。在HTTP协议中，HTTP Header与HTT">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>验证码绕过小技巧 | god_13</title>
+    <title>Nginx配置错误导致漏洞 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -258,13 +261,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        验证码绕过小技巧
+                        Nginx配置错误导致漏洞
                     </div>
                 </div>
             </div>
@@ -375,8 +378,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/漏洞/" target="_blank">
-                                <span class="chip bg-color">漏洞</span>
+                            <a href="/tags/漏洞复现/" target="_blank">
+                                <span class="chip bg-color">漏洞复现</span>
                             </a>
                         
                     </div>
@@ -390,21 +393,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-06-03
+                    2019-07-31
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        575
+                        755
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        3 Min
                     </div>
                     
                 
@@ -420,13 +423,71 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>在日常的CTF题目和渗透测试里，很容易遇到登陆的问题，如果没有验证码的情况下，可以直接爆破，但是如果有验证码，就很难操作了，下面就讲述一下验证码绕过小技巧。</p>
-<h2 id="验证码不刷新（服务器端）"><a href="#验证码不刷新（服务器端）" class="headerlink" title="验证码不刷新（服务器端）"></a>验证码不刷新（服务器端）</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>为什么会产生验证码不刷新的情况呢？原因就是你第一次输入的错误信息产生的session存储在服务器里，这时我们用抓包工具抓个包就可以用初始的那个验证码爆破了</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>0x00<br>Pikachu平台上的环境<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/1.PNG" alt=""><br>抓包显示<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/2.PNG" alt=""><br>说明此时的用户名或密码错误，现在我们不改验证码，只改密码为正确密码123456，再go一下<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/3.PNG" alt=""><br>登陆成功，说明验证码不刷新，确实可以直接就爆破的<br>0x01<br>还有一种情况是验证码在特定条件下不会刷新，比如失败后弹框，只要不点击取消或者确定，验证码就一直不刷新，这时候也可以进行爆破的</p>
-<h2 id="验证码刷新（客户端）"><a href="#验证码刷新（客户端）" class="headerlink" title="验证码刷新（客户端）"></a>验证码刷新（客户端）</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>这种情况在早期的一些网站中比较常见，主要是因为程序员在写代码的时候安全意识不足导致的。验证码通常会被他们隐藏在网站的源码中或者高级一点的隐藏在请求的Cookie中，但这两种情况都可以被攻击者轻松绕过。</p>
-<h3 id="验证码藏在源码中"><a href="#验证码藏在源码中" class="headerlink" title="验证码藏在源码中"></a>验证码藏在源码中</h3><p>验证这种情况很简单，我们只需要记住验证码，然后右键打开网站源代码，Ctrl+F搜索，输入刚才的验证码，如果可以成功匹配到，那恭喜你，接下来就可以写工具，提取源码中的验证码并将其放入每次请求的报文中，来进行帐号破解，这里推荐使用python。</p>
-<h2 id="验证码空值绕过"><a href="#验证码空值绕过" class="headerlink" title="验证码空值绕过"></a>验证码空值绕过</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>顾名思义，我们抓一个包，把有关验证码的cookie和参数给删去，那发送给服务器的验证就不起作用了。</p>
-<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>错误的密码，正确的验证码<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/4.PNG" alt=""><br>正确的密码，并把相关的验证信息删除<br><img src="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/5.PNG" alt=""><br>成功绕过<br>未完待续~~</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇文章主要讲nginx配置错误导致的漏洞，分别是</p>
+<pre><code>1.CRLF注入漏洞
+2.目录穿越漏洞
+3.add_header被覆盖
+</code></pre><h2 id="CRLF漏洞"><a href="#CRLF漏洞" class="headerlink" title="CRLF漏洞"></a>CRLF漏洞</h2><h3 id="前提知识"><a href="#前提知识" class="headerlink" title="前提知识"></a>前提知识</h3><p>CRLF是“回车+换行”（\r\n）的简称。在HTTP协议中，HTTP Header与HTTPBody是用两个CRLF分隔的，浏览器就是根据这两个CRLF来取出HTTP内容并显示出来的。所以，一旦我们能够控制HTTP消息头的字符输入，注入一些恶意的换行，我们就能注入一些会话cookie或者HtML代码。它通常和XSS一起联系使用。</p>
+<h3 id="错误代码"><a href="#错误代码" class="headerlink" title="错误代码"></a>错误代码</h3><pre><code>server {
+    listen 8080;
+    root /usr/share/nginx/html;
+    index index.html;
+    server_name _;
+    location / {
+        return 302 https://$host$uri;
+    }
+}
+</code></pre><p>一般网站会用<strong>Location:url</strong>的方式来进行302跳转，所以我们可以控制的是Location后面的内容</p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>通过传入payload</p>
+<pre><code>/%0d%0aSet-Cookie: This is cookie
+</code></pre><p><img src="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/1.PNG" alt=""><br>自定义cookie，可能会造成“会话固定漏洞”，当然，危害不止限于会话固定，还可以通过注入两个CRLF来实现XSS<br>payload</p>
+<pre><code>/%0d%0a%0d%0a&lt;script&gt;alert(/xss/)&lt;/script&gt;
+</code></pre><p><img src="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/2.PNG" alt=""><br>发现可以写入从而触发XSS<br>但是浏览器中有filter对xss做防护，当url中有xss相关的特征时就会过滤掉而不显示在页面里，所以不能触发xss。一般用户无法关闭filter，我们可以通过构造X-XSS-Protection: 0去绕过filter的验证。<br>可以参考离别歌的文章</p>
+<pre><code>https://www.leavesongs.com/PENETRATION/Sina-CRLF-Injection.html
+</code></pre><h2 id="目录穿越漏洞"><a href="#目录穿越漏洞" class="headerlink" title="目录穿越漏洞"></a>目录穿越漏洞</h2><p>顾名思义，目录穿越漏洞就是我们访问一个目录可以跳转到另一个目录，nginx默认是不让访问目录的，当前环境是已经允许访问的环境。</p>
+<pre><code>autoindex on;                        #开启目录浏览
+autoindex_exact_size off;            #显示文件大小（单位K/M/G）
+autoindex_localtime on;              #显示修改时间
+charset utf-8,gbk;                   #设置编码
+</code></pre><h3 id="错误-正确代码"><a href="#错误-正确代码" class="headerlink" title="错误/正确代码"></a>错误/正确代码</h3><pre><code>错误示范：
+location /files {
+  alias /home/;
+</code></pre><pre><code>正确示范：
+location /files {
+  alias /home;
+或
+location /paper/ {
+  alias /home/;
+</code></pre><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>构造payload</p>
+<pre><code>http://192.168.75.131:8081/files../
+</code></pre><p>可以成功穿越到根目录<br><img src="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/3.PNG" alt=""></p>
+<h2 id="add-header被覆盖漏洞"><a href="#add-header被覆盖漏洞" class="headerlink" title="add_header被覆盖漏洞"></a>add_header被覆盖漏洞</h2><p>nginx配置文件分为server，location，if等一些配置快，并且存在包含关系，和编程语言比较类似。如果在外层配置的一些选项，是可以被继承到内层的。而且这种继承也有一些特性，比如add_header，子块中配置完后将会覆盖父块中的配置，造成一些安全隐患。</p>
+<h3 id="错误代码-1"><a href="#错误代码-1" class="headerlink" title="错误代码"></a>错误代码</h3><p>如下的代码中，server头中配置了CSP，但是/test2中又添加了XCTO头，导致父块的配置失效。</p>
+<pre><code>server {
+    listen 8082;
+
+    root /usr/share/nginx/html;
+
+    index index.html;
+
+    server_name _;
+
+    autoindex on;
+
+    add_header Content-Security-Policy &quot;default-src &#39;self&#39;&quot;;
+    add_header X-Frame-Options DENY;
+
+    location = /test1 {
+        rewrite ^(.*)$ /xss.html break;
+    }
+
+    location = /test2 {
+        add_header X-Content-Type-Options nosniff;
+        rewrite ^(.*)$ /xss.html break;
+    }
+}
+</code></pre><h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><p>可能会造成XSS漏洞</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>解决这类问题，最根本的方法就是仔细阅读官方文档，文档里说明了很多配置文件错误和正确的用法，可以加以利用。</p>
 
             </div>
             <hr>
@@ -582,9 +643,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《验证码绕过小技巧》
+                    《Nginx配置错误导致漏洞》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/06/03/yan-zheng-ma-rao-guo-xiao-ji-qiao/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -647,27 +708,32 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/06/04/xss/">
+                <a href="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="XSS">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Nginx配置错误导致漏洞">
                         
-                        <span class="card-title">XSS</span>
+                        <span class="card-title">Nginx配置错误导致漏洞</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            概述Cross-Site-Scripting简称“CSS”，为了避免与前端叠成样式表的缩写“CSS”冲突，故又称XSS。一般分为反射型，存储型，DOM型。形成XSS的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前
+                            前言这篇文章主要讲nginx配置错误导致的漏洞，分别是
+1.CRLF注入漏洞
+2.目录穿越漏洞
+3.add_header被覆盖
+CRLF漏洞前提知识CRLF是“回车+换行”（\r\n）的简称。在HTTP协议中，HTTP Header与HTT
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -676,11 +742,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
@@ -694,24 +761,24 @@
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/04/29/wen-jian-shang-chuan-zhi-tiao-jian-jing-zheng/">
+                <a href="/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="文件上传之条件竞争">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="nginx越界读取缓存漏洞CVE-2017-7529">
                         
-                        <span class="card-title">文件上传之条件竞争</span>
+                        <span class="card-title">nginx越界读取缓存漏洞CVE-2017-7529</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            upload-labs-master第十七关真的感到写出这个lab的大佬的强大，膜拜~~~整个lab共计20关，因为最近学长布置了任务让学习一下条件竞争，就开始用这个lab因为主要是讲条件竞争，所以就先记录一下第十七关的学习经历这里先将文件
+                            漏洞原理nginx在反向代理站点的时候，通常会将一些文件进行缓存，特别是静态文件。攻击者可以通过发送包含恶意构造range域的header请求，来获取响应中的缓存文件头部信息。在某些配置文件中，缓存文件头可能包含后端服务器的IP地址或其他的
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-29
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-31
                             </span>
                         <span class="publish-author">
                             
@@ -724,8 +791,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/文件上传/" target="_blank">
-                        <span class="chip bg-color">文件上传</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>

