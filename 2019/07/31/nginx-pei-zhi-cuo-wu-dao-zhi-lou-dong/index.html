@@ -400,7 +400,7 @@ CRLF漏洞前提知识CRLF是“回车+换行”（\r\n）的简称。在HTTP协
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        755
+                        1k
                     </div>
                     
 
@@ -487,6 +487,19 @@ location /paper/ {
     }
 }
 </code></pre><h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><p>可能会造成XSS漏洞</p>
+<h2 id="nginx解析漏洞"><a href="#nginx解析漏洞" class="headerlink" title="nginx解析漏洞"></a>nginx解析漏洞</h2><p>nginx解析漏洞就是本来只解析php文件，现在可以解析jpg，png等图片的格式的漏洞</p>
+<h3 id="版本信息"><a href="#版本信息" class="headerlink" title="版本信息"></a>版本信息</h3><ul>
+<li>nginx 1.x </li>
+<li>php 7.x</li>
+</ul>
+<p>其实这个漏洞不和nginx和php版本有关，属于用户配置不当所导致的</p>
+<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>环境：是vulhub上搭建好的靶机<br>访问</p>
+<pre><code>http://192.168.75.131/index.php
+</code></pre><p>可以发现是一个上传页面，经过尝试发现，写一个一句话然后把后缀一改是不行的，需要自己制作一个图片木马，之前写过制作图片木马的方法</p>
+<pre><code>http://dvsx.cn/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/
+</code></pre><p>上传完之后发现目录已经回显在了页面，然后就可以用菜刀去连了，构造payload</p>
+<pre><code>http://192.168.75.131/uploadfiles/fb5c81ed3a220004b71069645f112867.png/.php
+</code></pre><p>发现成功连接！<br><img src="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/4.PNG" alt=""><br>这个漏洞危害还挺大的，直接能进入到文件夹中去操作了，所以配置文件的时候</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>解决这类问题，最根本的方法就是仔细阅读官方文档，文档里说明了很多配置文件错误和正确的用法，可以加以利用。</p>
 
             </div>
@@ -913,7 +926,7 @@ CRLF漏洞前提知识CRLF是“回车+换行”（\r\n）的简称。在HTTP协
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">32.2k</span>
+                <span class="white-color">32.5k</span>
             
 
             
