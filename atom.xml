@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-08-02T11:40:34.266Z</updated>
+  <updated>2019-08-03T09:22:14.676Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>apache漏洞复现</title>
+    <link href="http://dvsx.github.io/2019/08/03/apache-lou-dong-fu-xian/"/>
+    <id>http://dvsx.github.io/2019/08/03/apache-lou-dong-fu-xian/</id>
+    <published>2019-08-03T07:44:56.000Z</published>
+    <updated>2019-08-03T09:22:14.676Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Apache-HTTPD-换行解析漏洞&quot;&gt;&lt;a href=&quot;#Apache-HTTPD-换行解析漏洞&quot; class=&quot;headerlink&quot; title=&quot;Apache HTTPD 换行解析漏洞&quot;&gt;&lt;/a&gt;Apache HTTPD
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Nginx配置错误导致漏洞</title>
@@ -471,30 +495,6 @@
     
     
       <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>渗透测试靶机练习 DC-1</title>
-    <link href="http://dvsx.github.io/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/"/>
-    <id>http://dvsx.github.io/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/</id>
-    <published>2019-06-15T02:29:22.000Z</published>
-    <updated>2019-06-15T11:28:56.222Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考&quot;&gt;&lt;a href=&quot;#第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="渗透测试" scheme="http://dvsx.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
     
   </entry>
   

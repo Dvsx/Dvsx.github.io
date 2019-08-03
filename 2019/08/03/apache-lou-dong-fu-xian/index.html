@@ -4,8 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="比赛心得, god_13">
-    <meta name="description" content="第一次参加线下攻防赛，尽管之前做了一些准备，但真正开始的时候还是有些不知道该做什么。刚开始时，超尴尬，不知道登陆名是什么，本来以为是自己的队名，没想到是自己的名字。。。进入网站发现有两道题，第一步就是用xshell和winscap去连，后来">
+    <meta name="keywords" content="apache漏洞复现, god_13">
+    <meta name="description" content="Apache HTTPD 换行解析漏洞Apache的HTTPD是一款HTTP服务器，它可以通过mod_php来运行php网页。在解析PHP时，1.php\0x0a将被按照是php文件进行解析，导致绕过一些服务器的安全策略。
+影响版本apac">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>比赛心得 | god_13</title>
+    <title>apache漏洞复现 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +258,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        比赛心得
+                        apache漏洞复现
                     </div>
                 </div>
             </div>
@@ -374,8 +375,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/杂记/" target="_blank">
-                                <span class="chip bg-color">杂记</span>
+                            <a href="/tags/漏洞复现/" target="_blank">
+                                <span class="chip bg-color">漏洞复现</span>
                             </a>
                         
                     </div>
@@ -389,21 +390,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2018-12-09
+                    2019-08-03
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        590
+                        1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        4 Min
                     </div>
                     
                 
@@ -419,7 +420,68 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>第一次参加线下攻防赛<a id="more"></a>，尽管之前做了一些准备，但真正开始的时候还是有些不知道该做什么。<br>刚开始时，超尴尬，不知道登陆名是什么，本来以为是自己的队名，没想到是自己的名字。。。进入网站发现有两道题，第一步就是用xshell和winscap去连，后来还担心ssh密码会被人改掉，所以就改了ssh密码，连上winscap肯定是先下源码，但第一道题就给我整懵逼了，html里面啥也没有，让我下什么源码（后来才知道不同版本的服务器源码放的位置不一样）。。。第二道还能够找到源码，就以最快的速度下了下来，然后上文件监控和用D盾扫源码，当时就有点迷茫了，还好队友手速快，发现了预留的后门，然后运行脚本去拿flag。然后删掉自己服务器上的预留后门（最后发现主要就是靠预留后门得分了）。因为知道的漏洞形式太少了，所以中间并没有发现什么有价值的漏洞，中间找到了sql注入之类的漏洞，但是却是在数据库里的，所以我就在数据库上面花了一些时间，但后来被告知，flag是动态生成的，sql注入需要结合命令执行来获取flag，不用在数据库上花费一些不必要的时间（需注意啊），到比赛快要结束的时候，另一个学二进制的队友发现了一道pwn的题，并有现成的脚本，所以就拿来跑一跑，在后期就多了一个得分点。<br>在比赛的前期上了文件监控，别人上传的文件都可以监控到还好，但到了后期，被人又挖到了新的漏洞，就只能被动挨打了，而且每一轮都要被扣去好多分，这时候就需要一个流量监控的脚本了，但由于没有准备充分，被谁打的，怎么被吊打的都不知道，所以这一点是需要注意的。<br>一些漏洞的学习和使用还要一步步慢慢学，不能着急，先复习对应期末考试和六级再说！</p>
+                <h2 id="Apache-HTTPD-换行解析漏洞"><a href="#Apache-HTTPD-换行解析漏洞" class="headerlink" title="Apache HTTPD 换行解析漏洞"></a>Apache HTTPD 换行解析漏洞</h2><p>Apache的HTTPD是一款HTTP服务器，它可以通过mod_php来运行php网页。在解析PHP时，1.php\0x0a将被按照是php文件进行解析，导致绕过一些服务器的安全策略。</p>
+<h3 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h3><pre><code>apache2.4.0-2.4.29
+</code></pre><h3 id="后端源代码"><a href="#后端源代码" class="headerlink" title="后端源代码"></a>后端源代码</h3><pre><code>&lt;.. index.php ..&gt;
+&lt;?php
+if(isset($_FILES[&#39;file&#39;])) {
+    $name = basename($_POST[&#39;name&#39;]);
+    $ext = pathinfo($name,PATHINFO_EXTENSION);
+    if(in_array($ext, [&#39;php&#39;, &#39;php3&#39;, &#39;php4&#39;, &#39;php5&#39;, &#39;phtml&#39;, &#39;pht&#39;])) {
+        exit(&#39;bad file&#39;);
+    }
+    move_uploaded_file($_FILES[&#39;file&#39;][&#39;tmp_name&#39;], &#39;./&#39; . $name);
+}
+</code></pre><p>做了一个黑名单的验证，不允许上传’php’, ‘php3’, ‘php4’, ‘php5’, ‘phtml’, ‘pht’这些后缀的文件。</p>
+<h3 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h3><p>由于vulhub环境没有上传的界面，所以就自己写一个上传页面然后上传。写法就是点击F12–&gt;Elements–&gt;右键HTML–&gt;Edit as HTML</p>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;upload&lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action method=&#39;post&#39; enctype=&#39;multipart/form-data&#39;&gt;
+            &lt;input type=&#39;file&#39; name=&#39;file&#39;&gt;
+            &lt;input type=&#39;text&#39; name=&#39;name&#39;&gt;
+            &lt;input type=&#39;submit&#39;&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>需要上传两个内容，一个是file，另一个是name<br><img src="/2019/08/03/apache-lou-dong-fu-xian/1.PNG" alt=""><br>然后抓包，修改name参数后面为0a<br><img src="/2019/08/03/apache-lou-dong-fu-xian/2.PNG" alt=""><br>然后访问<strong>/1.php%0a</strong><br><img src="/2019/08/03/apache-lou-dong-fu-xian/3.PNG" alt=""><br>发现可以成功解析</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1.获取文件名时不能用$_FILES[‘file’][‘name’]，因为他会自动把换行去掉。<br>2.默认的apache配置就可以利用，因为apache默认配置就使用了<filematch></filematch></p>
+<pre><code>&lt;FilesMatch \.php$&gt;
+    SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;
+</code></pre><h2 id="Apache-HTTPD-多后缀解析漏洞"><a href="#Apache-HTTPD-多后缀解析漏洞" class="headerlink" title="Apache HTTPD 多后缀解析漏洞"></a>Apache HTTPD 多后缀解析漏洞</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>apache httpd支持一个文件拥有多个后缀，并为不同后缀执行不同的指令。比如，如下的配置文件</p>
+<pre><code>AddTYpe text/thml .html
+AddLamguage zh-CN .cn
+</code></pre><p>其给.html后缀增加了media-type，值为text/html;给.cn后缀增加了语言，值为zh-CN。此时，如果用户请求index.cn.html，页面将会返回一个中文的html页面。<br>以上就是apache多后缀的特性。如果运维人员给.php后缀增加了处理器</p>
+<pre><code>AddHandler application/x-httpd-php .php
+</code></pre><p>那么，在有多个后缀的情况下，只要文件含有.php后缀，不管是不是最后一个后缀，利用这个特性，将会造成一个可以绕过上传白名单的解析漏洞。</p>
+<h3 id="复现-1"><a href="#复现-1" class="headerlink" title="复现"></a>复现</h3><p>环境运行之后，访问<a href="http://your-ip/uploadfiles/apache.php.jpeg即可发现，phpinfo被执行了，该文件被解析为php脚本。" target="_blank" rel="noopener">http://your-ip/uploadfiles/apache.php.jpeg即可发现，phpinfo被执行了，该文件被解析为php脚本。</a><br><img src="/2019/08/03/apache-lou-dong-fu-xian/4.PNG" alt=""><br><a href="http://your-ip/index.php" target="_blank" rel="noopener">http://your-ip/index.php</a> 中是一个白名单检查文件后缀的上传组件，上传之后并未重命名。我们可以通过上传文件名为<strong>xxx.php.jpg或xxx.php.jpeg</strong>的文件，利用apache解析漏洞进行getshell。</p>
+<h2 id="Apache-SSI-远程命令执行漏洞"><a href="#Apache-SSI-远程命令执行漏洞" class="headerlink" title="Apache SSI 远程命令执行漏洞"></a>Apache SSI 远程命令执行漏洞</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>在测试任意文件上传漏洞的时候，目标服务器可能不允许上传php后缀的文件。如果目标服务器开启了SSI与CGI支持，我们可以上传一个sgtml文件，并利用<strong><!--#exec cmd="id" --></strong>语法执行任意命令。</p>
+<h3 id="复现-2"><a href="#复现-2" class="headerlink" title="复现"></a>复现</h3><p>先说一下vulhub进入后端命令行的语句</p>
+<pre><code>1.docker ps查看id号
+2.docker exec -ti id号 /bin/bash
+</code></pre><p>环境启动后，访问<a href="http://your-ip:8080/upload.php，" target="_blank" rel="noopener">http://your-ip:8080/upload.php，</a> 即可看到一个上传表单。<br>后端代码</p>
+<pre><code>root@1162cc172abe:/var/www/html# cat upload.php 
+&lt;?php
+if (!empty($_FILES)):
+$ext = pathinfo($_FILES[&#39;file_upload&#39;][&#39;name&#39;], PATHINFO_EXTENSION);
+if (in_array($ext, [&#39;php&#39;])) {
+    die(&#39;Unsupported filetype uploaded.&#39;);
+}
+
+move_uploaded_file($_FILES[&#39;file_upload&#39;][&#39;tmp_name&#39;], &#39;./&#39; . $_FILES[&#39;file_upload&#39;][&#39;name&#39;]);
+echo &quot;&lt;a href=&#39;/{$_FILES[&#39;file_upload&#39;][&#39;name&#39;]}&#39;&gt;{$_FILES[&#39;file_upload&#39;][&#39;name&#39;]}&lt;/a&gt;&quot;;
+
+endif;
+?&gt;
+&lt;form method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    File: &lt;input type=&quot;file&quot; name=&quot;file_upload&quot;&gt;
+    &lt;input type=&quot;submit&quot;&gt;
+&lt;/form&gt;
+</code></pre><p>上传一个shell.shtml文件</p>
+<pre><code>&lt;!--#exec cmd=&quot;ls&quot; --&gt;
+</code></pre><p><img src="/2019/08/03/apache-lou-dong-fu-xian/5.PNG" alt=""><br>成功上传，然后访问shell.shtml，发现命令已经成功执行：<br><img src="/2019/08/03/apache-lou-dong-fu-xian/6.PNG" alt=""></p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>这三个apache漏洞都是关于文件上传的，包括了三种上传姿势，记录一下，说不定以后会遇到。</p>
 
             </div>
             <hr>
@@ -575,9 +637,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《比赛心得》
+                    《apache漏洞复现》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/12/09/bi-sai-xin-de/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/03/apache-lou-dong-fu-xian/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -640,33 +702,29 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2018/12/17/ke-cheng-she-ji-zong-jie/">
+                <a href="/2019/08/03/apache-lou-dong-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="课程设计总结">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="apache漏洞复现">
                         
-                        <span class="card-title">课程设计总结</span>
+                        <span class="card-title">apache漏洞复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            单链表的创建
-前插法：（1）创建只有一个头结点的空链表（2）根据创建链表包括的元素个数n，循环n次执行以下操作
-
-生成一个新结点p输入元素值赋给新结点p的数据域将新结点插入到头结点之后
-
-【算法描述】
-void CreateList_H(L
+                            Apache HTTPD 换行解析漏洞Apache的HTTPD是一款HTTP服务器，它可以通过mod_php来运行php网页。在解析PHP时，1.php\0x0a将被按照是php文件进行解析，导致绕过一些服务器的安全策略。
+影响版本apac
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -675,11 +733,12 @@ void CreateList_H(L
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/杂记/" target="_blank">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
@@ -693,24 +752,28 @@ void CreateList_H(L
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/11/30/php-fan-xu-lie-hua-lou-dong/">
+                <a href="/2019/07/31/nginx-pei-zhi-cuo-wu-dao-zhi-lou-dong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="PHP反序列化漏洞">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Nginx配置错误导致漏洞">
                         
-                        <span class="card-title">PHP反序列化漏洞</span>
+                        <span class="card-title">Nginx配置错误导致漏洞</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而
+                            前言这篇文章主要讲nginx配置错误导致的漏洞，分别是
+1.CRLF注入漏洞
+2.目录穿越漏洞
+3.add_header被覆盖
+CRLF漏洞前提知识CRLF是“回车+换行”（\r\n）的简称。在HTTP协议中，HTTP Header与HTT
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-30
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-31
                             </span>
                         <span class="publish-author">
                             
@@ -723,8 +786,8 @@ void CreateList_H(L
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
