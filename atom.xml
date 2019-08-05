@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-08-03T09:22:14.676Z</updated>
+  <updated>2019-08-05T08:22:15.234Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jboss漏洞复现</title>
+    <link href="http://dvsx.github.io/2019/08/05/jboss-lou-dong-fu-xian/"/>
+    <id>http://dvsx.github.io/2019/08/05/jboss-lou-dong-fu-xian/</id>
+    <published>2019-08-05T08:18:29.000Z</published>
+    <updated>2019-08-05T08:22:15.234Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;P神写的文章真好！😊除了CVE-2017-12149不能用vulhub上的方法解决之外，其他的都没什么好说的了。。。&lt;br&gt;&lt;a href=&quot;http://imysec.cn/2019/08/01/jboss-lou-dong-fu-xian/&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>apache漏洞复现</title>
@@ -471,30 +495,6 @@
     
     
       <category term="。。。" scheme="http://dvsx.github.io/tags/%E3%80%82%E3%80%82%E3%80%82/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>dedeCMS后台代码执行漏洞复现[CNVD-2018-01221]</title>
-    <link href="http://dvsx.github.io/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/"/>
-    <id>http://dvsx.github.io/2019/06/19/dedecms-hou-tai-dai-ma-zhi-xing-lou-dong-cnvd-2018-01221/</id>
-    <published>2019-06-19T13:48:23.000Z</published>
-    <updated>2019-07-18T03:16:06.578Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;复现的第一个漏洞，CNVD-2018-01221，虽然有些鸡肋（要拿到管理员权限），但还是从中学到了很多&quot;&gt;&lt;a href=&quot;#复现的第一个漏洞，CNVD-2018-01221，虽然有些鸡肋（要拿到管理员权限），但还是从中学到了很多&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
   </entry>
   
