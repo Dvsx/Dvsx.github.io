@@ -4,8 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="PHP反序列化漏洞, god_13">
-    <meta name="description" content="漏洞简介PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而">
+    <meta name="keywords" content="使用docker搭建thinkphp环境, god_13">
+    <meta name="description" content="目标鉴于使用vulhub复现漏洞没什么技术含量，所以就自己搭建漏洞环境来复现漏洞，目标是通过docker搭建一个lamp的集成环境。
+操作步骤搜索并下载镜像搜索镜像
+docker search lamp
+下载镜像
+docker pull l">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>PHP反序列化漏洞 | god_13</title>
+    <title>使用docker搭建thinkphp环境 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +261,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        PHP反序列化漏洞
+                        使用docker搭建thinkphp环境
                     </div>
                 </div>
             </div>
@@ -374,8 +378,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/漏洞/" target="_blank">
-                                <span class="chip bg-color">漏洞</span>
+                            <a href="/tags/docker/" target="_blank">
+                                <span class="chip bg-color">docker</span>
                             </a>
                         
                     </div>
@@ -389,21 +393,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2018-11-30
+                    2019-08-29
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        492
+                        602
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        2 Min
                     </div>
                     
                 
@@ -419,17 +423,74 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h2><p><strong>PHP反序列化漏洞也叫PHP对象注入，是一个非常常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常危险的后果。漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有，也存在于Java、Python等语言之中，但其原理基本相通。</strong><br><a id="more"></a></p>
-<h2 id="深层理解"><a href="#深层理解" class="headerlink" title="深层理解"></a>深层理解</h2><p><strong>为什么要有序列化这种机制呢?因为在传递变量的过程中，有可能遇到变量值要跨脚本文件传递的过程。试想，如果在一个脚本中想要调用之前一个脚本的变量，但是前一个脚本已经执行完毕，所有的变量和内容释放掉了，我们要如何操作呢?难道要前一个脚本不断的循环，等待后面脚本调用?这肯定是不现实的。serialize和unserialize就是用来解决这一问题的。serialize可以将变量转换为字符串并且在转换中可以保存当前变量的值；unserialize则可以将serialize生成的字符串变换回变量。</strong></p>
-<h2 id="magic函数"><a href="#magic函数" class="headerlink" title="magic函数"></a>magic函数</h2><p>magic函数一般以_开头，通常会因为某些条件而触发不用我们手动调用<br>常见的magic函数</p>
-<pre><code>__construct()当一个对象创建时被调用
-__destruct()当一个对象销毁时被调用
-__toString()当一个对象被当作一个字符串使用
-__sleep() 在对象在被序列化之前运行
-__wakeup将在序列化之后立即被调用
-</code></pre><h2 id="反序列化漏洞需要满足两个条件"><a href="#反序列化漏洞需要满足两个条件" class="headerlink" title="反序列化漏洞需要满足两个条件"></a>反序列化漏洞需要满足两个条件</h2><pre><code>1、程序中存在序列化字符串的输入点
-2、程序中存在可以利用的magic函数
-</code></pre>
+                <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>鉴于使用vulhub复现漏洞没什么技术含量，所以就自己搭建漏洞环境来复现漏洞，目标是通过docker搭建一个lamp的集成环境。</p>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="搜索并下载镜像"><a href="#搜索并下载镜像" class="headerlink" title="搜索并下载镜像"></a>搜索并下载镜像</h3><p>搜索镜像</p>
+<pre><code>docker search lamp
+</code></pre><p>下载镜像</p>
+<pre><code>docker pull linode/lamp
+</code></pre><h3 id="查看使用说明"><a href="#查看使用说明" class="headerlink" title="查看使用说明"></a>查看使用说明</h3><p>下载好之后，官网上有相应的使用说明</p>
+<pre><code>https://hub.docker.com/
+</code></pre><p>得到的信息</p>
+<pre><code>mysql的root密码是Admin2015
+</code></pre><h3 id="建立docker卷"><a href="#建立docker卷" class="headerlink" title="建立docker卷"></a>建立docker卷</h3><pre><code>docker volume create lamp_www           # apache的web根目录
+docker volume create lamp_apache_conf   # apache的配置目录
+docker volume create lamp_mysql_conf    # MySQL的配置目录
+docker volume create lamp_mysql_data    # MySQL的数据目录
+
+</code></pre><p>已经建立好的docker卷的目录为</p>
+<pre><code>/var/lib/docker/volumes/
+</code></pre><h3 id="启动镜像"><a href="#启动镜像" class="headerlink" title="启动镜像"></a>启动镜像</h3><pre><code>docker run -it -p 80:80 -p 3306:3306 -v lamp_www:/var/www -v lamp_apache_conf:/etc/apache2 -v lamp_mysql_conf:/etc/mysql -v lamp_mysql_data:/var/lib/mysql --name lamp linode/lamp /bin/bash
+
+# 解释：
+# docker run：运行一个container，如果后面要绑定宿主主机的0-1024端口需要使用sudo
+# -p port1:port2: 将宿主机的端口port1映射到容器中的port2
+# -v volume:path: 将宿主机的docker卷映射到容器中的指定的路径
+# -t -i linode/lamp /bin/bash：使用linode/lamp生成容器，并打开shell
+
+</code></pre><p>至此lamp环境已经配置好了，如果需要mysql，apache环境，后续再进行安装即可</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p><strong>进入终端</strong></p>
+<pre><code>docker exec -ti lamp bash
+</code></pre><p><strong>启动apache2和mysql</strong></p>
+<pre><code>service apache2 start
+service mysql start
+</code></pre><p><strong>设置mysql允许远程登陆，修改密码</strong></p>
+<pre><code>mysql -u root -p
+#密码：Admin2015
+
+#修改root可远程登录：
+mysql&gt;use mysql;
+mysql&gt;update user set host = &#39;%&#39; where user = &#39;root&#39; and host=&#39;127.0.0.1&#39;;
+
+#修改密码：
+mysql&gt;update user set password=password(&quot;your_password&quot;) where user=&#39;root&#39;;
+
+#刷新权限
+FLUSH PRIVILEGES;
+
+</code></pre><p><strong>安装php扩展</strong></p>
+<pre><code>apt-get update
+apt-get install -y php5-mysql
+apt-get install -y php5-gd
+
+...
+
+#然后重启apache2:
+service apache2 restart
+
+#再次确认mysql和apache2有没有安装成功：
+netstat -pant
+
+</code></pre><p>这些操作进行完之后，apache2，mysql，php已经配置好了</p>
+<h2 id="导入thinkphp"><a href="#导入thinkphp" class="headerlink" title="导入thinkphp"></a>导入thinkphp</h2><p><strong>去thinkphp官网下载相应的版本</strong></p>
+<pre><code>http://www.thinkphp.cn/down.html
+</code></pre><p><strong>然后把代码拷贝进容器</strong></p>
+<pre><code>docker cp /home/dvsx/Desktop/tp5 295d6419c877:/var/www/example.com/public_html/
+
+</code></pre><p>需要注意的是拷贝进的目录不是www，而是public_html，因为默认的响应目录是后者。<br>完事之后就可以去网站访问了，另一个需要注意的是thinkphp的网址是</p>
+<pre><code>http://localhost/name/public
+</code></pre><p><img src="/2019/08/29/shi-yong-docker-da-jian-thinkphp-huan-jing/1.PNG" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>docker的东西还挺多的，一点一点学，慢慢积累吧。</p>
+
             </div>
             <hr>
 
@@ -584,9 +645,9 @@ __wakeup将在序列化之后立即被调用
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《PHP反序列化漏洞》
+                    《使用docker搭建thinkphp环境》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/11/30/php-fan-xu-lie-hua-lou-dong/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/29/shi-yong-docker-da-jian-thinkphp-huan-jing/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -649,27 +710,32 @@ __wakeup将在序列化之后立即被调用
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2018/12/09/bi-sai-xin-de/">
+                <a href="/2019/08/29/shi-yong-docker-da-jian-thinkphp-huan-jing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="比赛心得">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="使用docker搭建thinkphp环境">
                         
-                        <span class="card-title">比赛心得</span>
+                        <span class="card-title">使用docker搭建thinkphp环境</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            第一次参加线下攻防赛，尽管之前做了一些准备，但真正开始的时候还是有些不知道该做什么。刚开始时，超尴尬，不知道登陆名是什么，本来以为是自己的队名，没想到是自己的名字。。。进入网站发现有两道题，第一步就是用xshell和winscap去连，后来
+                            目标鉴于使用vulhub复现漏洞没什么技术含量，所以就自己搭建漏洞环境来复现漏洞，目标是通过docker搭建一个lamp的集成环境。
+操作步骤搜索并下载镜像搜索镜像
+docker search lamp
+下载镜像
+docker pull l
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -678,11 +744,12 @@ __wakeup将在序列化之后立即被调用
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/杂记/" target="_blank">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/docker/" target="_blank">
+                        <span class="chip bg-color">docker</span>
                     </a>
                     
                 </div>
@@ -696,29 +763,24 @@ __wakeup将在序列化之后立即被调用
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/11/20/dvwa-zhi-nan/">
+                <a href="/2019/08/05/jboss-lou-dong-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="DVWA指南">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="jboss漏洞复现">
                         
-                        <span class="card-title">DVWA指南</span>
+                        <span class="card-title">jboss漏洞复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Brute Force1.LOW级别源代码
-&lt;?php
-
-if( isset( $_GET[ &#39;Login&#39; ] ) ) {
-// Get username
-$user = $_GET[ &#39;username&#
+                            P神写的文章真好！😊除了CVE-2017-12149不能用vulhub上的方法解决之外，其他的都没什么好说的了。。。http://imysec.cn/2019/08/01/jboss-lou-dong-fu-xian/参考文章https:
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-20
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-05
                             </span>
                         <span class="publish-author">
                             
@@ -731,8 +793,8 @@ $user = $_GET[ &#39;username&#
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞学习/" target="_blank">
-                        <span class="chip bg-color">漏洞学习</span>
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>

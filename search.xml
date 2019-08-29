@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>使用docker搭建thinkphp环境</title>
+      <link href="/2019/08/29/shi-yong-docker-da-jian-thinkphp-huan-jing/"/>
+      <url>/2019/08/29/shi-yong-docker-da-jian-thinkphp-huan-jing/</url>
+      
+        <content type="html"><![CDATA[<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>鉴于使用vulhub复现漏洞没什么技术含量，所以就自己搭建漏洞环境来复现漏洞，目标是通过docker搭建一个lamp的集成环境。</p><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="搜索并下载镜像"><a href="#搜索并下载镜像" class="headerlink" title="搜索并下载镜像"></a>搜索并下载镜像</h3><p>搜索镜像</p><pre><code>docker search lamp</code></pre><p>下载镜像</p><pre><code>docker pull linode/lamp</code></pre><h3 id="查看使用说明"><a href="#查看使用说明" class="headerlink" title="查看使用说明"></a>查看使用说明</h3><p>下载好之后，官网上有相应的使用说明</p><pre><code>https://hub.docker.com/</code></pre><p>得到的信息</p><pre><code>mysql的root密码是Admin2015</code></pre><h3 id="建立docker卷"><a href="#建立docker卷" class="headerlink" title="建立docker卷"></a>建立docker卷</h3><pre><code>docker volume create lamp_www           # apache的web根目录docker volume create lamp_apache_conf   # apache的配置目录docker volume create lamp_mysql_conf    # MySQL的配置目录docker volume create lamp_mysql_data    # MySQL的数据目录</code></pre><p>已经建立好的docker卷的目录为</p><pre><code>/var/lib/docker/volumes/</code></pre><h3 id="启动镜像"><a href="#启动镜像" class="headerlink" title="启动镜像"></a>启动镜像</h3><pre><code>docker run -it -p 80:80 -p 3306:3306 -v lamp_www:/var/www -v lamp_apache_conf:/etc/apache2 -v lamp_mysql_conf:/etc/mysql -v lamp_mysql_data:/var/lib/mysql --name lamp linode/lamp /bin/bash# 解释：# docker run：运行一个container，如果后面要绑定宿主主机的0-1024端口需要使用sudo# -p port1:port2: 将宿主机的端口port1映射到容器中的port2# -v volume:path: 将宿主机的docker卷映射到容器中的指定的路径# -t -i linode/lamp /bin/bash：使用linode/lamp生成容器，并打开shell</code></pre><p>至此lamp环境已经配置好了，如果需要mysql，apache环境，后续再进行安装即可</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p><strong>进入终端</strong></p><pre><code>docker exec -ti lamp bash</code></pre><p><strong>启动apache2和mysql</strong></p><pre><code>service apache2 startservice mysql start</code></pre><p><strong>设置mysql允许远程登陆，修改密码</strong></p><pre><code>mysql -u root -p#密码：Admin2015#修改root可远程登录：mysql&gt;use mysql;mysql&gt;update user set host = &#39;%&#39; where user = &#39;root&#39; and host=&#39;127.0.0.1&#39;;#修改密码：mysql&gt;update user set password=password(&quot;your_password&quot;) where user=&#39;root&#39;;#刷新权限FLUSH PRIVILEGES;</code></pre><p><strong>安装php扩展</strong></p><pre><code>apt-get updateapt-get install -y php5-mysqlapt-get install -y php5-gd...#然后重启apache2:service apache2 restart#再次确认mysql和apache2有没有安装成功：netstat -pant</code></pre><p>这些操作进行完之后，apache2，mysql，php已经配置好了</p><h2 id="导入thinkphp"><a href="#导入thinkphp" class="headerlink" title="导入thinkphp"></a>导入thinkphp</h2><p><strong>去thinkphp官网下载相应的版本</strong></p><pre><code>http://www.thinkphp.cn/down.html</code></pre><p><strong>然后把代码拷贝进容器</strong></p><pre><code>docker cp /home/dvsx/Desktop/tp5 295d6419c877:/var/www/example.com/public_html/</code></pre><p>需要注意的是拷贝进的目录不是www，而是public_html，因为默认的响应目录是后者。<br>完事之后就可以去网站访问了，另一个需要注意的是thinkphp的网址是</p><pre><code>http://localhost/name/public</code></pre><p><img src="/2019/08/29/shi-yong-docker-da-jian-thinkphp-huan-jing/1.PNG" alt=""></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>docker的东西还挺多的，一点一点学，慢慢积累吧。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>jboss漏洞复现</title>
       <link href="/2019/08/05/jboss-lou-dong-fu-xian/"/>
       <url>/2019/08/05/jboss-lou-dong-fu-xian/</url>
