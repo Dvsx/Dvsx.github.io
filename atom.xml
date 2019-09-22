@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-09-22T14:02:27.424Z</updated>
+  <updated>2019-09-22T14:07:59.503Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://dvsx.github.io/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/"/>
     <id>http://dvsx.github.io/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/</id>
     <published>2019-09-22T14:01:25.000Z</published>
-    <updated>2019-09-22T14:02:27.424Z</updated>
+    <updated>2019-09-22T14:07:59.503Z</updated>
     
     <summary type="html">
     
@@ -35,6 +35,8 @@
     
     </summary>
     
+    
+      <category term="无线网络安全" scheme="http://dvsx.github.io/tags/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
   </entry>
   
