@@ -4,9 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="CSRF, god_13">
-    <meta name="description" content="概述CSRF是跨站请求伪造攻击的简称，在CSRF的攻击场景中攻击者会伪造一个请求（一般是一个链接），然后哦欺骗用户进行点击，用户一旦点击这个链接，整个攻击就完成了。所以CSRF也叫“one click”攻击。
-CSRF(GET)get方式的">
+    <meta name="keywords" content="WiFi pineapple 操作指南, god_13">
+    <meta name="description" content="0x00 简介WiFi Pineapple 是由国外无线安全审计公司Hak5开发并售卖的一款无线安全测试神器（俗称大菠萝），里面有许多内置的模块，给我们提供一些无线安全测试的方法。本文主要讲大菠萝的配置和使用。
+0x01 配置web管理界面">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@ CSRF(GET)get方式的">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>CSRF | god_13</title>
+    <title>WiFi pineapple 操作指南 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -258,13 +258,13 @@ CSRF(GET)get方式的">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        CSRF
+                        WiFi pineapple 操作指南
                     </div>
                 </div>
             </div>
@@ -373,13 +373,9 @@ CSRF(GET)get方式的">
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/漏洞/" target="_blank">
-                                <span class="chip bg-color">漏洞</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -390,21 +386,21 @@ CSRF(GET)get方式的">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-06-10
+                    2019-09-22
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        396
+                        1.3k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        4 Min
                     </div>
                     
                 
@@ -420,10 +416,53 @@ CSRF(GET)get方式的">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>CSRF是跨站请求伪造攻击的简称，在CSRF的攻击场景中攻击者会伪造一个请求（一般是一个链接），然后哦欺骗用户进行点击，用户一旦点击这个链接，整个攻击就完成了。所以CSRF也叫“one click”攻击。</p>
-<h2 id="CSRF-GET"><a href="#CSRF-GET" class="headerlink" title="CSRF(GET)"></a>CSRF(GET)</h2><p>get方式的csrf最容易理解。想象一个场景，小王已经登陆了一个网站，这个网站有csrf漏洞，他点击了一个修改个人信息的请求，由于他在登陆状态，点击完之后就会完成个人信息修改的操作。比如链接的url一部分为<br><code>http://www.xxx.com/edit.php?username=xiaoli&amp;password=123456</code><br>由于没有验证的过程，所以点击这个链接就会直接把自己的个人信息给修改了。想要攻击的话，就可以使用工具把url先缩短，然后上传到网站的评论区或其他能上传的地方，诱导管理员点击就行了。</p>
-<h2 id="CSRF-POST"><a href="#CSRF-POST" class="headerlink" title="CSRF(POST)"></a>CSRF(POST)</h2><p>这个也一样，构造一个链接，里面有自己构造的网页，然后是post请求，比如下面的一个<br><img src="/2019/06/10/csrf/1.PNG" alt=""><br>构造的是一个添加管理员的请求，由于网站没有CSRF的验证，管理员点击链接之后就相当于添加了一个管理员。</p>
-<h2 id="CSRF-TOOKEN"><a href="#CSRF-TOOKEN" class="headerlink" title="CSRF(TOOKEN)"></a>CSRF(TOOKEN)</h2><p>这个是添加了tooken的验证，先要绕过tooken就要结合xss与csrf，找到xss的注入点，通过xss获取登陆的令牌tooken，然后在构造的链接里加上tooken，然后绕过。<br>未完待续~~</p>
+                <h2 id="0x00-简介"><a href="#0x00-简介" class="headerlink" title="0x00 简介"></a>0x00 简介</h2><p>WiFi Pineapple 是由国外无线安全审计公司Hak5开发并售卖的一款无线安全测试神器（俗称大菠萝），里面有许多内置的模块，给我们提供一些无线安全测试的方法。本文主要讲大菠萝的配置和使用。</p>
+<h2 id="0x01-配置"><a href="#0x01-配置" class="headerlink" title="0x01 配置"></a>0x01 配置</h2><p>web管理界面的的登陆 <a href="http://172.16.42.1:1471/" target="_blank" rel="noopener">http://172.16.42.1:1471/</a> 复制到浏览器，打开之前要先连接设备开启的无线网Pineapple_4455</p>
+<p><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/10.png" alt=""></p>
+<p>设置密码 此密码为web和ssh登陆密码;SSID是设置wifi的名字，输入密码，点Complete Setup初始设置完成</p>
+<p><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/11.png" alt=""></p>
+<p>点击netwoking,scan扫描附近网络，连接，这样刚才设置的Free-WiFi就可以上网了</p>
+<p><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/12.png" alt=""></p>
+<h2 id="Recon模块"><a href="#Recon模块" class="headerlink" title="Recon模块"></a>Recon模块</h2><p>Recon模块采用被动式扫描方式，扫描过程会自动将网卡设置为监听模式，监听周围不同信道上的（客户端）发出的各种数据包。</p>
+<p>Recon能够扫描出SSID、MAC地址、加密方式、是否启用了WPS功能、信道及信号强度等信息，Recon甚至还能扫描出当前未连接任何AP的客户端。</p>
+<p>在执行扫描操作时，只需要按照预设的扫描时间（如15s、30s、60s…）等，点击“Scan”即可一键式启动。如果勾选“Continuous”的话，扫描将会持续进行，即不停地向周围进行探测并将结果显示出来。</p>
+<p><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/13.png" alt=""></p>
+<h2 id="Logging模块"><a href="#Logging模块" class="headerlink" title="Logging模块"></a>Logging模块</h2><p><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/14.png" alt=""><br>上图是PineAP模块在Logging中对日志进行Filter，例如可以进行去重、刷新、删除、下载等操作，还支持根据SSID或MAC地址功能进行过滤。</p>
+<p>总的来说，WiFi Pineapple Nano的Logging模块比较简单，主要是用来过滤查询PineAP模块的日志。</p>
+<h2 id="PineAP模块"><a href="#PineAP模块" class="headerlink" title="PineAP模块"></a>PineAP模块</h2><p>启PineAP功能需要点击图中“Switch”按钮，使其“Enable”，然后勾选上面三个选项“Allow Associations”、“Log Probes”、“Log Associations”，再勾选下面“Beacon Response”选项，再将Beacon Response Interval的模式选择为“Normal或Aggressive”，最后Save一下即可。</p>
+<ul>
+<li><p>Allow Associations：启用后允许（接受）所有周围客户端的探测或连接请求，通常是配合<code>Filters</code>模块进行过滤时候来用，一般情况下我们都是<code>Allow</code>。</p>
+</li>
+<li><p>Log Probes、Log Associations：一个是记录周围客户端对Pineapple Nano的请求日志，另一个是客户端与Pineapple Nano的连接日志，这些日志信息记录在<code>Logging</code>模块中，方便我们进行查询。</p>
+</li>
+<li><p>Beacon Response：启用后即模拟真实的无线AP来响应那些周围的对Pineapple Nano发出<code>Probe Request</code>请求的客户端。</p>
+</li>
+<li><p>Beacon Response Interval：是用来选择<code>Beacon Response</code>响应包的发送速率，一般是<code>Normal</code>或<code>Aggressive</code>，需要注意的是<code>Aggressive</code>模式将消耗更多的cpu资源。</p>
+</li>
+</ul>
+<p>在点击Save后，就启用了PineAP的功能，过一会我们就可以在Clients中查看周围有哪些客户端以及它们曾经都连接过那些AP了。</p>
+<h2 id="0x03-插件"><a href="#0x03-插件" class="headerlink" title="0x03 插件"></a>0x03 插件</h2><h3 id="DWall"><a href="#DWall" class="headerlink" title="DWall"></a>DWall</h3><p>DWall，俗称绵羊墙。当目标连接到大菠萝广播的热点之后，可以显示 HTTP URLs, Cookies, POST DATA，还有实时展示客户端的图片。如果不小心连接到黑客广播的热点，后果将不堪设想。<br>具体操作如下所示：</p>
+<pre><code>下载模块--&gt;enable--&gt;start listening
+</code></pre><p><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/1.png" alt=""></p>
+<p>这样就开始监听了<br>等待目标连接，接收数据<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/2.png" alt=""></p>
+<p>可以看到，获取到了用户的一些流量信息</p>
+<h3 id="Occupineapple"><a href="#Occupineapple" class="headerlink" title="Occupineapple"></a>Occupineapple</h3><p>Occupineapple 是一个干扰模块，能够在周围生成各种随机或者自定义的SSID，设置发送数据包的速度和产生的wifi类型，名字。settings的内容控制攻击产生的威力和形式。<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/3.png" alt=""></p>
+<p>editor的内容可以让我们自定义生成的SSID名字<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/4.png" alt=""></p>
+<p>点击start开始攻击后产生的效果如图所示<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/5.png" alt=""></p>
+<p>这种攻击更多情况下是在恶搞或散布一些广告</p>
+<h3 id="DNSspoof-Evil-Portal"><a href="#DNSspoof-Evil-Portal" class="headerlink" title="DNSspoof+Evil Portal"></a>DNSspoof+Evil Portal</h3><p>DNSspoof是用来进行dns欺骗用的，Evil Portal是用来管理认证页面的，当Evil Portal单独使用时连接wifi会弹出认证窗口。这两个模块在一起使用会起到修改主页的作用。<br>使用时首先下载DNSSpoof，修改Landing page为自定义的内容，点击start<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/6.png" alt=""><br>然后下载Evil Portal并点击start<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/7.png" alt=""><br>然后再访问其他页面，发现主页已经改成了自己自定义的页面<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/8.png" alt=""><br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/9.png" alt=""></p>
+<h3 id="Deauth"><a href="#Deauth" class="headerlink" title="Deauth"></a>Deauth</h3><p>Deauth攻击，是无线网络拒绝服务攻击的一种形式。它旨在对菠萝附近接入到其他AP的客户端进行认证攻击 。</p>
+<p>具体攻击步骤如下图所示<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/17.png" alt=""><br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/18.png" alt=""></p>
+<p>把要攻击的对象加入黑名单，设置频率和信道，然后save并开始攻击。</p>
+<h3 id="Tcpdump"><a href="#Tcpdump" class="headerlink" title="Tcpdump"></a>Tcpdump</h3><p>tcpdump可以将网络中传送的数据包完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来去掉无用的信息，是一款非常高级的网络数据分析工具。<br><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/16.png" alt=""></p>
+<ul>
+<li>Interface 为需要监听的端口</li>
+<li>Verbose 对应 -v 选项，代表输出报文信息的详细程度</li>
+<li>Resolve 对应 -n 选项，不将主机名转换为IP地址，以及不进行端口名称的转换</li>
+<li>Timestamp 对应 -t 选项，指定是否输出时间戳或时间戳格式</li>
+</ul>
+<p><img src="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/15.png" alt=""></p>
+<p>输出结果如上图所示，有请求头和相关的流量信息。</p>
 
             </div>
             <hr>
@@ -579,9 +618,9 @@ CSRF(GET)get方式的">
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《CSRF》
+                    《WiFi pineapple 操作指南》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/06/10/csrf/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -644,27 +683,29 @@ CSRF(GET)get方式的">
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/">
+                <a href="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="渗透测试靶机练习 DC-1">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="WiFi pineapple 操作指南">
                         
-                        <span class="card-title">渗透测试靶机练习 DC-1</span>
+                        <span class="card-title">WiFi pineapple 操作指南</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            第一次深入的了解靶机，下面把我做题的整个流程写在下面，仅供参考靶机介绍我所用的靶机是在vulnhub上下载的，网址如下https://www.vulnhub.com/?page=1里面有许多靶机可以供我们练习，我之后也将会花很多时间去练习，
+                            0x00 简介WiFi Pineapple 是由国外无线安全审计公司Hak5开发并售卖的一款无线安全测试神器（俗称大菠萝），里面有许多内置的模块，给我们提供一些无线安全测试的方法。本文主要讲大菠萝的配置和使用。
+0x01 配置web管理界面
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -673,14 +714,7 @@ CSRF(GET)get方式的">
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/渗透测试/" target="_blank">
-                        <span class="chip bg-color">渗透测试</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -691,24 +725,25 @@ CSRF(GET)get方式的">
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/06/04/xss/">
+                <a href="/2019/09/06/yu-shen-tou-xiang-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="XSS">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="域渗透详解">
                         
-                        <span class="card-title">XSS</span>
+                        <span class="card-title">域渗透详解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            概述Cross-Site-Scripting简称“CSS”，为了避免与前端叠成样式表的缩写“CSS”冲突，故又称XSS。一般分为反射型，存储型，DOM型。形成XSS的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前
+                            什么是域？将网络中多台计算机逻辑上组织到一起，进行集中管理，这种区别于工作组的逻辑环境叫做域，域是组织与存储资源的核心管理单元，在域中，至少有一台域控制器，域控制器中保存着整个域的用户帐号和安全数据库。
+域的优点1.权限管理集中，管理成本低
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-04
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-06
                             </span>
                         <span class="publish-author">
                             
@@ -721,8 +756,8 @@ CSRF(GET)get方式的">
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/内网渗透/" target="_blank">
+                        <span class="chip bg-color">内网渗透</span>
                     </a>
                     
                 </div>

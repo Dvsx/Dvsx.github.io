@@ -397,7 +397,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        867
+                        982
                     </div>
                     
 
@@ -429,13 +429,25 @@
 <h2 id="域渗透思路"><a href="#域渗透思路" class="headerlink" title="域渗透思路"></a>域渗透思路</h2><p>通过域成员主机，定位出域控制器IP及域管理员账号，利用域成员主机作为跳板，扩大渗透范围，利用域管理员可以登录到任何成员主机的特性，定位出域管理员登陆过的主机IP，设法从域成员主机内存中dump出域管理员密码，进而拿下域控制器，渗透整个内网。</p>
 <h2 id="域渗透常用指令"><a href="#域渗透常用指令" class="headerlink" title="域渗透常用指令"></a>域渗透常用指令</h2><p>查看域控制器的主机名,查看完之后主机名后面会多一个$</p>
 <pre><code>net group &quot;domain controllers&quot; /domain
-</code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/2.PNG" alt=""></p>
-<p>查看管理员的用户名</p>
+或
+net time /domain
+</code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/2.PNG" alt=""><br>查看所有域成员计算机列表</p>
+<pre><code>net group &quot;domain computers&quot; /domain
+</code></pre><p>查看管理员的用户名</p>
 <pre><code>net group &quot;domain admins&quot; /domain
 </code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/3.PNG" alt=""></p>
 <p>查看所有域用户</p>
 <pre><code>net user /domain
-</code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/4.PNG" alt=""><br>其中，有一个特殊用户叫做krbtgt，该用户是用于Kerberos身份验证的账户，获得了该用户的hash，就可以进行票据传递攻击<br>还有一些指令</p>
+</code></pre><p><img src="/2019/09/06/yu-shen-tou-xiang-jie/4.PNG" alt=""></p>
+<p>查看域管IP</p>
+<pre><code>ping -a 主机名
+</code></pre><p>查看域管密码时效信息</p>
+<pre><code>net user administrator /domain
+</code></pre><p>查看域列表</p>
+<pre><code>net view /domain
+</code></pre><p>查看 testdomain域中的计算机列表</p>
+<pre><code>net view /domain:testdomain
+</code></pre><p>其中，有一个特殊用户叫做krbtgt，该用户是用于Kerberos身份验证的账户，获得了该用户的hash，就可以进行票据传递攻击<br>还有一些指令</p>
 <pre><code>查询当前登陆域：net config workstation
 
 查询域密码策略：net accounts /domain
@@ -461,6 +473,8 @@ psexec \\192.168.33.11 -u administrator -p 123456 -i -d cmd /c start http:// www
 net share admin$
 </code></pre><p>PSexec官方命令文档</p>
 <pre><code>https://docs.microsoft.com/zh-cn/sysinternals/downloads/psexec
+</code></pre><p>PSexec在第一连接的时候会在域内的主机弹窗，这是一个BUG，所以在第一次连接的时候，一定要带上一个参数</p>
+<pre><code>psexec /accepteula...
 </code></pre><h3 id="mimicatz"><a href="#mimicatz" class="headerlink" title="mimicatz"></a>mimicatz</h3><p>下载地址</p>
 <pre><code>https://github.com/gentilkiwi/mimikatz/releases
 </code></pre><p>常用的命令，运行的时候要以管理员身份运行，否则会报错</p>
@@ -686,29 +700,28 @@ sekurlsa::logonpasswords  查找域内主机的密码
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2019/09/06/yu-shen-tou-xiang-jie/">
+                <a href="/2019/09/22/wifi-pineapple-cao-zuo-zhi-nan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="域渗透详解">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="WiFi pineapple 操作指南">
                         
-                        <span class="card-title">域渗透详解</span>
+                        <span class="card-title">WiFi pineapple 操作指南</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            什么是域？将网络中多台计算机逻辑上组织到一起，进行集中管理，这种区别于工作组的逻辑环境叫做域，域是组织与存储资源的核心管理单元，在域中，至少有一台域控制器，域控制器中保存着整个域的用户帐号和安全数据库。
-域的优点1.权限管理集中，管理成本低
+                            0x00 简介WiFi Pineapple 是由国外无线安全审计公司Hak5开发并售卖的一款无线安全测试神器（俗称大菠萝），里面有许多内置的模块，给我们提供一些无线安全测试的方法。本文主要讲大菠萝的配置和使用。
+0x01 配置web管理界面
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-06
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-22
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -716,15 +729,6 @@ sekurlsa::logonpasswords  查找域内主机的密码
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/内网渗透/" target="_blank">
-                        <span class="chip bg-color">内网渗透</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -889,7 +893,7 @@ sekurlsa::logonpasswords  查找域内主机的密码
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">35.7k</span>
+                <span class="white-color">37.2k</span>
             
 
             
