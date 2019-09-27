@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-09-22T14:07:59.503Z</updated>
+  <updated>2019-09-27T08:11:04.587Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Apache Shiro Java反序列化漏洞复现-踩坑记录</title>
+    <link href="http://dvsx.github.io/2019/09/25/apache-shiro-java-fan-xu-lie-hua-lou-dong-fu-xian-cai-keng-ji-lu/"/>
+    <id>http://dvsx.github.io/2019/09/25/apache-shiro-java-fan-xu-lie-hua-lou-dong-fu-xian-cai-keng-ji-lu/</id>
+    <published>2019-09-25T04:51:04.000Z</published>
+    <updated>2019-09-27T08:11:04.587Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;这个漏洞属于java反序列化漏洞的一种，shiro是java的一个开发框架，能够快速的搭建好应用程序的环境。&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>WiFi pineapple 操作指南</title>
@@ -465,30 +490,6 @@
         
         
           &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Weblogic 任意文件上传漏洞（CVE-2018-2894）</title>
-    <link href="http://dvsx.github.io/2019/07/11/weblogic-ren-yi-wen-jian-shang-chuan-lou-dong-cve-2018-2894/"/>
-    <id>http://dvsx.github.io/2019/07/11/weblogic-ren-yi-wen-jian-shang-chuan-lou-dong-cve-2018-2894/</id>
-    <published>2019-07-11T09:21:30.000Z</published>
-    <updated>2019-07-13T12:54:07.093Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;影响的版本：Oracle WebLogic
         
       
     
