@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-10-11T09:00:01.295Z</updated>
+  <updated>2019-10-12T14:38:17.270Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vulhub serial php反序列化靶机实战</title>
+    <link href="http://dvsx.github.io/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/"/>
+    <id>http://dvsx.github.io/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/</id>
+    <published>2019-10-12T13:07:10.000Z</published>
+    <updated>2019-10-12T14:38:17.270Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;此漏洞环境是vulhub上的系列漏洞之一，是php反序列化漏洞，也用到了远程代码执行漏洞。&lt;/p&gt;
+&lt;h2 id=&quot;复现过程&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>内网学习之路--活动目录基础知识</title>
@@ -474,30 +499,6 @@
     
     
       <category term="提权" scheme="http://dvsx.github.io/tags/%E6%8F%90%E6%9D%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>身份认证绕过漏洞(CVE-2012-2122)</title>
-    <link href="http://dvsx.github.io/2019/07/15/shen-fen-ren-zheng-rao-guo-lou-dong-cve-2012-2122/"/>
-    <id>http://dvsx.github.io/2019/07/15/shen-fen-ren-zheng-rao-guo-lou-dong-cve-2012-2122/</id>
-    <published>2019-07-15T01:36:57.000Z</published>
-    <updated>2019-07-15T01:54:32.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
   </entry>
   

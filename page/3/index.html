@@ -293,6 +293,50 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <div class="article col s12 m6 l4 overflow-policy" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2019/07/15/shen-fen-ren-zheng-rao-guo-lou-dong-cve-2012-2122/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="身份认证绕过漏洞(CVE-2012-2122)">
+                            
+                            <span class="card-title">身份认证绕过漏洞(CVE-2012-2122)</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                前言当连接MariaDB/MySQL时，输入的密码会与期望的正确密码比较，由于不正确的处理，会导致即便是memcmp()返回一个非零值，也会使MySQL认为两个密码是相同的。
+这个缺陷的根源在于memcmp()函数总是返回-128到127（
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-user fa-fw"></i>
+                                xiao
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/漏洞复现/" target="_blank">
+                            <span class="chip bg-color">漏洞复现</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4 overflow-policy" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2019/07/14/weblogic-fan-xu-lie-hua-lou-dong-fu-xian-cve-2018-2628/">
                         <div class="card-image">
                             
@@ -680,49 +724,6 @@ CSRF(GET)get方式的
                 </div>
             </div>
             
-            <div class="article col s12 m6 l4 overflow-policy" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2019/06/04/xss/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="XSS">
-                            
-                            <span class="card-title">XSS</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                概述Cross-Site-Scripting简称“CSS”，为了避免与前端叠成样式表的缩写“CSS”冲突，故又称XSS。一般分为反射型，存储型，DOM型。形成XSS的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-04
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-user fa-fw"></i>
-                                xiao
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/漏洞/" target="_blank">
-                            <span class="chip bg-color">漏洞</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
         </div>
     </article>
 
@@ -762,7 +763,7 @@ CSRF(GET)get方式的
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">41.3k</span>
+                <span class="white-color">42.4k</span>
             
 
             
