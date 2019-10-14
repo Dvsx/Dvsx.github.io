@@ -4,8 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="PHP伪协议, god_13">
-    <meta name="description" content="php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile(">
+    <meta name="keywords" content="内网学习之路--活动目录信息收集, god_13">
+    <meta name="description" content="前言上一节讲了活动目录的基础知识，对活动目录有了大致的了解，这一节就写了在活动目录里获取有用的信息及利用的方法
+活动目录中域名信息收集及利用常用命令（不全，后期再加）
+Net use
+Net view
+Tasklist /v
+Ipconfi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>PHP伪协议 | god_13</title>
+    <title>内网学习之路--活动目录信息收集 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +262,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        PHP伪协议
+                        内网学习之路--活动目录信息收集
                     </div>
                 </div>
             </div>
@@ -372,9 +377,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/内网渗透/" target="_blank">
+                                <span class="chip bg-color">内网渗透</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -385,14 +394,14 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2018-10-27
+                    2019-10-14
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        285
+                        303
                     </div>
                     
 
@@ -415,34 +424,29 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="php-filter的妙用"><a href="#php-filter的妙用" class="headerlink" title="php://filter的妙用"></a>php://filter的妙用</h1><h2 id="1-解释"><a href="#1-解释" class="headerlink" title="1.解释"></a>1.解释</h2><p><strong>什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。</strong><br><a id="more"></a></p>
-<h2 id="2-用法"><a href="#2-用法" class="headerlink" title="2.用法"></a>2.用法</h2><p><strong>php://filter是PHP语言中特有的协议流，可以作为一个“中间流”来处理其他流。可以用如下一行代码将POST内容转换成base64编码并输出。</strong></p>
-<pre><code>readfile(&quot;php://filter/read=convert.base64-encode/resource=php://input&quot;);
-</code></pre><table>
-<thead>
-<tr>
-<th style="text-align:center">名称</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">resource=&lt;要过滤的数据流&gt;</td>
-<td style="text-align:center">这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
-</tr>
-<tr>
-<td style="text-align:center">read=&lt;读链的筛选列表&gt;</td>
-<td style="text-align:center">该参数可选。可以设定一个或多个过滤器名称</td>
-</tr>
-<tr>
-<td style="text-align:center">write=&lt;写链的筛选列表&gt;</td>
-<td style="text-align:center">该参数可选。可以设定一个或多个过滤器名称</td>
-</tr>
-</tbody>
-</table>
-<h2 id="3-实例"><a href="#3-实例" class="headerlink" title="3.实例"></a>3.实例</h2><p><strong>（1）bugku：flag在index里</strong></p>
-<p><img src="/2018/10/27/php-wei-xie-yi/1.PNG" alt=""><br><strong>（2）极客大挑战</strong><br><img src="/2018/10/27/php-wei-xie-yi/2.PNG" alt=""><br><strong>首先给参数id赋值</strong><br><img src="/2018/10/27/php-wei-xie-yi/3.PNG" alt=""><br><strong>结果为</strong><br><img src="/2018/10/27/php-wei-xie-yi/4.PNG" alt=""><br><strong>post php://filter</strong><br><img src="/2018/10/27/php-wei-xie-yi/5.PNG" alt=""><br><strong>结果为</strong><br><img src="/2018/10/27/php-wei-xie-yi/6.PNG" alt=""><br><strong>再进行base64解密即可爆出flag</strong></p>
-
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一节讲了活动目录的基础知识，对活动目录有了大致的了解，这一节就写了在活动目录里获取有用的信息及利用的方法</p>
+<h2 id="活动目录中域名信息收集及利用"><a href="#活动目录中域名信息收集及利用" class="headerlink" title="活动目录中域名信息收集及利用"></a>活动目录中域名信息收集及利用</h2><p>常用命令（不全，后期再加）</p>
+<pre><code>Net use
+Net view
+Tasklist /v
+Ipconfig /all 
+net group /domain 获得所有域用户组列表
+net group “domain admins” /domain 获得域管理员列表
+net group “enterprise admins” /domain 获得企业管理员列表
+net localgroup administrators /domain 获取域内置administrators组用户（enterprise admins、domain admins）
+net group “domain controllers” /domain 获得域控制器列表
+net time /domain 显示时间，同时显示域控主机名
+ping -a 域控主机名 获得域控IP
+net group “domain computers” /domain 获得所有域成员计算机列表
+net user /domain 获得所有域用户列表
+net user someuser /domain 获得指定账户someuser的详细信息
+net accounts /domain 获得域密码策略设置，密码长短，错误锁定等信息
+nltest /domain_trusts 获取域信任信息
+net config workstation 查询当前登录域
+net accounts /domain 查询域密码策略
+wmic qfe 查看补丁信息
+wmic os 查看操作系统类型
+</code></pre><h2 id="SPN信息收集"><a href="#SPN信息收集" class="headerlink" title="SPN信息收集"></a>SPN信息收集</h2>
             </div>
             <hr>
 
@@ -597,9 +601,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《PHP伪协议》
+                    《内网学习之路--活动目录信息收集》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/10/27/php-wei-xie-yi/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/10/14/nei-wang-xue-xi-zhi-lu-huo-dong-mu-lu-xin-xi-shou-ji/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -664,25 +668,25 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2018/11/04/chu-kui-wen-jian-shang-chuan/">
+                <a href="/2019/10/14/fan-dan-shell-cong-ru-men-dao-jin-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="初窥文件上传">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="反弹shell从入门到进阶">
                         
-                        <span class="card-title">初窥文件上传</span>
+                        <span class="card-title">反弹shell从入门到进阶</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧
-基于DVWA的文件上传（1）LOW级别low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行php一句话木马如下所示&lt;?php @e
+                            前言在渗透测试过程中，反弹shell是获取到权限的一种很重要的方式，一直用那些反弹shell的命令却不知道是什么意思，现在来专门学习一下原理。
+什么是反弹shell反弹shell(reverse shell)，就是监控端在监控某TCP/UD
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-04
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-14
                         </span>
                         <span class="publish-author">
                             
@@ -695,8 +699,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/反弹shell/" target="_blank">
+                        <span class="chip bg-color">反弹shell</span>
                     </a>
                     
                 </div>
@@ -707,27 +711,30 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="fa fa-dot-circle-o"></i>
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/10/27/php-wei-xie-yi/">
+                <a href="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="PHP伪协议">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="vulhub serial php反序列化靶机实战">
                         
-                        <span class="card-title">PHP伪协议</span>
+                        <span class="card-title">vulhub serial php反序列化靶机实战</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile(
+                            前言此漏洞环境是vulhub上的系列漏洞之一，是php反序列化漏洞，也用到了远程代码执行漏洞。
+复现过程环境搭建靶机下载地址
+https://www.vulnhub.com/entry/serial-1,349/
+我之前写过一个搭建的过程，
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-27
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-12
                             </span>
                         <span class="publish-author">
                             
@@ -737,7 +744,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/漏洞复现/" target="_blank">
+                        <span class="chip bg-color">漏洞复现</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

