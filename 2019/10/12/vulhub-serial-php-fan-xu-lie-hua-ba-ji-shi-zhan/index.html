@@ -428,10 +428,10 @@ https://www.vulnhub.com/entry/serial-1,349/
 </code></pre><p>下载好之后直接用Vmware workstation打开就行了</p>
 <h3 id="存活扫描"><a href="#存活扫描" class="headerlink" title="存活扫描"></a>存活扫描</h3><p>内网存活主机扫描</p>
 <pre><code>arp-scan -l
-</code></pre><p>扫描到的存活主机是<strong>192.168.77.157</strong><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/10.png" alt=""></p>
+</code></pre><p>扫描到的存活主机是<strong>192.168.77.157</strong><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/10.PNG" alt=""></p>
 <h3 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h3><p>扫描开放的端口</p>
 <pre><code>nmap -sV -p- 192.168.77.157
-</code></pre><p>发现开放了80,22号端口<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/11.png" alt=""></p>
+</code></pre><p>发现开放了80,22号端口<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/11.PNG" alt=""></p>
 <h3 id="访问web服务"><a href="#访问web服务" class="headerlink" title="访问web服务"></a>访问web服务</h3><p><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/1.png" alt=""><br>页面上显示</p>
 <pre><code>Hello sk4This is a beta test for new cookie handler
 </code></pre><p>burp抓包：<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/2.png" alt=""><br>发现cookie是base64加密过的，解密后发现是经过序列化过的：</p>
