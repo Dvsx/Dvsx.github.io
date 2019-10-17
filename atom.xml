@@ -66,11 +66,11 @@
   </entry>
   
   <entry>
-    <title>vulhub serial php反序列化靶机实战</title>
+    <title></title>
     <link href="http://dvsx.github.io/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/"/>
     <id>http://dvsx.github.io/2019/10/12/vulhub-serial-php-fan-xu-lie-hua-ba-ji-shi-zhan/</id>
-    <published>2019-10-12T13:07:10.000Z</published>
-    <updated>2019-10-16T13:17:09.758Z</updated>
+    <published>2019-10-12T13:07:10.228Z</published>
+    <updated>2019-10-17T10:22:54.787Z</updated>
     
     <summary type="html">
     
@@ -85,8 +85,6 @@
     
     </summary>
     
-    
-      <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
   </entry>
   
