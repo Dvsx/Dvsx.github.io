@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dvsx.github.io/"/>
-  <updated>2019-10-16T13:11:33.016Z</updated>
+  <updated>2019-11-02T03:46:06.893Z</updated>
   <id>http://dvsx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>用卷积神经网络实现MINIST手写字识别</title>
+    <link href="http://dvsx.github.io/2019/11/02/yong-juan-ji-shen-jing-wang-luo-shi-xian-minist-shou-xie-zi-shi-bie/"/>
+    <id>http://dvsx.github.io/2019/11/02/yong-juan-ji-shen-jing-wang-luo-shi-xian-minist-shou-xie-zi-shi-bie/</id>
+    <published>2019-11-02T01:38:20.000Z</published>
+    <updated>2019-11-02T03:46:06.893Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="深度学习" scheme="http://dvsx.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>反弹shell从入门到进阶</title>
@@ -474,30 +498,6 @@
     
     
       <category term="漏洞复现" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Sql-inject</title>
-    <link href="http://dvsx.github.io/2019/07/23/sql-inject/"/>
-    <id>http://dvsx.github.io/2019/07/23/sql-inject/</id>
-    <published>2019-07-23T03:20:59.000Z</published>
-    <updated>2019-07-24T08:08:05.612Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="漏洞" scheme="http://dvsx.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
     
   </entry>
   
