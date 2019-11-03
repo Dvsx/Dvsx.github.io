@@ -4,9 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="kali下钓鱼网站的制作, god_13">
-    <meta name="description" content="尽管当今互联网的安全措施已经很完善，但是还是会出现“被盗号”的情况，很多情况下是“有心人”的钓鱼网站导致的，今天的文章主要讲一下kali下使用setoolkit来制作钓鱼网站。
-setoolkit简介setoolkit是kali下的社会工程">
+    <meta name="keywords" content="文件包含原理解析, god_13">
+    <meta name="description" content="前言文件包含是在许多漏洞复现过程中都会使用得到的一个漏洞，可以包含自己上传上去的木马或者passwd等文件，也可以进行远程文件包含
+原理程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@ setoolkit简介setoolkit是kali下的社会工程">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>kali下钓鱼网站的制作 | god_13</title>
+    <title>文件包含原理解析 | god_13</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -258,13 +258,13 @@ setoolkit简介setoolkit是kali下的社会工程">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        kali下钓鱼网站的制作
+                        文件包含原理解析
                     </div>
                 </div>
             </div>
@@ -375,8 +375,8 @@ setoolkit简介setoolkit是kali下的社会工程">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/渗透/" target="_blank">
-                                <span class="chip bg-color">渗透</span>
+                            <a href="/tags/文件包含/" target="_blank">
+                                <span class="chip bg-color">文件包含</span>
                             </a>
                         
                     </div>
@@ -390,21 +390,21 @@ setoolkit简介setoolkit是kali下的社会工程">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-04-05
+                    2019-11-03
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        786
+                        368
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        2 Min
+                        1 Min
                     </div>
                     
                 
@@ -420,42 +420,18 @@ setoolkit简介setoolkit是kali下的社会工程">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>尽管当今互联网的安全措施已经很完善，但是还是会出现“被盗号”的情况，很多情况下是“有心人”的钓鱼网站导致的，今天的文章主要讲一下kali下使用setoolkit来制作钓鱼网站。<br><a id="more"></a></p>
-<h2 id="setoolkit简介"><a href="#setoolkit简介" class="headerlink" title="setoolkit简介"></a>setoolkit简介</h2><p>setoolkit是kali下的社会工程学工具集，有很多功能，在命令行输入setoolkit<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/1.PNG" alt=""><br>有几个选项<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/2.PNG" alt=""></p>
-<pre><code>社会工程学攻击
-快速追踪测试
-第三方模块
-升级软件
-升级配置
-帮助
-</code></pre><p>这里我们选择1，社会工程学攻击，还有选项<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/3.PNG" alt=""></p>
-<pre><code>鱼叉式网络攻击
-网页攻击
-传染媒介式
-建立payload和listener
-邮件群发攻击
-Arduino基础攻击
-无线接入点攻击
-二维码攻击
-Powershell攻击
-第三反方模块
-</code></pre><p>我们选择2，网页攻击<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/4.PNG" alt=""></p>
-<pre><code>Java applet攻击
-Metasploit浏览器攻击
-钓鱼网站攻击
-标签钓鱼攻击
-网站jacking攻击
-多种网站攻击
-全屏幕攻击
-</code></pre><p>这里选择3，钓鱼网站攻击<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/5.PNG" alt=""></p>
-<pre><code>网站模板
-站点克隆
-用自己的网站
-</code></pre><p>如果选择网站模板的话，会有几个默认的登陆界面的模板<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/6.PNG" alt=""><br>如果想克隆指定的页面的话，就选择2站点克隆，当然，这个功能虽然强大，但是有的网站是无法克隆的，如果无法克隆，就选择3，自己制作一样的网站去钓鱼。这里我详细讲一下站点克隆的方法。</p>
-<h2 id="站点克隆"><a href="#站点克隆" class="headerlink" title="站点克隆"></a>站点克隆</h2><p>选择完2之后，需要我们输入一些信息<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/7.PNG" alt=""><br>这个是我们克隆完之后的网站返回的ip地址，一般就写虚拟机的IP地址，然后我们需要填写想要克隆的网站的url<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/8.PNG" alt=""><br>回车之后，显示如下信息就代表克隆完成<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/9.PNG" alt=""><br>我们可以对比一下克隆的网站和原网站<br>这是原网站<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/10.PNG" alt=""><br>这是克隆的网站<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/11.PNG" alt=""><br>我们将账号和密码都设为admin，点击登陆，发现有跳转到了真正的页面，也不会返回账号信息错误的界面，同时，kali也将我们输入的信息截获了，并在终端显示<br><img src="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/12.PNG" alt=""><br>现在做的这些只能在同一个局域网内实现，在同一局域网的小伙伴可以试试玩一下，如果想让外网也能访问该怎么做呢？这就需要做一个内网穿透来实现了。</p>
-<h2 id="内网穿透"><a href="#内网穿透" class="headerlink" title="内网穿透"></a>内网穿透</h2><p>简单来说内网穿透的目的是：让外网能访问你本地的应用，例如在外网打开你本地<a href="http://127.0.0.1" target="_blank" rel="noopener">http://127.0.0.1</a> 指向的Web站点。<br>那怎么才能实现内网穿透呢？现有工具有花生壳，natapp，小米球工具，前两个都是收费的，最后一个生成的域名前缀是自己设置的，穿透域名是<br>xx.ngrok.xiaomiqiu.cn.有兴趣的可以玩一下。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大家也可以看到，钓鱼网站的制作其实并不难，所以我们平常在访问一些常用的有账号登陆的地方一定要看清楚url，防止被钓鱼。</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>文件包含是在许多漏洞复现过程中都会使用得到的一个漏洞，可以包含自己上传上去的木马或者passwd等文件，也可以进行远程文件包含</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，<br>但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。</p>
+<h2 id="常见的文件包含函数"><a href="#常见的文件包含函数" class="headerlink" title="常见的文件包含函数"></a>常见的文件包含函数</h2><pre><code>include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行
+require()：只要程序一运行就包含文件，找不到被包含的文件时会产生致命错误，并停止脚本
+include_once()和require_once()：若文件中代码已被包含则不会再次包含
+</code></pre><h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>文件包含包括本地文件包含和远程文件包含，远程文件包含需要设置两个参数维ON</p>
+<pre><code>allow_url_fopen = On（是否允许打开远程文件）
 
+allow_url_include = On（是否允许include/require远程文件）
+</code></pre><p>详情可参考</p>
+<pre><code>https://www.freebuf.com/articles/web/182280.html
+</code></pre>
             </div>
             <hr>
 
@@ -610,9 +586,9 @@ Metasploit浏览器攻击
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《kali下钓鱼网站的制作》
+                    《文件包含原理解析》
                 </span> by
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/04/05/kali-xia-diao-yu-wang-zhan-de-zhi-zuo/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/11/03/wen-jian-bao-han-yuan-li-jie-xi/" property="cc:attributionName" rel="cc:attributionURL">
                 xiao
             </a> is licensed under a
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -675,27 +651,29 @@ Metasploit浏览器攻击
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2019/04/09/ssti-mo-ban-zhu-ru-gong-fang-shi-jie/">
+                <a href="/2019/11/03/wen-jian-bao-han-yuan-li-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="攻防世界writeup">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="文件包含原理解析">
                         
-                        <span class="card-title">攻防世界writeup</span>
+                        <span class="card-title">文件包含原理解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            攻防世界 confusion1第一次接触这样的漏洞，认真学习了一波0x00题目介绍打开是一个网站，有登陆注册功能，正中间还有一张图片（后来才知道代表php vs python）但是点击登陆注册都显示404，就很迷了，之后又去扫描了网站，并没
+                            前言文件包含是在许多漏洞复现过程中都会使用得到的一个漏洞，可以包含自己上传上去的木马或者passwd等文件，也可以进行远程文件包含
+原理程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-11-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -704,11 +682,12 @@ Metasploit浏览器攻击
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CTF/" target="_blank">
-                        <span class="chip bg-color">CTF</span>
+                    <a href="/tags/文件包含/" target="_blank">
+                        <span class="chip bg-color">文件包含</span>
                     </a>
                     
                 </div>
@@ -722,24 +701,26 @@ Metasploit浏览器攻击
                 Next&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/03/22/xin-xi-shou-ji/">
+                <a href="/2019/11/02/yong-juan-ji-shen-jing-wang-luo-shi-xian-minist-shou-xie-zi-shi-bie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="信息收集">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="用卷积神经网络实现MINIST手写字识别">
                         
-                        <span class="card-title">信息收集</span>
+                        <span class="card-title">用卷积神经网络实现MINIST手写字识别</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            信息收集信息收集对于渗透测试前期来说是非常重要的，因为只有我们掌握了目标网站或目标主机足够多的信息之后，我们才能更好地对其进行漏洞检测。正所谓，知己知彼百战百胜！信息收集的方式可以分为两种：主动和被动主动信息收集：通过直接访问、扫描网站，这
+                            前言学习了这么久的深度学习，基本上都是在学习一些理论，那么现在就来实践一下吧，今天实践的是用卷积神经网络实现MINIST手写字识别
+代码分析既然是实践，卷积神经网络的具体步骤就不在此赘述了，直接上代码
+#导入MNIST数据集-创建模型-保存
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-22
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-11-02
                             </span>
                         <span class="publish-author">
                             
@@ -752,8 +733,8 @@ Metasploit浏览器攻击
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/渗透/" target="_blank">
-                        <span class="chip bg-color">渗透</span>
+                    <a href="/tags/深度学习/" target="_blank">
+                        <span class="chip bg-color">深度学习</span>
                     </a>
                     
                 </div>
