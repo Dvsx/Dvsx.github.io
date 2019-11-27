@@ -397,14 +397,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>Word Count:&nbsp;&nbsp;
-                        1.3k
+                        2.8k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>Read Times:&nbsp;&nbsp;
-                        4 Min
+                        11 Min
                     </div>
                     
                 
@@ -427,6 +427,100 @@
 <h3 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h3><p>池化层的作用是把卷积层得到的特征平面的数据量降低。池化之后的图像大小虽然发生了变化，但是图像的大致轮廓并没有丢失，而且生成的平面作为下次卷积的输入在卷积核不变的情况下相当于增加了卷积核对于图片信息的提取能力。<br><img src="/2019/11/15/juan-ji-shen-jing-wang-luo-xiang-jie/7.png" alt=""><br>池化有平均值池化和最大值池化，上图是最大值池化操作</p>
 <h3 id="全连接"><a href="#全连接" class="headerlink" title="全连接"></a>全连接</h3><p>全连接层是为了将卷积层中提取的特征进行整和，一般全连接层的输出会交给softmax函数处理分类。<br><img src="/2019/11/15/juan-ji-shen-jing-wang-luo-xiang-jie/8.png" alt=""></p>
 <h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>上面介绍过了卷积神经网络的一些基本操作，但是在实际运行过程中还是会出现一些问题，比如过拟合(模型在训练数据上损失函数较小，预测准确率较高；但是在测试数据上损失函数比较大，预测准确率较低)。出现这样的问题可以采用drop out技术，Dropout说的简单一点就是：我们在前向传播的时候，让某个神经元的激活值以一定的概率p停止工作，这样可以使模型泛化性更强，因为它不会太依赖某些局部的特征，从而减小模型的过拟合。</p>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h3 id="初始化权值和偏置"><a href="#初始化权值和偏置" class="headerlink" title="初始化权值和偏置"></a>初始化权值和偏置</h3><pre><code>#初始化权值
+def weight_variable(shape):
+    initial = tf.truncated_normal(shape,stddev=0.1)#生成一个截断的正太分布
+    return tf.Variable(initial)
+
+#初始化偏置
+def bias_variable(shape):
+    initial = tf.constant(0.1,shape=shape)#创建常量
+    return tf.Variable(initial)
+</code></pre><p>truncated_normal()函数的作用是让权值W呈正态分布，标准差为0.1；<br>constant()函数是创建一个结构为shape矩阵也可以说是数组shape，初始化所有值为0.1</p>
+<h3 id="初始化卷积层和池化层"><a href="#初始化卷积层和池化层" class="headerlink" title="初始化卷积层和池化层"></a>初始化卷积层和池化层</h3><pre><code>#卷积层
+def conv2d_same(x,W):
+    #x input tensor of shape &#39;[batch, in_height. in_width. in_channels]&#39; 输入的图片张量
+    #W filter / kernel tensor of shape [filter_heiht. filter_width, in_channels, out_channels] 卷积核
+    #&#39;strides[0] = strides[3] = 1&#39; strides[1]代表x方向的步长，strides[2]代表y方向的步长
+    #padding:A &#39;string&#39; from:&#39;&quot;SAME&quot;, &quot;VALID&quot;&#39; SAME表示考虑边界
+    return tf.nn.conv2d(x,W,strides=[1,1,1,1],padding=&#39;SAME&#39;)
+
+def conv2d_valid(x,W):
+    return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding=&quot;VALID&quot;)
+
+#池化层
+def max_pool_2x2(x):
+    #ksize[1,x,y,1] 参数依次是：输入(feature map),池化窗口大小，步长，边界
+    return tf.nn.max_pool(x,ksize=[1,2,2,1],strides=[1,2,2,1],padding=&#39;SAME&#39;)
+</code></pre><p><strong>tf.nn</strong>：提供神经网络相关操作的支持，包括卷积操作（conv）、池化操作（pooling）、归一化、loss、分类操作、embedding、RNN、Evaluation。<br><strong>padding</strong>：padding参数的作用是决定在进行卷积或池化操作时，是否对输入的图像矩阵边缘补0，’SAME’ 为补零，’VALID’ 则不补，其原因是因为在这些操作过程中过滤器可能不能将某个方向上的数据刚好处理完。</p>
+<h3 id="定义输入输出结构"><a href="#定义输入输出结构" class="headerlink" title="定义输入输出结构"></a>定义输入输出结构</h3><p>主要是使用占位符先声明一下结构</p>
+<pre><code>with tf.name_scope(&#39;inputs&#39;):
+    # 声明一个占位符，None表示输入图片的数量不定，28*28图片分辨率
+    xs = tf.placeholder(tf.float32, [None, 28*28]) 
+    # 类别是0-9总共10个类别，对应输出分类结果
+    ys = tf.placeholder(tf.float32, [None, 10]) 
+    keep_prob = tf.placeholder(tf.float32)
+    # x_image又把xs reshape成了28*28*1的形状，因为是灰色图片，所以通道是1.作为训练时的input，-1代表图片数量不定
+    x_image = tf.reshape(xs, [-1, 28, 28, 1]) 
+</code></pre><p>reshape()函数用来重新定义数组的形状，最后的1表示灰度图，-1表示图片数量不定。<br>tf.name_scope()函数的作用是指定区域中定义的所有的对象及各种操作，他们的name属性上会增加该命名区域的区域名，用于区别对象属于那个区域。</p>
+<h3 id="搭建网络"><a href="#搭建网络" class="headerlink" title="搭建网络"></a>搭建网络</h3><h4 id="第一次卷积"><a href="#第一次卷积" class="headerlink" title="第一次卷积"></a>第一次卷积</h4><pre><code>with tf.name_scope(&#39;Conv_layer1&#39;):
+    # 初始化第一个卷积层的权值和偏置
+    W_conv1 = weight_variable([3,3,1,4])#3*3的采样窗口，4个卷积核从1个平面抽取特征
+    b_conv1 = bias_variable([4])#每一个卷积核一个偏置值
+    #把x_image和权值进行卷积，在加上偏置值，然后应用relu激活函数
+    with tf.name_scope(&#39;w_plus_b1&#39;):
+        res_conv1 = conv2d_valid(x_image,W_conv1)+b_conv1
+        tf.summary.histogram(&#39;res_conv1&#39;,res_conv1)
+    h_conv1 = tf.nn.relu(res_conv1,name=&#39;conv1_relu&#39;)
+    h_pool1 = max_pool_2x2(h_conv1)#运行max_pooling
+</code></pre><p>tf.summary.histogram(): 在训练神经网络时，当需要查看一个张量在训练过程中值的分布情况时，可通过tf.summary.histogram()将其分布情况以直方图的形式在TensorBoard直方图仪表板上显示．<br>tf.nn.relu(): 函数是将大于0的数保持不变，小于0的数置为0,作用是激活函数.</p>
+<h4 id="第二次卷积"><a href="#第二次卷积" class="headerlink" title="第二次卷积"></a>第二次卷积</h4><pre><code>with tf.name_scope(&#39;Conv_layer2&#39;):
+    #初始化第二个卷积层的权值和偏置
+    W_conv2 = weight_variable([3,3,4,8])#3*3的采样窗口，8个卷积核从4个平面抽取特
+    b_conv2 = bias_variable([8])
+    #把和权值进行卷积，在加上偏置值，然后应用relu激函数h_pool1
+    with tf.name_scope(&#39;w_plus_b2&#39;):
+        res_conv2 = conv2d_same(h_pool1,W_conv2)+b_conv2
+        tf.summary.histogram(&quot;res_conv2&quot;,res_conv2)
+    h_conv2 = tf.nn.relu(res_conv2)
+    h_pool2 = max_pool_2x2(h_conv2)#运行max_pooling
+</code></pre><p>和第一次卷积类似，改变的是卷积核的个数和特征平面的个数</p>
+<h4 id="第一个全连接层"><a href="#第一个全连接层" class="headerlink" title="第一个全连接层"></a>第一个全连接层</h4><pre><code>#初始化第一个全连接层的权值
+with tf.name_scope(&#39;FC1&#39;):
+    W_fc1 = weight_variable([8*8*8,2048])#上一层有8*8*8个神经院，全连接层有2048个神经元
+    b_fc1 = bias_variable([2048])#2048个偏置值
+
+    #把池化层2的输出扁平化为1维
+    h_pool2_flat = tf.reshape(h_pool2,[-1,8*8*8])
+    #求第一个全连接层的输出
+    h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat,W_fc1) + b_fc1)
+    # keep_prob 用来表示神经元的输出概率
+    h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+</code></pre><p>tf.matmul()将矩阵a乘以矩阵b，生成a * b<br>tf.nn.dropout()是tensorflow里面为了防止或减轻过拟合而使用的函数，它一般用在全连接层</p>
+<h4 id="第二个全连接层"><a href="#第二个全连接层" class="headerlink" title="第二个全连接层"></a>第二个全连接层</h4><pre><code>with tf.name_scope(&#39;FC2&#39;):
+
+    #初始化第二个全连接层
+    W_fc2 = weight_variable([2048,10])
+    b_fc2 = bias_variable([10])
+with tf.name_scope(&#39;Pr&#39;):
+    #计算输出
+    preduction = tf.nn.softmax(tf.matmul(h_fc1_drop,W_fc2)+b_fc2)
+</code></pre><h4 id="交叉熵代价函数"><a href="#交叉熵代价函数" class="headerlink" title="交叉熵代价函数"></a>交叉熵代价函数</h4><pre><code>with tf.name_scope(&#39;loss&#39;):
+    cross_entorpy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y,logits=preduction))
+    tf.summary.scalar(&quot;loss&quot;,cross_entorpy)
+</code></pre><p>tf.reduce_mean()函数用于计算张量tensor沿着指定的数轴（tensor的某一维度）上的的平均值，主要用作降维或者计算tensor（图像）的平均值。<br>tf.summary.scalar()函数用来显示标量信息，一般在画loss，accuary时会用到。</p>
+<h4 id="AdamOptinizer优化"><a href="#AdamOptinizer优化" class="headerlink" title="AdamOptinizer优化"></a>AdamOptinizer优化</h4><pre><code>with tf.name_scope(&#39;train&#39;):
+    train_step = tf.train.AdamOptimizer(LR).minimize(cross_entorpy)
+</code></pre><p>tf.train.AdamOptimizer()函数是Adam优化算法：是一个寻找全局最优点的优化算法，引入了二次方梯度校正。</p>
+<h4 id="存放结果并求准确率"><a href="#存放结果并求准确率" class="headerlink" title="存放结果并求准确率"></a>存放结果并求准确率</h4><pre><code>#存放结果在一个bool列表中
+with tf.name_scope(&#39;accuracy&#39;):
+    with tf.name_scope(&quot;correct_prediction&quot;):
+        correct_prediction = tf.equal(tf.argmax(preduction,1),tf.argmax(y,1))
+    #求准确率
+    with tf.name_scope(&#39;accuracy&#39;):
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))
+        tf.summary.scalar(&#39;accuracy&#39;,accuracy)
+</code></pre><p>tf.equal()的作用是判断里面的两个参数的值是否相等，相等则返回True，否则为False，在这里是比较预测值和计算值的大小，返回的是大数所在数组的索引值。<br>tf.cast()函数的作用是执行 tensorflow 中张量数据类型转换，比如读入的图片如果是int8类型的，一般在要在训练前把图像的数据格式转换为float32类型。</p>
 
             </div>
             <hr>
@@ -850,7 +944,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">47.5k</span>
+                <span class="white-color">49.1k</span>
             
 
             
