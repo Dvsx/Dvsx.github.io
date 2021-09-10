@@ -168,86 +168,9 @@
                     <div class="fade-in-down-animation">
     <div class="category-list-container">
         <div class="category-list-content">
-            
+            <ul class="all-category-list"><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/Test/">Test</a><span class="all-category-list-count">1</span></li></ul>
         </div>
         <div class="category-comments">
-            
-                <div class="comments-container">
-    <div id="comment-anchor"></div>
-    <div class="comment-area-title">
-        <i class="fas fa-comments">&nbsp;Comments</i>
-    </div>
-    
-
-        
-            
-    <div class="valine-container">
-        <script data-pjax
-                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
-        <div id="vcomments"></div>
-        <script data-pjax>
-            function loadValine() {
-                new Valine({
-                    el: '#vcomments',
-                    appId: 'TmA378BlbYslLoo4ToSTUI80-gzGzoHsz',
-                    appKey: 'A2d4DLIBLveP7UDyCiSTv0sb',
-                    meta: ['nick', 'mail', 'link'],
-                    avatar: 'wavatar',
-                    enableQQ: true,
-                    placeholder: '😜 尽情吐槽吧~',
-                    lang: 'en'.toLowerCase()
-                });
-
-                function getAuthor(language) {
-                    switch (language) {
-                        case 'en':
-                            return 'Author';
-                        case 'zh-CN':
-                            return '博主';
-                        default:
-                            return 'Master';
-                    }
-                }
-
-                // Add "Author" identify
-                const getValineDomTimer = setInterval(() => {
-                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
-                    if (vcards.length > 0) {
-                        let author = 'Impala';
-
-                        if (author) {
-                            for (let vcard of vcards) {
-                                const vnick_dom = vcard.querySelector('.vhead .vnick');
-                                const vnick = vnick_dom.innerHTML;
-                                if (vnick === author) {
-                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
-                                }
-                            }
-                        }
-                        clearInterval(getValineDomTimer);
-                    } else {
-                        clearInterval(getValineDomTimer);
-                    }
-                }, 2000);
-            }
-
-            if ('true') {
-                const loadValineTimeout = setTimeout(() => {
-                    loadValine();
-                    clearTimeout(loadValineTimeout);
-                }, 1000);
-            } else {
-                window.addEventListener('DOMContentLoaded', loadValine);
-            }
-        </script>
-    </div>
-
-
-
-        
-    
-</div>
-
             
         </div>
     </div>
