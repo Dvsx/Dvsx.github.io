@@ -9,7 +9,7 @@
     
     <title>
         
-            Archive: 2021 |
+            数据仓库维度建模实例 |
         
         乐天阁
     </title>
@@ -73,7 +73,7 @@
                         </li>
                     
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/archives"
                             >
                                 ARCHIVES
@@ -123,7 +123,7 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/archives">ARCHIVES</a>
                 </li>
             
@@ -153,45 +153,187 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="archive-container ">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">数据仓库维度建模实例</span>
+        </div>
+
         
-<div class="archive-list-container">
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/male.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Impala</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-10-14 13:58:47
+    </span>
     
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2021</span>
-                <span class="archive-year-post-count">[3]</span>
-            </div>
-            <ul class="article-list">
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/10/14/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1%E5%AE%9E%E4%BE%8B/"
-                        >数据仓库维度建模实例</a>
-                        <span class="article-date">10-14</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/10/09/%E5%8F%8D%E6%80%9D%E4%B8%8E%E6%80%BB%E7%BB%93/"
-                        >反思与总结</a>
-                        <span class="article-date">10-09</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/09/10/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D/"
-                        >自我介绍</a>
-                        <span class="article-date">09-10</span>
-                    </li>
-                
-            </ul>
-        </section>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>316 Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>1 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="零售业务"><a href="#零售业务" class="headerlink" title="零售业务"></a>零售业务</h1><h2 id="维度模型设计的4步过程"><a href="#维度模型设计的4步过程" class="headerlink" title="维度模型设计的4步过程"></a>维度模型设计的4步过程</h2><h3 id="第一步-选择业务过程"><a href="#第一步-选择业务过程" class="headerlink" title="第一步 选择业务过程"></a>第一步 选择业务过程</h3><p>有时业务部门比较清楚的是业务的战略规划，数据仓库人员需要把战略规划拆分成基本业务过程，这意味着需要深入挖掘，理解数据和操作型系统，以支持对规划进行分析的需求。<br>不要以部门为边界建立维度模型，以业务为中心，否则会造成数据的重复使用。</p>
+<h3 id="第二步-声明粒度"><a href="#第二步-声明粒度" class="headerlink" title="第二步 声明粒度"></a>第二步 声明粒度</h3><p>声明粒度意味着精确定义某个事实表的某一行表示的是什么。粒度的例子：<br>①客户销售系统中每个产品信息占据一行<br>②银行账户系统每月每个客户信息占据一行</p>
+<h3 id="第三步-确定维度"><a href="#第三步-确定维度" class="headerlink" title="第三步 确定维度"></a>第三步 确定维度</h3><p>维度通常表示的是“谁，什么，何时，何处，为何，如何”的事件，常见的维度实例包括，日期，产品，客户，雇员，设备等，通常是文本属性较多</p>
+<h3 id="第四步-确定事实"><a href="#第四步-确定事实" class="headerlink" title="第四步 确定事实"></a>第四步 确定事实</h3><p>可以通过确定业务过程的度量来确定事实，事实通常是可加性数值。不应该把注意力仅仅放在数据上，还要考虑业务。<br><img src="/2021/10/14/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1%E5%AE%9E%E4%BE%8B/4%E6%AD%A5.png" alt="4步"></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：数据仓库维度建模实例</li>
+        <li>Post author：Impala</li>
+        <li>Create time：2021-10-14 13:58:47</li>
+        <li>
+            Post link：https://dvsx.github.io/2021/10/14/数据仓库维度建模实例/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/10/09/%E5%8F%8D%E6%80%9D%E4%B8%8E%E6%80%BB%E7%BB%93/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">反思与总结</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: 'TmA378BlbYslLoo4ToSTUI80-gzGzoHsz',
+                    appKey: 'A2d4DLIBLveP7UDyCiSTv0sb',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '😜 尽情吐槽吧~',
+                    lang: 'en'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Impala';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
     </div>
 </div>
+
 
                 
             </div>
@@ -233,6 +375,27 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-bottom-side-tools">
@@ -288,6 +451,14 @@
     </div>
 
     
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%B6%E5%94%AE%E4%B8%9A%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">零售业务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1%E7%9A%844%E6%AD%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">维度模型设计的4步过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E9%80%89%E6%8B%A9%E4%B8%9A%E5%8A%A1%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">第一步 选择业务过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%A3%B0%E6%98%8E%E7%B2%92%E5%BA%A6"><span class="nav-number">1.1.2.</span> <span class="nav-text">第二步 声明粒度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E7%A1%AE%E5%AE%9A%E7%BB%B4%E5%BA%A6"><span class="nav-number">1.1.3.</span> <span class="nav-text">第三步 确定维度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-%E7%A1%AE%E5%AE%9A%E4%BA%8B%E5%AE%9E"><span class="nav-number">1.1.4.</span> <span class="nav-text">第四步 确定事实</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
 
     <div class="image-viewer-container">
     <img src="">
@@ -342,6 +513,8 @@
 
 
 <div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
     
 </div>
 
